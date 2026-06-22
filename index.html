@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situs Video - Ultimate Affiliate</title>
+    <style id="core-style">
+        :root { --bg-body: #1a1a1a; --bg-header: #202020; --accent-color: #ff5c8a; --text-main: #ffffff; --text-muted: #b3b3b3; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.5; }
+        a { text-decoration: none; color: inherit; }
+
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background-color: var(--bg-header); border-bottom: 1px solid #333; }
+        .logo { font-size: 26px; font-weight: bold; font-style: italic; color: #ff5c8a; cursor: pointer; user-select: none; display: inline-block; transition: opacity 0.2s;}
+        .logo:hover { opacity: 0.8; }
+        
+        .search-box { display: flex; background: #111; border-radius: 3px; overflow: hidden; border: 1px solid #333; }
+        .search-box input { background: transparent; border: none; padding: 10px 15px; color: white; width: 250px; outline: none; font-size: 14px; }
+        .search-box button { background: var(--accent-color); border: none; padding: 10px 20px; color: white; cursor: pointer; }
+
+        nav { background-color: var(--bg-header); padding: 15px 50px; display: flex; gap: 10px; border-bottom: 1px solid #222; overflow-x: auto; white-space: nowrap; align-items: center; min-height: 50px;}
+        nav a { padding: 8px 15px; font-size: 13px; font-weight: bold; transition: background 0.2s; color: #ddd; border-radius: 4px; border: 1px solid #444; }
+        nav a.active, nav a:hover { background-color: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+        
+        .edit-block { display: inline-flex; flex-direction: column; gap: 4px; vertical-align: top; margin-right: 5px; }
+        .edit-sm-input { background: #111; color: white; border: 1px solid var(--accent-color); padding: 6px; font-size: 12px; border-radius: 3px; outline: none; text-align: center; width: 100px; }
+        .edit-sm-link { border-color: #2ecc71; } 
+
+        main { padding: 30px 50px; min-height: 80vh; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background-color: #252525; padding: 8px 15px; border-radius: 3px; border-left: 3px solid var(--accent-color); }
+        .section-header h2 { font-size: 14px; font-weight: normal; color: #eee; }
+        .filter-btn { background: #111; border: 1px solid #444; color: white; padding: 4px 12px; border-radius: 3px; cursor: pointer; font-size: 12px; }
+
+        .video-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px 15px; }
+        .video-card { background-color: transparent; position: relative; cursor: pointer; transition: transform 0.2s; }
+        .video-card:hover { transform: translateY(-3px); }
+        .video-card.editing:hover { transform: none; cursor: default; }
+
+        .thumbnail { position: relative; width: 100%; aspect-ratio: 16/9; background-color: #000; overflow: hidden; border-radius: 2px;}
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.2s; }
+        
+        /* Play Icon */
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; transition: background 0.3s; z-index: 2; }
+        .play-icon::after { content: ""; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 15px solid white; margin-left: 5px; }
+        .video-card:hover .play-icon {background: rgba(255, 92, 138, 0.8);}
+    
+
+        .overlay-stats { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 6px 8px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); font-size: 11px; font-weight: bold; pointer-events: none; z-index: 2; }
+        .info { padding-top: 8px; text-align: center; }
+        .likes { color: #fff; font-size: 11px; font-weight: bold; margin-bottom: 4px; display: flex; justify-content: center; gap: 4px; }
+        .title { font-size: 12px; color: var(--text-muted); line-height: 1.4; word-wrap: break-word; }
+
+        .edit-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(92, 32, 214, 0.7); color: white; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; font-size: 14px; text-align: center; padding: 10px; z-index: 10;}
+        .video-card.editing .edit-overlay { display: flex; }
+        .video-card.editing .thumbnail img { opacity: 0.3; }
+        .edit-input-title, .edit-input-link { display: none; width: 100%; background: #222; color: white; padding: 6px; font-size: 11px; text-align: center; margin-top: 5px; outline: none; border-radius: 2px;}
+        .edit-input-title { border: 1px solid var(--accent-color); }
+        .edit-input-link { border: 1px solid #2ecc71; }
+        .video-card.editing .title { display: none; }
+        .video-card.editing .edit-input-title { display: block; }
+        .video-card.editing .edit-input-link { display: block; }
+
+        .pagination { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin: 50px 0 20px 0; }
+        .pagination button { background-color: #2a2a2a; color: #ccc; border: none; padding: 8px 14px; border-radius: 3px; cursor: pointer; font-size: 13px; font-weight: bold; transition: background 0.2s;}
+        .pagination button:hover { background-color: #444; }
+        .pagination button.active { background-color: var(--accent-color); color: white; }
+
+        footer { background-color: #1a1a1a; padding: 30px 20px; text-align: center; border-top: 1px solid #333; position: relative; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; }
+        .footer-links a { color: var(--accent-color); font-size: 12px; font-weight: bold; }
+        footer p { color: #666; font-size: 11px; }
+
+        .fab-container { position: fixed; bottom: 20px; right: 20px; display: none; flex-direction: column; gap: 10px; z-index: 1000; }
+        .fab-btn { background-color: var(--accent-color); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3); font-size: 14px; }
+        .fab-btn.save { background-color: #2ecc71; display: none; } 
+        .fab-btn.download { background-color: #e74c3c; display: none; }
+
+        
+.redirect-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;color:white;justify-content:center;align-items:center;font-size:28px;font-weight:bold;text-align:center;}
+
+        @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header, nav, main { padding-left: 20px; padding-right: 20px; } }
+        @media (max-width: 480px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header { flex-direction: column; gap: 15px; } }
+    </style>
+    <script id="data-situs">
+        window.DATA_HEADER = {"text":"ZoneXhub.net","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"};
+        window.DATA_MENU = [{"text":"Tiktok blunder","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"text":"Smp/Sma terbaru","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"text":"Viral terbaru","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"text":"Viral","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"text":"Random","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"}];
+        window.DATA_PAGINATION = [{"text":"1","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","active":true},{"text":"2","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","active":false},{"text":"3","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","active":false},{"text":"4","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","active":false},{"text":"5","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","active":false},{"text":"Next","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","active":false},{"text":"Last","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","active":false}];
+        window.DATA_VIDEO = [{"gambar":"https://i.pinimg.com/736x/c8/4d/16/c84d164ae8109a5298a58ebef6b26dcd.jpg","judul":"Mulus banget pink lagi","views":"120K","durasi":"03:26","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://vdko.cc/d/o13e2cl0xpjt","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/59/93/f2/5993f2f7180688a5f22f4d7299920edf.jpg","judul":"ABG SMP sempit banget","views":"122K","durasi":"03:42","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://vdko.cc/d/bpsq3zaynk5b","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/9d/61/9c/9d619c8e342d8d0c3743e837a4d0a63b.jpg","judul":"Smp Abg Masih Bocil Di Perawanin Pacar","views":"70K","durasi":"2:05","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://vdko.cc/d/m5afnvz7zvms","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/39/17/26/391726ab0defd85c9722d6d06e7a40f4.jpg","judul":"Abg Boba super padet","views":"160K","durasi":"03:06","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://vdko.cc/d/hcw6555unasp","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/1d/43/74/1d4374160afaaede206659986a5e396d.jpg","judul":"Talent Laura update","views":"40K","durasi":"08:21","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://plav.ink/f/a3anvup4j8z","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/bc/9f/69/bc9f6955f3e90561f7842e91ddf1996d.jpg","judul":"Ade Kaka Viral terpantau CCTV","views":"304K","durasi":"06:41","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://plav.ink/d/e7o9j6um5uag","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/a1/b4/af/a1b4afd9d1db9e0a8464193dbc4719fa.jpg","judul":"SMA Boba super bulat","views":"70K","durasi":"02:20","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://vdko.cc/d/z1wv6vje8bor","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/6e/a8/64/6ea864a0a88115c66a5bc9d8c950a37b.jpg","judul":"Andini sama adeknya","views":"51K","durasi":"01:25","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://plav.ink/f/sympzt417gd","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/3c/0b/a1/3c0ba174dcb3ce8a9c5c9a1e93ddad8d.jpg","judul":"Bandar batang update full 16menit","views":"221K","durasi":"16:42","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://vdko.cc/d/v4ezt0b4yrr6","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/dc/6c/b4/dc6cb4c5ea50bf75fb4d8a9ff95b5455.jpg","judul":"Viral Kebaya ungu ","views":"80K","durasi":"19:04","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://vdko.cc/d/3g4lonb0nbyq","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"},{"gambar":"https://i.pinimg.com/736x/ab/46/fd/ab46fd74ad463157034a345e459b06e8.jpg","judul":"Bulan Smp Pramuka Tobrut Body Mantap","views":"124K","durasi":"02:25","likes":"100%","iklan":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28","tujuan":"https://vdko.cc/d/70m8n5xu7js8","link":"https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"}];
+    </script>
+</head>
+<body>
+    <header>
+        <div id="tempat-logo"></div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search judul video..." onkeyup="cariVideo(event)">
+            <button id="btnSecret" onclick="bukaKunciRahasia()">🔍</button>
+        </div>
+    </header>
+    <nav id="menu-navigasi"></nav>
+    <main>
+        <div class="section-header">
+            <h2>Latest videos</h2>
+            <button class="filter-btn">▼</button>
+        </div>
+        <div class="video-grid" id="tempat-video"></div>
+        <div class="pagination" id="tempat-pagination"></div>
+    </main>
+    <footer>
+        <div class="footer-links"><a href="#">18 U.S.C 2257</a><a href="#">DMCA</a><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+        <p>© 2026 ZoneXhub. All rights reserved</p>
+    </footer>
+    <div class="fab-container" id="panelAdmin">
+        <button class="fab-btn download" id="btnDownload" onclick="downloadWebFinal()">📥 Bikin File Siap Sebar</button>
+        <button class="fab-btn save" id="btnSimpan" onclick="simpanPerubahan()">💾 Simpan Sementara</button>
+        <button class="fab-btn" onclick="tambahVideo()">➕ Tambah Video</button>
+        <button class="fab-btn" onclick="hapusVideo()">❌ Hapus Video</button>
+        <button class="fab-btn" id="btnEdit" onclick="toggleEditMode()">⚙️ Mode Edit</button>
+    </div>
+    <script id="core-script">
+        let jumlahKlik = 0;
+        let waktuResetKlik;
+        function bukaKunciRahasia() {
+    jumlahKlik++;
+    clearTimeout(waktuResetKlik);
+
+    if (jumlahKlik >= 5) {
+
+        let pass = prompt("Masukkan Password Admin");
+
+        if (pass === "Ajid1234") {
+            document.getElementById('panelAdmin').style.display = 'flex';
+            alert("Login Berhasil!");
+        } else {
+            alert("Password Salah!");
+        }
+
+        jumlahKlik = 0;
+
+    } else {
+
+        waktuResetKlik = setTimeout(() => {
+            jumlahKlik = 0;
+        }, 1500);
+
+    }
+}
+
+        let headerData = JSON.parse(localStorage.getItem('dataHeaderLokal')) || window.DATA_HEADER;
+        let menuData = JSON.parse(localStorage.getItem('dataMenuObjLokal')) || window.DATA_MENU;
+        let pagData = JSON.parse(localStorage.getItem('dataPagLokal')) || window.DATA_PAGINATION;
+        let videoData = JSON.parse(localStorage.getItem('dataVideoLokal')) || window.DATA_VIDEO;
+
+        const wadahLogo = document.getElementById("tempat-logo");
+        const wadahVideo = document.getElementById("tempat-video");
+        const wadahMenu = document.getElementById("menu-navigasi");
+        const wadahPag = document.getElementById("tempat-pagination");
+        let isEditMode = false;
+const videoPerHalaman = 8;
+let halamanSekarang = 1;
+let hasilPencarian = null;
+
+        function arahkanKeLink(video) {
+            if (!isEditMode) {
+                const iklan = video.iklan || video.link || "";
+                const tujuan = video.tujuan || video.link || "";
+                if(iklan) window.open(iklan, "_blank");
+                const ov = document.getElementById('redirectOverlay');
+                if(ov){ ov.style.display='flex'; }
+                setTimeout(() => {
+                    if(tujuan) window.location.href = tujuan;
+                }, 3000);
+            }
+        }
+       function bukaMenu(url) {
+        window.open(url, "_blank");
+        }
+        function tampilkanHeader() {
+            if (isEditMode) {
+                wadahLogo.innerHTML = `<div class="edit-block" style="flex-direction: row; gap: 5px; align-items: center;"><input type="text" class="edit-sm-input" id="input-header-text" value="${headerData.text}" style="width: 150px; font-weight: bold; font-style: italic;"><input type="text" class="edit-sm-input edit-sm-link" id="input-header-link" value="${headerData.link}" placeholder="Link Redirect" style="width: 150px;"></div>`;
+            } else {
+                wadahLogo.innerHTML = `<a href="javascript:void(0)" class="logo" onclick="arahkanKeLink('${headerData.link}')">${headerData.text}</a>`;
+            }
+        }
+
+        function tampilkanMenu() {
+            wadahMenu.innerHTML = `<a href="javascript:void(0)" class="active"
+onclick="gantiHalaman(1)">🏠 Home</a>`;
+            menuData.forEach((menu, index) => {
+                if (isEditMode) {
+                    wadahMenu.innerHTML += `<div class="edit-block"><input type="text" class="edit-sm-input" id="input-menu-text-${index}" value="${menu.text}"><input type="text" class="edit-sm-input edit-sm-link" id="input-menu-link-${index}" value="${menu.link}" placeholder="Link"></div>`;
+                } else {
+                    wadahMenu.innerHTML += `<a href="javascript:void(0)" onclick="bukaMenu('${menu.link}')">${menu.text}</a>`;
+                }
+            });
+        }
+
+        
+function tampilkanPagination() {
+    if (isEditMode) { wadahPag.innerHTML=''; return; }
+    wadahPag.innerHTML = '';
+    const dataAktif = hasilPencarian || videoData;
+    const totalHalaman = Math.max(1, Math.ceil(dataAktif.length / videoPerHalaman));
+
+    if(halamanSekarang > 1){
+        wadahPag.innerHTML += `<button onclick="gantiHalaman(${halamanSekarang-1})">Prev</button>`;
+    }
+
+    wadahPag.innerHTML += `<button class="${halamanSekarang===1?'active':''}" onclick="gantiHalaman(1)">1</button>`;
+
+    let start = Math.max(2, halamanSekarang - 2);
+    let end = Math.min(totalHalaman - 1, halamanSekarang + 2);
+
+    if(start > 2){
+        wadahPag.innerHTML += `<button disabled>...</button>`;
+    }
+
+    for(let i=start;i<=end;i++){
+        wadahPag.innerHTML += `<button class="${i===halamanSekarang?'active':''}" onclick="gantiHalaman(${i})">${i}</button>`;
+    }
+
+    if(end < totalHalaman - 1){
+        wadahPag.innerHTML += `<button disabled>...</button>`;
+    }
+
+    if(totalHalaman > 1){
+        wadahPag.innerHTML += `<button class="${halamanSekarang===totalHalaman?'active':''}" onclick="gantiHalaman(${totalHalaman})">${totalHalaman}</button>`;
+    }
+
+    if(halamanSekarang < totalHalaman){
+        wadahPag.innerHTML += `<button onclick="gantiHalaman(${halamanSekarang+1})">Next</button>`;
+    }
+
+    if(totalHalaman > 1){
+        wadahPag.innerHTML += `<button onclick="gantiHalaman(${totalHalaman})">Last</button>`;
+    }
+}
+
+
+        function tampilkanGrid() {
+            wadahVideo.innerHTML = "";
+            const mulai = (halamanSekarang-1)*videoPerHalaman;
+            const akhir = mulai + videoPerHalaman;
+            (hasilPencarian || videoData).slice(mulai, akhir).forEach((video, idx) => {
+                const index = mulai + idx;
+                const srcGambar = video.gambar ? video.gambar : "https://via.placeholder.com/640x360/000000/333333?text=Klik+Ganti+Gambar";
+                wadahVideo.innerHTML += `
+                    <div class="video-card ${isEditMode ? 'editing' : ''}" id="card-${index}" onclick="arahkanKeLink(videoData[${index}])">
+                        <div class="thumbnail">
+                            <img src="${srcGambar}" alt="Thumbnail" loading="lazy">
+                            <div class="play-icon"></div>
+                            <div class="overlay-stats"><span>👁 ${video.views}</span><span>⏱ ${video.durasi}</span></div>
+                            <div class="edit-overlay" onclick="event.stopPropagation(); gantiGambarURL(${index})">🔗 Link Gambar</div>
+                        </div>
+                        <div class="info" onclick="if(isEditMode) event.stopPropagation();">
+                            <div class="likes">👍 ${video.likes}</div>
+                            <div class="title">${video.judul}</div>
+                            <input type="text" class="edit-input-title" id="input-judul-${index}" value="${video.judul}">
+                            <input type="text" class="edit-input-link" id="input-link-${index}" value="${video.link}" placeholder="Link Redirect">
+                            <input type="text" class="edit-input-link" id="input-iklan-${index}" value="${video.iklan || ""}" placeholder="Link Iklan">
+                            <input type="text" class="edit-input-link" id="input-tujuan-${index}" value="${video.tujuan || video.link || ""}" placeholder="Link Tujuan">
+                            <input type="text" class="edit-input-title" id="input-view-${index}" value="${video.views}" placeholder="Views">
+                            <input type="text" class="edit-input-title" id="input-durasi-${index}" value="${video.durasi}" placeholder="Durasi">
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function toggleEditMode() {
+            isEditMode = true;
+            document.getElementById("btnEdit").style.display = "none";
+            document.getElementById("btnSimpan").style.display = "block";
+            document.getElementById("btnDownload").style.display = "block";
+            tampilkanHeader(); tampilkanGrid(); tampilkanMenu(); tampilkanPagination();
+        }
+
+        function simpanPerubahan() {
+            headerData.text = document.getElementById("input-header-text")?.value || headerData.text;
+            headerData.link = document.getElementById("input-header-link")?.value || headerData.link;
+            videoData.forEach((v, i) => { v.judul = document.getElementById(`input-judul-${i}`)?.value || v.judul; v.link = document.getElementById(`input-link-${i}`)?.value || v.link;
+    v.iklan = document.getElementById(`input-iklan-${i}`)?.value || v.iklan || "";
+    v.tujuan = document.getElementById(`input-tujuan-${i}`)?.value || v.tujuan || v.link; v.views = document.getElementById(`input-view-${i}`)?.value || v.views; v.durasi = document.getElementById(`input-durasi-${i}`)?.value || v.durasi; });
+            menuData.forEach((m, i) => { m.text = document.getElementById(`input-menu-text-${i}`)?.value || m.text; m.link = document.getElementById(`input-menu-link-${i}`)?.value || m.link; });
+            pagData.forEach((p, i) => { p.text = document.getElementById(`input-pag-text-${i}`)?.value || p.text; p.link = document.getElementById(`input-pag-link-${i}`)?.value || p.link; });
+
+            localStorage.setItem('dataHeaderLokal', JSON.stringify(headerData));
+            localStorage.setItem('dataVideoLokal', JSON.stringify(videoData));
+            localStorage.setItem('dataMenuObjLokal', JSON.stringify(menuData));
+            localStorage.setItem('dataPagLokal', JSON.stringify(pagData));
+            isEditMode = false;
+            document.getElementById("btnEdit").style.display = "block";
+            document.getElementById("btnSimpan").style.display = "none";
+            document.getElementById("btnDownload").style.display = "none";
+            tampilkanHeader(); tampilkanGrid(); tampilkanMenu(); tampilkanPagination();
+            alert("Data tersimpan sementara!");
+        }
+
+        function gantiGambarURL(i) {
+            let u = prompt("LINK GAMBAR:", videoData[i].gambar);
+            if (u) { videoData[i].gambar = u; tampilkanGrid(); }
+        }
+
+        // FUNGSI PENGHANCUR BUG EKSTENSI TRANSLATE
+        function downloadWebFinal() {
+            simpanPerubahan(); 
+            
+            let cssContent = document.getElementById("core-style").innerHTML;
+            let scriptContent = document.getElementById("core-script").innerHTML;
+
+            // Merakit ulang HTML dari nol yang 100% steril
+            let htmlBersih = `<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situs Video - Ultimate Affiliate</title>
+    <style id="core-style">${cssContent}</style>
+    <script id="data-situs">
+        window.DATA_HEADER = ${JSON.stringify(headerData)};
+        window.DATA_MENU = ${JSON.stringify(menuData)};
+        window.DATA_PAGINATION = ${JSON.stringify(pagData)};
+        window.DATA_VIDEO = ${JSON.stringify(videoData)};
+    <\/script>
+</head>
+<body>
+    <header>
+        <div id="tempat-logo"></div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search judul video..." onkeyup="cariVideo(event)">
+            <button id="btnSecret" onclick="bukaKunciRahasia()">🔍</button>
+        </div>
+    </header>
+    <nav id="menu-navigasi"></nav>
+    <main>
+        <div class="section-header">
+            <h2>Latest videos</h2>
+            <button class="filter-btn">▼</button>
+        </div>
+        <div class="video-grid" id="tempat-video"></div>
+        <div class="pagination" id="tempat-pagination"></div>
+    </main>
+    <footer>
+        <div class="footer-links"><a href="#">18 U.S.C 2257</a><a href="#">DMCA</a><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+        <p>© 2026 ZoneXhub. All rights reserved</p>
+    </footer>
+    <div class="fab-container" id="panelAdmin">
+        <button class="fab-btn download" id="btnDownload" onclick="downloadWebFinal()">📥 Bikin File Siap Sebar</button>
+        <button class="fab-btn save" id="btnSimpan" onclick="simpanPerubahan()">💾 Simpan Sementara</button>
+        <button class="fab-btn" onclick="tambahVideo()">➕ Tambah Video</button>
+        <button class="fab-btn" onclick="hapusVideo()">❌ Hapus Video</button>
+        <button class="fab-btn" id="btnEdit" onclick="toggleEditMode()">⚙️ Mode Edit</button>
+    </div>
+    <script id="core-script">${scriptContent}<\/script>
+</body>
+</html>`;
+
+            let b = new Blob([htmlBersih], { type: "text/html" });
+            let a = document.createElement("a");
+            a.href = URL.createObjectURL(b);
+            a.download = "index-publik.html";
+            a.click();
+            
+            alert("File bersih berhasil di-download! Bug translate telah dihanguskan.");
+        }
+
+        
+        function tambahVideo() {
+            videoData.unshift({
+                gambar: "https://via.placeholder.com/640x360",
+                judul: "Video Baru",
+                views: "0",
+                durasi: "00:00",
+                likes: "100%",
+                iklan: "#", tujuan: "#", link: "#"
+            });
+            tampilkanGrid();
+        }
+
+        function hapusVideo() {
+            if(videoData.length > 0){
+                videoData.shift();
+                tampilkanGrid();
+            }
+        }
+
+
+
+function cariVideo(event){
+    const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+
+    if(keyword === ''){
+        hasilPencarian = null;
+    } else {
+        hasilPencarian = videoData.filter(v =>
+            (v.judul || '').toLowerCase().includes(keyword)
+        );
+    }
+
+    halamanSekarang = 1;
+    tampilkanPagination();
+    tampilkanGrid();
+}
+
+function gantiHalaman(page){
+    halamanSekarang = page;
+    tampilkanPagination();
+    tampilkanGrid();
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+tampilkanHeader(); tampilkanMenu(); tampilkanPagination(); tampilkanGrid();
+
+    </script>
+</body>
+</html>
