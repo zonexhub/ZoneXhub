@@ -228,7 +228,7 @@ let hasilPencarian = null;
 
         setTimeout(() => {
             if(tujuan) window.location.href = tujuan;
-        }, 2000);
+        }, 1000);
     }
 }
        function bukaMenu(url) {
@@ -426,12 +426,13 @@ function tampilkanPagination() {
         
         function tambahVideo() {
             videoData.unshift({
-                gambar: "https://via.placeholder.com/640x360",
-                judul: "Video Baru",
-                views: "0",
-                durasi: "00:00",
-                likes: "100%",
-                iklan: "#", tujuan: "#", link: "#"
+                gambar: "",
+                judul: "",
+                views: "",
+                durasi: "",
+                iklan: "https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28",
+                tujuan: "",
+                link: "https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"
             });
             tampilkanGrid();
         }
