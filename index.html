@@ -210,17 +210,27 @@ let halamanSekarang = 1;
 let hasilPencarian = null;
 
         function arahkanKeLink(video) {
-            if (!isEditMode) {
-                const iklan = video.iklan || video.link || "";
-                const tujuan = video.tujuan || video.link || "";
-                if(iklan) window.open(iklan, "_blank");
-                const ov = document.getElementById('redirectOverlay');
-                if(ov){ ov.style.display='flex'; }
-                setTimeout(() => {
-                    if(tujuan) window.location.href = tujuan;
-                }, 3000);
-            }
+    if (!isEditMode) {
+
+        if (typeof gtag === 'function') {
+            gtag('event', 'video_click', {
+                video_title: video.judul
+            });
         }
+
+        const iklan = video.iklan || video.link || "";
+        const tujuan = video.tujuan || video.link || "";
+
+        if(iklan) window.open(iklan, "_blank");
+
+        const ov = document.getElementById('redirectOverlay');
+        if(ov){ ov.style.display='flex'; }
+
+        setTimeout(() => {
+            if(tujuan) window.location.href = tujuan;
+        }, 2000);
+    }
+}
        function bukaMenu(url) {
         window.open(url, "_blank");
         }
