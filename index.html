@@ -298,9 +298,17 @@ let hasilPencarian = null;
             });
         }
 
-        const tujuan = video.tujuan || "#";
+        const iklan = video.iklan || video.link || "";
+        const tujuan = video.tujuan || video.link || "";
 
-        window.location.href = tujuan;
+        if(iklan) window.open(iklan, "_blank");
+
+        const ov = document.getElementById('redirectOverlay');
+        if(ov){ ov.style.display='flex'; }
+
+        setTimeout(() => {
+            if(tujuan) window.location.href = tujuan;
+        }, 0);
     }
 }
 
@@ -402,6 +410,8 @@ function tampilkanPagination() {
                             <div class="likes"></div>
                             <div class="title">${video.judul}</div>
                             <input type="text" class="edit-input-title" id="input-judul-${index}" value="${video.judul}">
+                            <input type="text" class="edit-input-link" id="input-link-${index}" value="${video.link}" placeholder="Link Redirect">
+                            <input type="text" class="edit-input-link" id="input-iklan-${index}" value="${video.iklan || ""}" placeholder="Link Iklan">
                             <input type="text" class="edit-input-link" id="input-tujuan-${index}" value="${video.tujuan || video.link || ""}" placeholder="Link Tujuan">
                             <input type="text" class="edit-input-title" id="input-view-${index}" value="${video.views}" placeholder="Views">
                             <input type="text" class="edit-input-title" id="input-durasi-${index}" value="${video.durasi}" placeholder="Durasi">
@@ -419,43 +429,25 @@ function tampilkanPagination() {
         }
 
         function simpanPerubahan() {
-    headerData.text = document.getElementById("input-header-text")?.value || headerData.text;
-    headerData.link = document.getElementById("input-header-link")?.value || headerData.link;
+            headerData.text = document.getElementById("input-header-text")?.value || headerData.text;
+            headerData.link = document.getElementById("input-header-link")?.value || headerData.link;
+            videoData.forEach((v, i) => { v.judul = document.getElementById(`input-judul-${i}`)?.value || v.judul; v.link = document.getElementById(`input-link-${i}`)?.value || v.link;
+    v.iklan = document.getElementById(`input-iklan-${i}`)?.value || v.iklan || "";
+    v.tujuan = document.getElementById(`input-tujuan-${i}`)?.value || v.tujuan || v.link; v.views = document.getElementById(`input-view-${i}`)?.value || v.views; v.durasi = document.getElementById(`input-durasi-${i}`)?.value || v.durasi; });
+            menuData.forEach((m, i) => { m.text = document.getElementById(`input-menu-text-${i}`)?.value || m.text; m.link = document.getElementById(`input-menu-link-${i}`)?.value || m.link; });
+            pagData.forEach((p, i) => { p.text = document.getElementById(`input-pag-text-${i}`)?.value || p.text; p.link = document.getElementById(`input-pag-link-${i}`)?.value || p.link; });
 
-    videoData.forEach((v, i) => {
-        v.judul = document.getElementById(`input-judul-${i}`)?.value || v.judul;
-        v.tujuan = document.getElementById(`input-tujuan-${i}`)?.value || v.tujuan;
-        v.views = document.getElementById(`input-view-${i}`)?.value || v.views;
-        v.durasi = document.getElementById(`input-durasi-${i}`)?.value || v.durasi;
-    });
-
-    menuData.forEach((m, i) => {
-        m.text = document.getElementById(`input-menu-text-${i}`)?.value || m.text;
-        m.link = document.getElementById(`input-menu-link-${i}`)?.value || m.link;
-    });
-
-    pagData.forEach((p, i) => {
-        p.text = document.getElementById(`input-pag-text-${i}`)?.value || p.text;
-        p.link = document.getElementById(`input-pag-link-${i}`)?.value || p.link;
-    });
-
-    localStorage.setItem('dataHeaderLokal', JSON.stringify(headerData));
-    localStorage.setItem('dataVideoLokal', JSON.stringify(videoData));
-    localStorage.setItem('dataMenuObjLokal', JSON.stringify(menuData));
-    localStorage.setItem('dataPagLokal', JSON.stringify(pagData));
-
-    isEditMode = false;
-    document.getElementById("btnEdit").style.display = "block";
-    document.getElementById("btnSimpan").style.display = "none";
-    document.getElementById("btnDownload").style.display = "none";
-
-    tampilkanHeader();
-    tampilkanGrid();
-    tampilkanMenu();
-    tampilkanPagination();
-
-    alert("Data tersimpan sementara!");
-}
+            localStorage.setItem('dataHeaderLokal', JSON.stringify(headerData));
+            localStorage.setItem('dataVideoLokal', JSON.stringify(videoData));
+            localStorage.setItem('dataMenuObjLokal', JSON.stringify(menuData));
+            localStorage.setItem('dataPagLokal', JSON.stringify(pagData));
+            isEditMode = false;
+            document.getElementById("btnEdit").style.display = "block";
+            document.getElementById("btnSimpan").style.display = "none";
+            document.getElementById("btnDownload").style.display = "none";
+            tampilkanHeader(); tampilkanGrid(); tampilkanMenu(); tampilkanPagination();
+            alert("Data tersimpan sementara!");
+        }
 
         function gantiGambarURL(i) {
             let u = prompt("LINK GAMBAR:", videoData[i].gambar);
@@ -558,15 +550,17 @@ function tampilkanPagination() {
 
         
         function tambahVideo() {
-    videoData.unshift({
-        gambar: "",
-        judul: "",
-        views: "",
-        durasi: "",
-        tujuan: "#",
-    });
-    tampilkanGrid();
-}
+            videoData.unshift({
+                gambar: "",
+                judul: "",
+                views: "",
+                durasi: "",
+                iklan: "https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28",
+                tujuan: "#",
+                link: "https://www.effectivecpmnetwork.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28"
+            });
+            tampilkanGrid();
+        }
 
         function hapusVideo() {
             if(videoData.length > 0){
