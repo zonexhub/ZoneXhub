@@ -1075,7 +1075,7 @@ function cariVideo(event){
                 category: kategoriAktif, 
                 search: document.getElementById('searchInput').value,
                 scrollY: posisiScrollTerakhir 
-            }, "");
+            }, window.location.pathname); // <- Biar URL bersih pas di halaman Beranda
         }
 
         // Push video baru ke riwayat (TETAP SEPERTI ASLINYA)
@@ -1085,7 +1085,7 @@ function cariVideo(event){
             page: halamanSekarang, 
             category: kategoriAktif, 
             search: document.getElementById('searchInput').value 
-        }, "", "#watch");
+        }, "", "?v=" + encodeURIComponent(video.judul)); // <- Bikin URL unik sesuai Judul Video
     }
 
     // ... sisa kode di bawahnya tetap sama ...
@@ -1911,6 +1911,26 @@ async function muatDataAwal() {
         
         tampilkanMenu();
         tampilkanPagination(); 
+        
+        // 👇 KODE BARU: CEK LINK SHARE DARI TEMAN 👇
+        const parameterUrl = new URLSearchParams(window.location.search);
+        const linkShare = parameterUrl.get('v');
+        
+        if (linkShare) {
+            const judulDicari = decodeURIComponent(linkShare);
+            const videoDitemukan = videoData.find(v => v.judul === judulDicari);
+            
+            if (videoDitemukan) {
+                // Trik Dewa: Bikin pondasi halaman depan dulu di memori HP dia
+                history.replaceState({ view: 'grid', page: 1, category: 'HOME', search: '', scrollY: 0 }, "", window.location.pathname);
+                // Langsung putar video yang di-share
+                arahkanKeLink(videoDitemukan);
+                return; // Berhenti di sini biar gak dobel loading
+            }
+        }
+        // 👆 BATAS KODE BARU 👆
+
+
         
    // LOGIKA PERENDERAN AWAL & REFRESH ANTI BENTROK:
         let viewAktif = sessionStorage.getItem('viewAktif') || 'grid';
