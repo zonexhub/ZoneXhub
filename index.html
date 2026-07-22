@@ -466,6 +466,7 @@
          background: transparent;
          padding: 0px 10px; /* Angka 2px bikin garis lebih pendek */
          border-left: 4px solid var(--accent-color);
+         margin-top: 30px;
          margin-bottom: 16px;
        }
       .section-related h2 { font-size: 17px; font-weight: 900; color: #eee; } 
@@ -513,6 +514,22 @@
         margin-left: 3px; /* Sedikit ditambah agar saat miring tidak menabrak teks */
         vertical-align: middle; 
         transform: skewX(-15deg); /* Tambahan baris ini untuk memiringkan bendera */
+      }
+      
+       /* --- SIHIR KOTAK IKLAN SILUMAN (AUTO MUNCUL/HILANG) --- */
+       /* 1. Sembunyikan semua kotak banner secara default (karena lagi kosong) */
+     #home-banner, #bottom-banner, #player-top-banner, #player-bottom-banner {
+      display: none !important;
+      }
+
+     /* 2. SENSOR: Otomatis MUNCUL kalau suatu saat lu naruh script iklan di dalamnya */
+      #home-banner:has(script), #home-banner:has(iframe) {
+       display: flex !important;
+      }
+        #bottom-banner:has(script), #bottom-banner:has(iframe),
+        #player-top-banner:has(script), #player-top-banner:has(iframe),
+        #player-bottom-banner:has(script), #player-bottom-banner:has(iframe) {
+         display: block !important;
       }
       
         /* --- Desain Responsif Mobile / Tablet --- */
@@ -574,20 +591,8 @@
             
             <!-- Tempel Kode Script Banner tipis Header Adsterra di BawahSini -->
                      
-                     <script>
-  atOptions = {
-    'key' : '49a16f5cf444a57246639bcf56f72c2a',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://layinghypothesis.com/49a16f5cf444a57246639bcf56f72c2a/invoke.js"></script>
-
-
                      
-                                        
+                                                             
             <!-- batas salin banner -->
         </div>
         
@@ -615,19 +620,7 @@
             
        <!-- Tempel Kode Script Banner 300x250 Adsterra di Sini -->
             
-            <script>
-  atOptions = {
-    'key' : 'ca353ff4fb081e9b0a48eb877b93b412',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://layinghypothesis.com/ca353ff4fb081e9b0a48eb877b93b412/invoke.js"></script>
-
-            
-            
+                                 
             
        <!-- batas salin banner -->     
              </div>
@@ -683,25 +676,10 @@
         </div>
         
         <!-- 1. KOTAK BARU (TERLIHAT): KHUSUS UNTUK BANNER 300x250 + TULISAN -->
-        <div style="margin: 25px 0 30px 0; padding: 8px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
+        <div id="player-top-banner" class="banner-siluman" style="margin: 25px 0 30px 0; padding: 8px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
             <span style="display: block; font-size: 10px; color: #777; margin-bottom: 5px; letter-spacing: 1px; text-transform: uppercase;">- Advertisement -</span>
-            
             <!-- Banner tipis halaman player  300x50 Adsterra di Sini -->
             
-            <script>
-  atOptions = {
-    'key' : '49a16f5cf444a57246639bcf56f72c2a',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://layinghypothesis.com/49a16f5cf444a57246639bcf56f72c2a/invoke.js"></script>
-
-            
-            
-
             <!-- batas salin banner --> 
          </div>
 
@@ -722,23 +700,9 @@
         </div>
         
         <!-- BANER BAWAH RELATED VIDEO (POSISI BENAR DI DALAM PLAYER) -->
-        <div style="margin: 30px 0 35px 0; padding: 15px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
+        <div id="player-bottom-banner" class="banner-siluman" style="margin: 30px 0 35px 0; padding: 15px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
             <span style="display: block; font-size: 10px; color: #777; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase;">- Advertisement -</span>
-            
             <!-- Banner bawah related  300x250 Adsterra di Sini -->
-            
-            
-            <script>
-  atOptions = {
-    'key' : 'ca353ff4fb081e9b0a48eb877b93b412',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://layinghypothesis.com/ca353ff4fb081e9b0a48eb877b93b412/invoke.js"></script>
-
             
              <!-- batas salin banner --> 
          </div>
@@ -2024,6 +1988,8 @@ async function muatDataAwal() {
             filterKategori(text);
 }
 muatDataAwal();
+
+
     </script>
 </body>
 </html>
