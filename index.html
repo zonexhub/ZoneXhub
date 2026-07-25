@@ -676,22 +676,22 @@
              </div>
                 
                
-                <!-- Tambahkan flex-wrap: nowrap agar dipaksa sejajar 1 baris -->
-                        <div class="player-meta-row" style="flex-wrap: nowrap; gap: 5px; overflow-x: auto;">
-                    <div class="player-stats" style="gap: 10px; flex-shrink: 0;">
-                  <span class="player-view"><i class="fa-solid fa-eye"></i> <span class="view-count"></span></span>
-                  <span class="player-duration"><i class="fa-regular fa-clock"></i> <span class="duration-count"></span></span>
-                  </div>    
-                 <!-- gap diperkecil jadi 5px agar muat di layar HP -->
-                  <div class="player-actions" style="display: flex; gap: 6px; justify-content: flex-end; flex-shrink: 0;">
-                  <button class="player-share-btn" onclick="unduhVideoAktif()" style="background-color: #2ecc71; border-color: #2ecc71; padding: 6px 10px; font-size: 12px;">
-                  <i class="fa-solid fa-download"></i> Download
-                     </button>
-                 <button class="player-share-btn" onclick="openShareMenu()" style="padding: 6px 10px; font-size: 12px;">
-                  <i class="fa-solid fa-share"></i> Share
-                    </button>
-                 </div>
-              </div>
+                <!-- Sejajar 1 baris paten, TANPA scroll, font otomatis mengecil menyesuaikan ruang -->
+                <div class="player-meta-row" style="flex-wrap: nowrap; gap: 4px; justify-content: space-between; overflow: hidden;">
+                    <div class="player-stats" style="gap: 8px; font-size: clamp(10px, 3.5vw, 14px); white-space: nowrap;">
+                        <span class="player-view"><i class="fa-solid fa-eye"></i> <span class="view-count"></span></span>
+                        <span class="player-duration"><i class="fa-regular fa-clock"></i> <span class="duration-count"></span></span>
+                    </div>    
+                    
+                    <div class="player-actions" style="display: flex; gap: 5px; justify-content: flex-end; white-space: nowrap;">
+                        <button class="player-share-btn" onclick="unduhVideoAktif()" style="background-color: #2ecc71; border-color: #2ecc71; padding: 6px 8px; font-size: clamp(10px, 3vw, 12px);">
+                            <i class="fa-solid fa-download"></i> Download
+                        </button>
+                        <button class="player-share-btn" onclick="openShareMenu()" style="padding: 6px 8px; font-size: clamp(10px, 3vw, 12px);">
+                            <i class="fa-solid fa-share"></i> Share
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         
