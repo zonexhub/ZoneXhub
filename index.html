@@ -15,6 +15,7 @@
     </script>
 
     <meta charset="UTF-8">
+    <meta name="google-site-verification" content="WCzjjso7vBVgHuBf_qLWQ79DSY-BEdSOedJ4cAL0qXA" />
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -836,6 +837,26 @@
         let hasilPencarian = null;
         let debounceTimer;
         let posisiScrollTerakhir = 0;
+        
+        // --- FUNGSI SIHIR SEO DINAMIS ---
+function ubahSEO(judul, deskripsi, gambar) {
+    document.title = judul; // Ubah Judul Tab
+
+    const ubahMeta = (selector, content) => {
+        let el = document.querySelector(selector);
+        if (el && content) el.setAttribute("content", content);
+    };
+
+    // Timpa meta tag buat pas di-share
+    ubahMeta('meta[name="description"]', deskripsi);
+    ubahMeta('meta[property="og:title"]', judul);
+    ubahMeta('meta[property="og:description"]', deskripsi);
+    ubahMeta('meta[property="og:url"]', window.location.href);
+    ubahMeta('meta[property="og:image"]', gambar);
+    ubahMeta('meta[name="twitter:title"]', judul);
+    ubahMeta('meta[name="twitter:description"]', deskripsi);
+    ubahMeta('meta[name="twitter:image"]', gambar);
+}
 
         // --- Fungsi Buka Kunci Admin Klik 7x ---
 function bukaKunciRahasia() {
@@ -926,6 +947,12 @@ function bukaKunciRahasia() {
         search: '',
         scrollY: 0 
     }, "");
+    
+    let judulBeranda = "Free porn Viral Porn, Indonesian Porn, Western Porn, and Porn JAV - ZoneXhub.";
+    let deskripsiBeranda = "A collection of the latest, trending, and most popular porn videos today. Updated daily with videos that are currently generating buzz on social media.";
+    let gambarBeranda = "https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png";
+    
+    ubahSEO(judulBeranda, deskripsiBeranda, gambarBeranda);
 }
 
 
@@ -1100,6 +1127,8 @@ function cariVideo(event){
     
     // 2. Populate Detailed Player Page
     document.getElementById("playerTitle").textContent = video.judul;
+    let deskripsiVideo = "Nonton video " + video.judul + " gratis. Kumpulan video viral terbaru hari ini tanpa sensor hanya di ZoneXhub.";
+    ubahSEO(video.judul + " - ZoneXhub", deskripsiVideo, video.gambar);
     const elTanggal = document.getElementById("playerTanggal");
 if(elTanggal) {
     elTanggal.querySelector("span").textContent = video.tanggal || "Tanggal tidak tersedia";
@@ -1245,6 +1274,13 @@ if(elTanggal) {
 
                 tampilkanPagination();
                 tampilkanGrid();
+                
+               
+                let judulBeranda = "Free porn Viral Porn, Indonesian Porn, Western Porn, and Porn JAV - ZoneXhub.";
+                let deskripsiBeranda = "A collection of the latest, trending, and most popular porn videos today. Updated daily with videos that are currently generating buzz on social media.";
+                let gambarBeranda = "https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png";
+                ubahSEO(judulBeranda, deskripsiBeranda, gambarBeranda);
+                
 
                 // Kembalikan Posisi Scroll Akurat!
                 if (state.scrollY !== undefined) {
