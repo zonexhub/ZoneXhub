@@ -472,18 +472,12 @@
         vertical-align: middle; 
         transform: skewX(-15deg); 
       }
-      
-             
-        #home-banner, #bottom-banner, #player-top-banner, #player-bottom-banner {
-        display: none !important;
-      }     
-       #home-banner:has(script), #home-banner:has(iframe) {
-        display: flex !important;
-      }
-        #bottom-banner:has(script), #bottom-banner:has(iframe),
-        #player-top-banner:has(script), #player-top-banner:has(iframe),
-        #player-bottom-banner:has(script), #player-bottom-banner:has(iframe) {
-         display: block !important;
+                          
+        #home-banner:not(:has(script)):not(:has(iframe)),
+        #bottom-banner:not(:has(script)):not(:has(iframe)),
+        #player-top-banner:not(:has(script)):not(:has(iframe)),
+        #player-bottom-banner:not(:has(script)):not(:has(iframe)) {
+          display: none !important;
       }
       
         @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
