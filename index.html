@@ -946,7 +946,7 @@ function bukaKunciRahasia() {
         category: kategoriAktif, 
         search: '',
         scrollY: 0 
-    }, window.location.pathname);
+    }, "", window.location.pathname);
     
     let judulBeranda = "Free porn Viral Porn, Indonesian Porn, Western Porn, and Porn JAV - ZoneXhub.";
     let deskripsiBeranda = "A collection of the latest, trending, and most popular porn videos today. Updated daily with videos that are currently generating buzz on social media.";
@@ -985,7 +985,7 @@ function gantiHalaman(page){
         category: kategoriAktif, 
         search: document.getElementById('searchInput').value,
         scrollY: 0 
-    }, window.location.pathname);
+    }, "", window.location.pathname);
 }
 
         // --- Fungsi Fitur Mesin Pencari Video (Update Terbaru) ---
@@ -1074,7 +1074,7 @@ function cariVideo(event){
             category: kategoriAktif, 
             search: keywordInput,
             scrollY: 0 
-        }, window.location.pathname);
+        }, "", window.location.pathname);
         // 👆 --------------------------------- 👆
 
     }, 300);
@@ -1102,7 +1102,7 @@ function cariVideo(event){
                 category: kategoriAktif, 
                 search: document.getElementById('searchInput').value,
                 scrollY: posisiScrollTerakhir 
-            }, window.location.pathname); // <- Biar URL bersih pas di halaman Beranda
+            }, "", window.location.pathname); // <- Biar URL bersih pas di halaman Beranda // <- Biar URL bersih pas di halaman Beranda
         }
 
         // Push video baru ke riwayat (TETAP SEPERTI ASLINYA)
