@@ -204,7 +204,7 @@
         background: #262626;
         text-align: left;
        }
-        .likes { color: #fff; font-size: 11px; font-weight: bold; margin-bottom: 4px; display: flex; justify-content: center; gap: 4px; }
+       
         .title {
          color: #fff;
          font-size: 14px;
@@ -232,13 +232,26 @@
         .pagination button.active { background-color: var(--accent-color); color: white; }
         
         
+        
         footer {
             background-color: #121212; 
-            padding: 50px 20px 20px 20px;
-            border-top: 3px solid var(--accent-color); 
+            padding: 23px 20px 20px 20px;
             color: #999;
             font-size: 13px;
             line-height: 1.6;
+            margin-top: 25px;
+            position: relative; 
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 8px;   
+            right: 8px;  
+            height: 2px; 
+            background-color: var(--accent-color);
+            border-radius: 4px; 
         }
 
         .footer-container {
@@ -336,22 +349,19 @@
           display: none;
           max-width: 1200px;
           margin: auto;
-          padding: 15px 8px;
+          padding: 0 8px;
         }
-
-        
-        .player-wrapper-card {
-            background-color: #262626;
-            border: 1px solid #333;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,.35);
+                      
+        .player-wrapper-card {            
+            margin-left: -8px; 
+            margin-right: -8px;             
+            overflow: hidden;          
         }
         
         .player-box iframe { width:100%; aspect-ratio:16/9; border:none; display: block; background:#000; }
         
         #playerInfoBlock {
-            padding: 15px 15px 20px 15px;
+            padding: 15px 14px 20px 14px; 
         }
 
         #playerTitle { 
@@ -402,8 +412,7 @@
             background-color: #1a1a1a !important;
             border-color: #444 !important;
         }
-        
-        
+                          
         #playerAds { 
             margin: 30px 0 40px 0; 
             padding: 15px;
@@ -432,12 +441,13 @@
          margin-bottom: 16px;
        }
       .section-related h2 { font-size: 17px; font-weight: 900; color: #eee; } 
-      
-       @media (min-width: 769px) {
+        
+     @media (min-width: 769px) {
        #playerPage {
-        padding: 20px;
+        padding: 0 20px;
        }
-   
+       
+       
         #backBtn {
         padding: 4px 10px;
        }
@@ -591,11 +601,11 @@
                     Categories : <span id="playerCategory" style="font-style: italic; margin-bottom: 12px; color: var(--accent-color);"></span>
                 </div>
                                 
-                <div style="font-size: 12px; color: #ff9800; font-style: italic; margin-bottom: 15px; background: rgba(255, 152, 0, 0.1); padding: 8px; border-radius: 4px; border-left: 3px solid #ff9800;">
-                  <i class="fa-solid fa-triangle-exclamation"></i> 
+                <div style="font-size: 13px; color: #ff9800; margin-bottom: 20px; margin-top: 15px; line-height: 1.6; font-style: italic;">
+                  <i class="fa-solid fa-triangle-exclamation" style="margin-right: 3px;"></i> 
                   <b>Tips Nonton Lancar:</b> Video error atau cuma muter doang? Coba <b>Aktifkan VPN</b> atau <b>Matikan AdBlock</b> kamu sejenak. <br>
-                <span style="color: #999; font-size: 11px;">* Malas buffering atau keganggu iklan? Download videonya langsung di tombol bawah, jaminan anti ribet!</span>
-             </div>
+                  <span style="display: inline-block; color: #888; font-size: 12px; margin-top: 4px;">* Malas buffering atau keganggu iklan? Download videonya langsung di tombol bawah, jaminan anti ribet!</span>
+                </div>
                              
                 <div class="player-meta-row" style="flex-wrap: nowrap; gap: 4px; justify-content: space-between; align-items: center; overflow: hidden;">                 
                     <div class="player-stats" style="display: flex; align-items: center; gap: 12px; font-size: clamp(11px, 3.5vw, 14px); white-space: nowrap; line-height: 1;">
@@ -619,7 +629,7 @@
             </div>
         </div>
         
-        <div id="player-top-banner" class="banner-siluman" style="margin: 25px 0 30px 0; padding: 8px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
+        <div id="player-top-banner" class="banner-siluman" style="margin: 15px 0 30px 0; padding: 8px 4px 10px 4px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
             <span style="display: block; font-size: 10px; color: #777; margin-bottom: 5px; letter-spacing: 1px; text-transform: uppercase;">- Advertisement -</span>
             <!-- Banner tipis halaman player  300x50 Adsterra di Sini -->
               <script>
@@ -632,7 +642,6 @@
   };
 </script>
 <script src="https://layinghypothesis.com/49a16f5cf444a57246639bcf56f72c2a/invoke.js"></script>
- 
             <!-- batas salin banner --> 
          </div>
 
@@ -1274,8 +1283,7 @@ function tampilkanGrid() {
                 </div>
                 <div class="edit-overlay" onclick="event.stopPropagation(); gantiGambarURL(${index})">🔗 Link Gambar</div>
             </div>
-            <div class="info" onclick="if(isEditMode) event.stopPropagation();">
-                <div class="likes"></div>
+            <div class="info" onclick="if(isEditMode) event.stopPropagation();">               
                 <div class="title">${video.judul}</div>
                 <input type="text" class="edit-input-title" id="input-judul-${index}" value="${video.judul}" placeholder="Judul Video">
                 <input type="text" class="edit-input-link" id="input-player-${index}" value="${video.tujuan || video.player || ""}" placeholder="Link Embed Player" oninput="bersihkanIframeInstan(this)">                                
