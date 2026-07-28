@@ -12,25 +12,7 @@
     </script>
 
     <meta charset="UTF-8">
-    
-    <script>
-      async function cekUpdateDesain() {
-          try {
-              let waktuSekarang = new Date().getTime();
-              let respon = await fetch('update.json?v=' + waktuSekarang);
-              let data = await respon.json();            
-              let versiHP = localStorage.getItem('versi_desain_zonexhub');                            
-              if (!versiHP || versiHP !== data.versi) {                 
-                  localStorage.setItem('versi_desain_zonexhub', data.versi);                  
-                  window.location.reload(true);
-              }
-          } catch (e) { 
-              console.log("Cek update aman."); 
-          }
-      }
-      cekUpdateDesain();
-    </script>
-        
+          
     <meta name="google-site-verification" content="WCzjjso7vBVgHuBf_qLWQ79DSY-BEdSOedJ4cAL0qXA" />
        
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
