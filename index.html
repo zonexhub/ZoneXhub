@@ -1257,7 +1257,7 @@ function tampilkanGrid() {
     if (dataAktif.length === 0) {
         wadahVideo.innerHTML = `
             <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: transparent; margin-top: 10px;">
-                <i class="fa-solid fa-magnifying-glass-minus" style="font-size: 50px; color: #ff5c8a; margin-bottom: 15px;"></i>
+                <i class="fa-solid fa-magnifying-glass-minus" style="font-size: 50px; color: #eb1f72; margin-bottom: 15px;"></i>
                 <h3 style="color: #eee; font-size: 18px; margin-bottom: 8px;">Oops, Video Not Found</h3>
                 <p style="color: #888; font-size: 13px;">We couldn't find any videos matching your search. Try using different keywords.</p>
             </div>`;
@@ -1663,6 +1663,15 @@ async function muatDataAwal() {
         const dataJav = await resJav.json();
         const dataWestern = await resWestern.json();
         videoData = [...dataIndo, ...dataJav, ...dataWestern];
+          
+        const kamusBulan = {"Januari":0, "Februari":1, "Maret":2, "April":3, "Mei":4, "Juni":5, "Juli":6, "Agustus":7, "September":8, "Oktober":9, "November":10, "Desember":11};
+        videoData.sort((a, b) => {
+            let tglA = a.tanggal ? a.tanggal.split(" ") : [1,"Januari",2000];
+            let tglB = b.tanggal ? b.tanggal.split(" ") : [1,"Januari",2000];
+            let waktuA = new Date(tglA[2], kamusBulan[tglA[1]], tglA[0]).getTime() || 0;
+            let waktuB = new Date(tglB[2], kamusBulan[tglB[1]], tglB[0]).getTime() || 0;
+            return waktuB - waktuA; // Dari paling baru ke paling lama
+        });
        }
 
         document.querySelector(".search-box").style.display = "flex";
