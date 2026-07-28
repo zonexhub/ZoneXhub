@@ -507,7 +507,7 @@
     <script id="data-situs">
     window.DATA_HEADER = {"text":"ZoneXhub.net","link":"https://ZoneXhub.net"};
     window.DATA_MENU = [
-        {"text":"Indonesia", "link":"https://layinghypothesis.com/r1gwp6en?key=8f60e6b010387bcc242cd445bf337a58"},
+        {"text":"Indo", "link":"https://layinghypothesis.com/r1gwp6en?key=8f60e6b010387bcc242cd445bf337a58"},
         {"text":"Jav",       "link":"https://layinghypothesis.com/r1gwp6en?key=8f60e6b010387bcc242cd445bf337a58"},
         {"text":"Western",   "link":"https://layinghypothesis.com/r1gwp6en?key=8f60e6b010387bcc242cd445bf337a58"}
     ];   
@@ -685,7 +685,7 @@
             <div>
                 <div class="footer-heading">Categories</div>
                 <ul class="footer-list">
-                    <li><a href="javascript:void(0)" onclick="filterKategori('Indonesia')">Indonesian Viral</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterKategori('Indo')">Indonesian Viral</a></li>
                     <li><a href="javascript:void(0)" onclick="filterKategori('Jav')">JAV Censored & Uncensored</a></li>
                     <li><a href="javascript:void(0)" onclick="filterKategori('Western')">Western & OnlyFans</a></li>
                 </ul>
@@ -816,7 +816,7 @@ function bukaKunciRahasia() {
         let flag = "";
         let catLower = (kategori || "").toLowerCase();
                 
-        if(catLower.includes("indonesia")) flag = '<span class="fi fi-id"></span>';
+        if(catLower.includes("indo")) flag = '<span class="fi fi-id"></span>';
         else if(catLower.includes("jav")) flag = '<span class="fi fi-jp"></span>';
         else if(catLower.includes("western")) flag = '<span class="fi fi-us"></span>';
         
@@ -926,7 +926,7 @@ function cariVideo(event){
                 let flag = "";
                 let catLower = (kategoriAktif || "").toLowerCase();
                                 
-                if(catLower.includes("indonesia")) flag = '<span class="fi fi-id"></span>';
+                if(catLower.includes("indo")) flag = '<span class="fi fi-id"></span>';
                 else if(catLower.includes("jav")) flag = '<span class="fi fi-jp"></span>';
                 else if(catLower.includes("western")) flag = '<span class="fi fi-us"></span>';
                 hotVideoEl.innerHTML = `Categories : <span style="color: var(--accent-color); font-style: italic;">${kategoriAktif}</span> ${flag}`;
@@ -997,7 +997,7 @@ function cariVideo(event){
             page: halamanSekarang, 
             category: kategoriAktif, 
             search: document.getElementById('searchInput').value 
-        }, "", "?v=" + encodeURIComponent(video.judul)); 
+        }, "", "?v=" + encodeURIComponent(video.judul.replace(/ /g, '-')));
     }
 
             if (typeof gtag === 'function') {
@@ -1076,7 +1076,7 @@ if(elTanggal) {
                     hotVideoEl.style.display = "flex";
                     let flag = "";
                     let catLower = (kategoriAktif || "").toLowerCase();
-                    if(catLower.includes("indonesia")) flag = '<span class="fi fi-id"></span>';
+                    if(catLower.includes("indo")) flag = '<span class="fi fi-id"></span>';
                     else if(catLower.includes("jav")) flag = '<span class="fi fi-jp"></span>';
                     else if(catLower.includes("western")) flag = '<span class="fi fi-us"></span>';
                     hotVideoEl.innerHTML = `Categories : <span style="color: var(--accent-color); font-style: italic;">${kategoriAktif}</span> ${flag}`;
@@ -1408,7 +1408,7 @@ function tampilkanGrid() {
                 <input type="text" class="edit-input-title" id="input-tanggal-${index}" value="${video.tanggal || ''}" placeholder="Tanggal Post">               
                 <select class="edit-input-title" id="input-kategori-${index}">
                     <option value="${video.kategori}" selected>${video.kategori || "Pilih Kategori"}</option>
-                    <option value="Indonesia">Indonesia</option>
+                    <option value="Indo">Indo</option>
                     <option value="Jav">Jav</option>
                     <option value="Western">Western</option>
                 </select>
@@ -1614,20 +1614,35 @@ function tampilkanGrid() {
      
 function downloadWebFinal() {
     simpanPerubahan(true); 
-    const jsonString = JSON.stringify(videoData, null, 2);
-    const blob = new Blob([jsonString], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = atob('dmlkZW9fYWluZy5qc29u');    
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+
+    
+    const dataIndo = videoData.filter(v => v.kategori === 'Indo');
+    const dataJav = videoData.filter(v => v.kategori === 'Jav');
+    const dataWestern = videoData.filter(v => v.kategori === 'Western');
+
+    
+    const unduhFile = (data, namaFile) => {
+        if(data.length === 0) return; 
+        const jsonString = JSON.stringify(data, null, 2);
+        const blob = new Blob([jsonString], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = namaFile;    
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    
+    unduhFile(dataIndo, 'indo.json');
+    unduhFile(dataJav, 'jav.json');
+    unduhFile(dataWestern, 'western.json');
  
     setTimeout(() => {
-        URL.revokeObjectURL(url); 
         localStorage.removeItem('dataVideoLokal');       
-        alert("File siap disebar! Sistem telah dibersihkan otomatis.");             
+        alert("3 File JSON siap disebar! Sistem telah dibersihkan otomatis.");             
         location.reload();        
     }, 15000); 
 }
@@ -1690,7 +1705,7 @@ async function muatDataAwal() {
                 hotVideoEl.style.display = "flex";
                 let flag = "";
                 let catLower = (kategoriAktif || "").toLowerCase();
-                if(catLower.includes("indonesia")) flag = '<span class="fi fi-id"></span>';
+                if(catLower.includes("indo")) flag = '<span class="fi fi-id"></span>';
                 else if(catLower.includes("jav")) flag = '<span class="fi fi-jp"></span>';
                 else if(catLower.includes("western")) flag = '<span class="fi fi-us"></span>';
                 hotVideoEl.innerHTML = `Categories : <span style="color: var(--accent-color); font-style: italic;">${kategoriAktif}</span> ${flag}`;
@@ -1705,7 +1720,7 @@ async function muatDataAwal() {
         const linkKategori = parameterUrl.get('kategori'); 
         
         if (linkShare) {
-            const judulDicari = decodeURIComponent(linkShare);
+            const judulDicari = decodeURIComponent(linkShare).replace(/-/g, ' ');
             const videoDitemukan = videoData.find(v => v.judul === judulDicari);
             
             if (videoDitemukan) {
