@@ -1613,14 +1613,10 @@ function tampilkanGrid() {
 
      
 function downloadWebFinal() {
-    simpanPerubahan(true); 
-
-    
+    simpanPerubahan(true);     
     const dataIndo = videoData.filter(v => v.kategori === 'Indo');
     const dataJav = videoData.filter(v => v.kategori === 'Jav');
-    const dataWestern = videoData.filter(v => v.kategori === 'Western');
-
-    
+    const dataWestern = videoData.filter(v => v.kategori === 'Western');  
     const unduhFile = (data, namaFile) => {
         if(data.length === 0) return; 
         const jsonString = JSON.stringify(data, null, 2);
@@ -1633,13 +1629,10 @@ function downloadWebFinal() {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-    };
-
-    
+    };   
     unduhFile(dataIndo, 'indo.json');
     unduhFile(dataJav, 'jav.json');
     unduhFile(dataWestern, 'western.json');
- 
     setTimeout(() => {
         localStorage.removeItem('dataVideoLokal');       
         alert("3 File JSON siap disebar! Sistem telah dibersihkan otomatis.");             
@@ -1656,13 +1649,20 @@ async function muatDataAwal() {
         console.log("Memuat data draft dari LocalStorage (Mode Edit Aktif)...");
         videoData = JSON.parse(dataLokal);
      } else {
-        console.log("Memuat data dari Server GitHub...");
-        const versiAntiCache = new Date().getTime();
-        const namaFileRahasia = atob('dmlkZW9fYWluZy5qc29u');
-        const response = await fetch(namaFileRahasia + '?v=' + versiAntiCache);            
-        if (!response.ok) throw new Error("Gagal mengambil data");
-         const dataVideoDariServer = await response.json();
-         videoData = dataVideoDariServer;
+        console.log("Memuat 3 data JSON dari Server GitHub...");
+        const versiAntiCache = new Date().getTime();        
+        const [resIndo, resJav, resWestern] = await Promise.all([
+            fetch('indo.json?v=' + versiAntiCache),
+            fetch('jav.json?v=' + versiAntiCache),
+            fetch('western.json?v=' + versiAntiCache)
+        ]);
+        if (!resIndo.ok || !resJav.ok || !resWestern.ok) {
+            throw new Error("Gagal mengambil salah satu data JSON");
+        }
+        const dataIndo = await resIndo.json();
+        const dataJav = await resJav.json();
+        const dataWestern = await resWestern.json();
+        videoData = [...dataIndo, ...dataJav, ...dataWestern];
        }
 
         document.querySelector(".search-box").style.display = "flex";
