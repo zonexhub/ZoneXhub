@@ -1815,30 +1815,25 @@ async function muatDataAwal() {
 muatDataAwal();
 
 
-function cekAdblock() {
-    // 1. Umpan Gambar Iklan Palsu (Bait Image)
+function cekAdblock() {    
     let gambarPalsu = document.createElement('img');
-    gambarPalsu.src = 'https://pagead2.googlesyndication.com/pagead/show_ads.js'; // URL pancingan Google Ads
+    gambarPalsu.src = 'https://pagead2.googlesyndication.com/pagead/show_ads.js'; 
     gambarPalsu.style.display = 'none';
     gambarPalsu.onerror = function() {
-        // Kalau gambar/script iklan gagal dimuat (karena diblokir AdBlock), jalankan satpam!
+        
         tampilkanPeringatanAdblock();
     };
-    document.body.appendChild(gambarPalsu);
-
-    // 2. Deteksi Alternatif via Fetch Error
+    document.body.appendChild(gambarPalsu);    
     fetch('https://pagead2.googlesyndication.com/pagead/show_ads.js', { mode: 'no-cors' }).catch(function() {
         tampilkanPeringatanAdblock();
     });
 }
 
-function tampilkanPeringatanAdblock() {
-    // Cek apakah pop-up sudah pernah dimunculkan biar tidak menumpuk
+function tampilkanPeringatanAdblock() {   
     if (document.getElementById('overlay-satpam')) return;
-
     let overlayAdblock = document.createElement('div');
     overlayAdblock.id = 'overlay-satpam';
-    overlayAdblock.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,15,15,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:9999999;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;padding:25px;';
+    overlayAdblock.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,15,15,0.40);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:9999999;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;padding:25px;';
     
     overlayAdblock.innerHTML = `
         <img src="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345608/1000042601-removebg-preview_onl3xz.png" alt="ZoneXhub" style="height: 55px; margin-bottom: 25px; filter: drop-shadow(0 0 10px rgba(235, 31, 114, 0.4));">
