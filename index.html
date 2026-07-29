@@ -39,7 +39,7 @@
     <meta name="twitter:description" content="A collection of the latest and trending viral porn videos that are currently the talk of the town.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png">
   
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=4">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=5">
       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
@@ -1819,18 +1819,17 @@ async function muatDataAwal() {
 }
 muatDataAwal();
 
-function cekAdblock() {    
-    let gambarPalsu = document.createElement('img');
-    gambarPalsu.src = 'https://pagead2.googlesyndication.com/pagead/show_ads.js'; 
-    gambarPalsu.style.display = 'none';
-    gambarPalsu.onerror = function() {
-        
-        tampilkanPeringatanAdblock();
-    };
-    document.body.appendChild(gambarPalsu);    
-    fetch('https://pagead2.googlesyndication.com/pagead/show_ads.js', { mode: 'no-cors' }).catch(function() {
-        tampilkanPeringatanAdblock();
-    });
+function cekAdblock() {  
+    let umpanIklan = document.createElement('div');    
+    umpanIklan.className = 'ads adbox doubleclick ad-placement ad-banner';   
+    umpanIklan.style.cssText = 'width: 1px; height: 1px; position: absolute; left: -9999px; top: -9999px;';
+    document.body.appendChild(umpanIklan);        
+    setTimeout(function() {        
+        if (umpanIklan.offsetHeight === 0 || window.getComputedStyle(umpanIklan).display === 'none') {
+            tampilkanPeringatanAdblock(); 
+        }              
+        umpanIklan.remove();
+    }, 300);
 }
 
 function tampilkanPeringatanAdblock() {   
