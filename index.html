@@ -1666,11 +1666,11 @@ async function muatDataAwal() {
           
         const kamusBulan = {"Januari":0, "Februari":1, "Maret":2, "April":3, "Mei":4, "Juni":5, "Juli":6, "Agustus":7, "September":8, "Oktober":9, "November":10, "Desember":11};
         videoData.sort((a, b) => {
-            let tglA = a.tanggal ? a.tanggal.split(" ") : [1,"Januari",2000];
-            let tglB = b.tanggal ? b.tanggal.split(" ") : [1,"Januari",2000];
+            let tglA = a.tanggal ? a.tanggal.split(" ") : [1,"Januari",2020];
+            let tglB = b.tanggal ? b.tanggal.split(" ") : [1,"Januari",2020];
             let waktuA = new Date(tglA[2], kamusBulan[tglA[1]], tglA[0]).getTime() || 0;
             let waktuB = new Date(tglB[2], kamusBulan[tglB[1]], tglB[0]).getTime() || 0;
-            return waktuB - waktuA; // Dari paling baru ke paling lama
+            return waktuB - waktuA; 
         });
        }
 
@@ -1813,6 +1813,38 @@ async function muatDataAwal() {
             filterKategori(text);
 }
 muatDataAwal();
+
+function cekAdblock() {
+    let umpanIklan = document.createElement('div');
+    umpanIklan.innerHTML = '&nbsp;';
+    umpanIklan.className = 'adsbox ad-placement doubleclick';
+    umpanIklan.style.position = 'absolute';
+    umpanIklan.style.top = '-1000px';
+    document.body.appendChild(umpanIklan);
+    setTimeout(function() {
+        if (umpanIklan.offsetHeight === 0 || window.getComputedStyle(umpanIklan).display === 'none') {        
+            let overlayAdblock = document.createElement('div');          
+            overlayAdblock.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,15,15,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:9999999;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;padding:25px;';         
+            overlayAdblock.innerHTML = `              
+                <img src="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345608/1000042601-removebg-preview_onl3xz.png" alt="ZoneXhub" style="height: 55px; margin-bottom: 25px; filter: drop-shadow(0 0 10px rgba(235, 31, 114, 0.4));">
+                <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 15px; color: #fff;">Tunggu Sebentar, Suhu! ✋</h2>             
+                <p style="font-size: 14px; color: #bbb; max-width: 420px; line-height: 1.6; margin-bottom: 30px;">
+                    Kami sadar iklan emang kadang ngeselin. Tapi <b>ZoneXhub</b> berkomitmen ngasih ribuan video viral 100% GRATIS buat kalian tanpa perlu bayar langganan bulanan. <br><br>
+                    Biar server ini tetap hidup dan mimin makin semangat nge-<i>update</i> video pemersatu bangsa, tolong matikan <b style="color: #eb1f72;">AdBlock</b> kamu ya. <br><br>
+                    <i>Anggap aja iklannya sebagai bentuk donasi gratis buat mimin!</i> 🙏
+                </p>                               
+                <button onclick="location.reload()" style="background-color: var(--accent-color); color: white; border: none; padding: 14px 35px; font-size: 15px; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(235, 31, 114, 0.4); transition: transform 0.2s;">
+                    <i class="fa-solid fa-rotate-right"></i> Gass! AdBlock Udah Mati 🚀
+                </button>
+            `;         
+            document.body.appendChild(overlayAdblock);
+            document.body.style.overflow = 'hidden'; 
+        }
+        umpanIklan.remove(); 
+    }, 1000);
+}
+window.addEventListener('load', cekAdblock);
+
     </script>
 </body>
 </html>
