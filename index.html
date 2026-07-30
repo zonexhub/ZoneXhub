@@ -39,7 +39,7 @@
     <meta name="twitter:description" content="A collection of the latest and trending viral porn videos that are currently the talk of the town.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png">
   
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=8">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=10">
       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
@@ -2095,15 +2095,6 @@ if ('serviceWorker' in navigator) {
 
 
 function cekAdblock() {        
-    let kecidukAdblock = false;
-    let scriptUmpan = document.createElement('script');    
-    scriptUmpan.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-    scriptUmpan.async = true;    
-    scriptUmpan.onerror = function() {
-        kecidukAdblock = true;
-    };
-    document.head.appendChild(scriptUmpan);       
-
     let kotakUmpan = document.createElement('div');
     kotakUmpan.innerHTML = '&nbsp;';    
     kotakUmpan.className = 'adsbox ad-placement pub_300x250 pub_728x90 text-ad adBanner';    
@@ -2114,7 +2105,7 @@ function cekAdblock() {
         let gaya = window.getComputedStyle(kotakUmpan);
         let kotakIlang = (kotakUmpan.offsetHeight === 0 || kotakUmpan.clientHeight === 0 || gaya.display === 'none');
 
-        if (kecidukAdblock || kotakIlang) {
+        if (kotakIlang) {
             tampilkanPeringatanAdblock();
         }
                 
