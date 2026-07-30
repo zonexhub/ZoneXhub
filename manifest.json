@@ -1,0 +1,21 @@
+{
+  "name": "ZoneXhub Viral Video",
+  "short_name": "ZoneXhub",
+  "description": "Kumpulan video viral terbaru dan terpopuler.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#eb1f72",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

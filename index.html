@@ -39,10 +39,16 @@
     <meta name="twitter:description" content="A collection of the latest and trending viral porn videos that are currently the talk of the town.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png">
   
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=6">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=7">
       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
+        
+    <link rel="canonical" id="canonical-url" href="https://zonexhub.net/">  
+    <script type="application/ld+json" id="schema-data"></script>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#eb1f72">
     
     <style id="core-style">
         :root { --bg-body: #1a1a1a; --bg-header: #202020; --accent-color: #eb1f72; --text-main: #ffffff; --text-muted: #b3b3b3; }
@@ -164,7 +170,7 @@
      }
 }
 
-       .section-header h2 { 
+       .section-header h1 { 
        font-size: 16px;
        font-weight: 900; 
        color: #cccccc; 
@@ -490,6 +496,93 @@
           display: none !important;
       }
       
+           
+        .player-box {            
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease; 
+            background: #000;
+        }
+        
+        .player-box.floating {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 320px !important;
+            height: 180px !important; 
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9);                     
+            border-radius: 6px !important; 
+            border: 1.5px solid #444; !important;         
+            overflow: hidden;
+            animation: popIn 0.3s ease-out;
+            will-change: transform; 
+        }
+        
+        .player-box.floating iframe {
+            width: 320px !important;
+            height: 180px !important; 
+            aspect-ratio: unset !important;
+        }
+
+        @keyframes popIn {
+           0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+           100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .player-box.floating { 
+                width: 240px !important; 
+                height: 135px !important; 
+                top: 20px !important;                   
+                right: 8px !important; 
+            }
+            .player-box.floating iframe { 
+                width: 240px !important;
+                height: 135px !important; 
+                aspect-ratio: unset !important;
+            }
+        }
+                      
+        #closeFloatBtn {
+            display: none;
+            position: absolute;
+            top: 2px;
+            right: 8px;
+            background: transparent; 
+            color: var(--accent-color); 
+            border: none; 
+            border-radius: 0; 
+            font-size: 28px; 
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 20; 
+            padding: 0;
+            line-height: 1;
+            transition: 0.2s;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.9); 
+        }
+              
+        #closeFloatBtn:hover { 
+            color: #fff; 
+            transform: scale(1.1); 
+        }
+        
+        .player-box.floating #closeFloatBtn { 
+            display: block; 
+        }
+   
+        #dragArea {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: calc(100% - 40px); 
+            height: 45%; 
+            z-index: 10;
+            cursor: move;
+            touch-action: none;
+        }
+        .player-box.floating #dragArea { display: block; }
+   
         @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header, nav, main { padding-left: 8px; padding-right: 8px; } }
         @media (max-width: 480px) { .video-grid { grid-template-columns: repeat(2, 1fr); }  header {  flex-direction: column;  gap: 15px;  padding-top: 25px;  padding-bottom: 15px; 
@@ -509,23 +602,34 @@
     
 </head>
 <body>
-    
+
+    <noscript data-nosnippet>
+        <div style="position:fixed; inset:0; background:#111; z-index:99999999; display:flex; flex-direction:column; justify-content:center; align-items:center; color:white; text-align:center; padding:25px;">            
+            <div style="font-size: 60px; margin-bottom: 20px;">⚠️</div>
+            <h2 style="font-size: 24px; font-weight: 900; margin-bottom: 15px;">Waduh, Script Dimatikan! 🛑</h2>
+            <p style="font-size: 15px; color: #bbb; max-width: 400px; line-height: 1.6;">
+                Browser kamu mendeteksi mematikan fitur <b>Javascript</b>. <br><br>
+                Web ZoneXhub butuh Javascript untuk menampilkan ribuan video viral. Tolong izinkan/nyalakan kembali Javascript di browser kamu untuk lanjut menonton ya Suhu! 🙏
+            </p>
+        </div>
+    </noscript>
+      
     <header>
         <div id="tempat-logo"></div>
-        <div class="search-box" data-nosnippet aria-hidden="true">
+        <div class="search-box" data-nosnippet>
             <input type="text" id="searchInput" placeholder="Search video..." onkeyup="cariVideo(event)">
             <button id="btnSecret" onclick="cariVideo(event)"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </header>
 
-    <nav id="menu-navigasi" data-nosnippet aria-hidden="true"></nav>
+    <nav id="menu-navigasi" data-nosnippet></nav>
     
     <div class="section-header" id="sectionTitle">
-        <h2>Most Popular & Viral Porn Video Collection: Indo, JAV, and Western.</h2>
+        <h1>Most Popular & Viral Porn Video Collection: Indo, JAV, and Western.</h1>
     </div>
-          
+              
      <main>
-        <div id="home-banner" data-nosnippet aria-hidden="true" style="margin: 0 0 20px 0; padding: 8px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
+        <div id="home-banner" data-nosnippet style="margin: 0 0 20px 0; padding: 8px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
             <span style="display: block; font-size: 10px; color: #777; margin-bottom: 5px; letter-spacing: 1px; text-transform: uppercase;">- Advertisement -</span>           
            
              <iframe 
@@ -539,20 +643,20 @@
                                                               
         </div>
                   
-        <div id="hot-video-text" class="hot-video" data-nosnippet aria-hidden="true">
+        <div id="hot-video-text" class="hot-video" data-nosnippet>
           Hot Porn Videos <i class="fa-solid fa-fire"></i>
        </div>
        <div class="video-grid" id="tempat-video"></div>
               
         <div class="pagination" id="tempat-pagination"></div>
       
-       <div id="tombol-telegram" data-nosnippet aria-hidden="true" style="text-align: center; margin: 30px 0 20px 0;">
+       <div id="tombol-telegram" data-nosnippet style="text-align: center; margin: 30px 0 20px 0;">
        <a href="https://t.me/+9yfRTEBsNSNjNWVl" target="_blank" style="background-color: #24A1DE; color: white; padding: 6px 12px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 14px; display: inline-block; transition: 0.2s;">
        <i class="fab fa-telegram-plane" style="margin-right: 4px; font-size: 18px;"></i> Join Grup Telegram
        </a>
        </div>
 
-        <div id="bottom-banner" data-nosnippet aria-hidden="true" style="margin: 30px 0 10px 0; padding: 15px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
+        <div id="bottom-banner" data-nosnippet style="margin: 30px 0 10px 0; padding: 15px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
             <span style="display: block; font-size: 10px; color: #777; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase;">- Advertisement -</span>
             
             <iframe 
@@ -569,12 +673,14 @@
 
     <div id="playerPage">
         <div class="player-wrapper-card">
-            <div class="player-box">
-                <iframe id="playerFrame" allowfullscreen frameborder="0"></iframe>
-            </div>
+            <div class="player-box">                              
+                <div id="dragArea"></div>                
+                <button id="closeFloatBtn" onclick="tutupFloating(event)">&times;</button>              
+         <iframe id="playerFrame" allowfullscreen frameborder="0"></iframe>
+      </div>
             
-            <div id="playerInfoBlock">
-                <h2 id="playerTitle" style="margin-bottom: 7px;"></h2>
+          <div id="playerInfoBlock">
+               <h2 id="playerTitle" style="margin-bottom: 7px;"></h2>
                          
                <div id="playerTanggal" style="font-size: 13px; color: #aaaaaa; margin-bottom: 8px; font-style: italic;">
                     <i class="fa fa-calendar"></i> <span></span>
@@ -584,7 +690,7 @@
                     Categories : <span id="playerCategory" style="font-style: italic; margin-bottom: 12px; color: var(--accent-color);"></span>
                 </div>
                                 
-                <div data-nosnippet aria-hidden="true" style="font-size: 13px; color: #ff9800; margin-bottom: 20px; margin-top: 15px; line-height: 1.6; font-style: italic;">
+                <div data-nosnippet style="font-size: 13px; color: #ff9800; margin-bottom: 20px; margin-top: 15px; line-height: 1.6; font-style: italic;">
                   <i class="fa-solid fa-triangle-exclamation" style="margin-right: 3px;"></i> 
                   <b>Tips Nonton Lancar:</b> Video error atau cuma muter doang? Coba <b>Aktifkan VPN</b> atau <b>Matikan AdBlock</b> kamu sejenak. <br>
                   <span style="display: inline-block; color: #888; font-size: 12px; margin-top: 4px;">* Malas buffering atau keganggu iklan? Download videonya langsung di tombol bawah, jaminan anti ribet!</span>
@@ -600,7 +706,7 @@
                         </span>
                     </div>    
                     
-                    <div class="player-actions" data-nosnippet aria-hidden="true" style="display: flex; align-items: center; gap: 6px; justify-content: flex-end; white-space: nowrap;">
+                    <div class="player-actions" data-nosnippet style="display: flex; align-items: center; gap: 6px; justify-content: flex-end; white-space: nowrap;">
                         <button class="player-share-btn" onclick="unduhVideoAktif()" style="background-color: #2ecc71; border-color: #2ecc71; padding: 7px 10px; font-size: clamp(10px, 3vw, 12px); display: flex; align-items: center; justify-content: center; gap: 5px; line-height: 1;">
                             <i class="fa-solid fa-download"></i> <span>Download</span>
                         </button>
@@ -612,7 +718,7 @@
             </div>
         </div>
         
-        <div id="player-top-banner" class="banner-siluman" data-nosnippet aria-hidden="true" style="margin: 20px 0 0 0; padding: 8px 4px 10px 4px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
+        <div id="player-top-banner" class="banner-siluman" data-nosnippet style="margin: 20px 0 0 0; padding: 8px 4px 10px 4px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
             <span style="display: block; font-size: 10px; color: #777; margin-bottom: 5px; letter-spacing: 1px; text-transform: uppercase;">- Advertisement -</span>
             
          <iframe 
@@ -633,11 +739,11 @@
         <div id="playerAds"></div>
         
         <div class="related-section">
-            <div class="section-related" data-nosnippet aria-hidden="true"><h2>Related Videos :</h2></div>
+            <div class="section-related" data-nosnippet><h2>Related Videos :</h2></div>
             <div class="video-grid" id="tempat-video-related"></div>
         </div>
         
-        <div id="player-bottom-banner" class="banner-siluman" data-nosnippet aria-hidden="true" style="margin: 30px 0 35px 0; padding: 15px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
+        <div id="player-bottom-banner" class="banner-siluman" data-nosnippet style="margin: 30px 0 35px 0; padding: 15px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: block;">
             <span style="display: block; font-size: 10px; color: #777; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase;">- Advertisement -</span>
             
             <iframe 
@@ -653,7 +759,7 @@
 
     </div> 
     
-    <footer data-nosnippet aria-hidden="true">
+    <footer data-nosnippet>
         <div class="footer-container">         
             <div class="footer-brand">
                 <h3>ZoneX<span>hub</span></h3>
@@ -699,7 +805,7 @@
         </div>
     </footer>
 
-    <div class="fab-container" id="panelAdmin" data-nosnippet aria-hidden="true">
+    <div class="fab-container" id="panelAdmin" data-nosnippet>
         <button class="fab-btn download" id="btnDownload" onclick="downloadWebFinal()">📥 Bikin File Siap Sebar</button>
         <button class="fab-btn save" id="btnSimpan" onclick="simpanPerubahan()">💾 Simpan Sementara</button>
         <button class="fab-btn" onclick="tambahVideo()">➕ Tambah Video</button>
@@ -708,6 +814,7 @@
     </div>
 
     <script id="core-script">
+        
         let jumlahKlik = 0;
         let waktuResetKlik;
         let headerData = JSON.parse(localStorage.getItem('dataHeaderLokal')) || window.DATA_HEADER;
@@ -729,8 +836,9 @@
         let debounceTimer;
         let posisiScrollTerakhir = 0;
         
-function ubahSEO(judul, deskripsi, gambar) {
+function ubahSEO(judul, deskripsi, gambar, urlParam = null, videoDataObj = null) {
     document.title = judul; 
+    let currentUrl = urlParam || window.location.href;
 
     const ubahMeta = (selector, content) => {
         let el = document.querySelector(selector);
@@ -740,12 +848,46 @@ function ubahSEO(judul, deskripsi, gambar) {
     ubahMeta('meta[name="description"]', deskripsi);
     ubahMeta('meta[property="og:title"]', judul);
     ubahMeta('meta[property="og:description"]', deskripsi);
-    ubahMeta('meta[property="og:url"]', window.location.href);
+    ubahMeta('meta[property="og:url"]', currentUrl);
     ubahMeta('meta[property="og:image"]', gambar);
     ubahMeta('meta[name="twitter:title"]', judul);
     ubahMeta('meta[name="twitter:description"]', deskripsi);
     ubahMeta('meta[name="twitter:image"]', gambar);
+
+
+    let canonical = document.getElementById("canonical-url");
+    if (canonical) canonical.setAttribute("href", currentUrl);
+
+    
+    let schemaEl = document.getElementById("schema-data");
+    if (schemaEl) {
+        if (videoDataObj) {
+            
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "VideoObject",
+                "name": judul,
+                "description": deskripsi,
+                "thumbnailUrl": [gambar],
+                "uploadDate": new Date().toISOString(), 
+                "contentUrl": currentUrl
+            };
+            schemaEl.textContent = JSON.stringify(schema);
+        } else {
+            
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "url": "https://zonexhub.net/",
+                "name": "ZoneXhub",
+                "description": deskripsi
+            };
+            schemaEl.textContent = JSON.stringify(schema);
+        }
+    }
 }
+
+
         
 function bukaKunciRahasia() {
     jumlahKlik++;
@@ -955,6 +1097,8 @@ function cariVideo(event){
         function arahkanKeLink(video, dariRefresh = false) {
     if (isEditMode) return;
     
+    floatDitutupLokal = false;
+    
     const statusSebelumnya = sessionStorage.getItem('viewAktif'); 
     sessionStorage.setItem('viewAktif', 'player');
     sessionStorage.setItem('videoAktif', JSON.stringify(video));
@@ -991,7 +1135,8 @@ function cariVideo(event){
     
     document.getElementById("playerTitle").textContent = video.judul;
     let deskripsiVideo = "Nonton video " + video.judul + " gratis. Kumpulan video viral terbaru hari ini tanpa sensor hanya di ZoneXhub.";
-    ubahSEO(video.judul + " - ZoneXhub", deskripsiVideo, video.gambar);
+    let videoUrlLengkap = window.location.origin + window.location.pathname + "?v=" + encodeURIComponent(video.judul.replace(/ /g, '-'));
+ubahSEO(video.judul + " - ZoneXhub", deskripsiVideo, video.gambar, videoUrlLengkap, video);
     const elTanggal = document.getElementById("playerTanggal");
 if(elTanggal) {
     elTanggal.querySelector("span").textContent = video.tanggal || "Tanggal tidak tersedia";
@@ -1139,12 +1284,12 @@ if(elTanggal) {
        
         function tampilkanHeader() {
             if (isEditMode) {
-                wadahLogo.innerHTML = `<div class="edit-block" data-nosnippet aria-hidden="true" style="flex-direction: row; gap: 5px; align-items: center;">
+                wadahLogo.innerHTML = `<div class="edit-block" data-nosnippet style="flex-direction: row; gap: 5px; align-items: center;">
                     <input type="text" class="edit-sm-input" id="input-header-text" value="${headerData.text}" style="width: 150px; font-weight: bold; font-style: italic;">
                     <input type="text" class="edit-sm-input edit-sm-link" id="input-header-link" value="${headerData.link}" placeholder="Link Redirect" style="width: 150px;">
                 </div>`;
             } else {
-                wadahLogo.innerHTML = `<a href="${headerData.link}"><img src="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345608/1000042601-removebg-preview_onl3xz.png" alt="Logo" style="height: auto; width:150px; margin-bottom: 10px;"></a>`;
+                wadahLogo.innerHTML = `<a href="${headerData.link}"><img src="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345608/1000042601-removebg-preview_onl3xz.png" alt="Logo" style="height: auto; width:150px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(235, 31, 114, 0.4)"></a>`;
             }
         }
         
@@ -1153,7 +1298,7 @@ if(elTanggal) {
             wadahMenu.innerHTML = `<a href="javascript:void(0)" ${isHomeActive} onclick="kembaliKeHome()">All Videos</a>`;            
             menuData.forEach((menu, index) => {
                 if (isEditMode) {
-                    wadahMenu.innerHTML += `<div class="edit-block" data-nosnippet aria-hidden="true"><input type="text" class="edit-sm-input" id="input-menu-text-${index}" value="${menu.text}"><input type="text" class="edit-sm-input edit-sm-link" id="input-menu-link-${index}" value="${menu.link}" placeholder="Link"></div>`;
+                    wadahMenu.innerHTML += `<div class="edit-block" data-nosnippet><input type="text" class="edit-sm-input" id="input-menu-text-${index}" value="${menu.text}"><input type="text" class="edit-sm-input edit-sm-link" id="input-menu-link-${index}" value="${menu.link}" placeholder="Link"></div>`;
                 } else {
                     let isKategoriActive = (kategoriAktif === menu.text) ? 'class="active"' : '';
                     wadahMenu.innerHTML += `<a href="javascript:void(0)" ${isKategoriActive} onclick="bukaKategoriDenganIklan('${menu.link}', '${menu.text}')">${menu.text}</a>`;
@@ -1234,7 +1379,7 @@ function tampilkanGrid() {
    
     if (dataAktif.length === 0) {
         wadahVideo.innerHTML = `
-            <div data-nosnippet aria-hidden="true" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: transparent; margin-top: 10px;">
+            <div data-nosnippet style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: transparent; margin-top: 10px;">
                 <i class="fa-solid fa-magnifying-glass-minus" style="font-size: 50px; color: #eb1f72; margin-bottom: 15px;"></i>
                 <h3 style="color: #eee; font-size: 18px; margin-bottom: 8px;">Oops, Video Not Found</h3>
                 <p style="color: #888; font-size: 13px;">We couldn't find any videos matching your search. Try using different keywords.</p>
@@ -1264,11 +1409,11 @@ function tampilkanGrid() {
                     <span><i class="fa-solid fa-eye"></i> ${video.views}</span>
                     <span><i class="fa-regular fa-clock"></i> ${video.durasi}</span>
                 </div>
-              <div class="edit-overlay" data-nosnippet aria-hidden="true" onclick="event.stopPropagation(); gantiGambarURL(${index})">🔗 Link Gambar</div>
+              <div class="edit-overlay" data-nosnippet onclick="event.stopPropagation(); gantiGambarURL(${index})">🔗 Link Gambar</div>
             </div>
             <div class="info" onclick="if(isEditMode) event.stopPropagation();">               
                 <div class="title">${video.judul}</div>
-                <div data-nosnippet aria-hidden="true">
+                <div data-nosnippet>
                     <input type="text" class="edit-input-title" id="input-judul-${index}" value="${video.judul}" placeholder="Judul Video">
                     <input type="text" class="edit-input-link" id="input-player-${index}" value="${video.tujuan || video.player || ""}" placeholder="Link Embed Player" oninput="bersihkanIframeInstan(this)">                                
                     <input type="text" list="pilihan-views" class="edit-input-title" id="input-view-${index}" value="${video.views}" placeholder="Views (misal: 12K)">
@@ -1594,9 +1739,11 @@ function tampilkanGrid() {
      
 function downloadWebFinal() {
     simpanPerubahan(true);     
+    
     const dataIndo = videoData.filter(v => v.kategori === 'Indo');
     const dataJav = videoData.filter(v => v.kategori === 'Jav');
     const dataWestern = videoData.filter(v => v.kategori === 'Western');  
+        
     const unduhFile = (data, namaFile) => {
         if(data.length === 0) return; 
         const jsonString = JSON.stringify(data, null, 2);
@@ -1610,12 +1757,41 @@ function downloadWebFinal() {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     };   
+    
+    const unduhSitemap = (semuaData) => {
+        if (semuaData.length === 0) return;
+        let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+                
+        xml += `  <url>\n    <loc>https://zonexhub.net/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n`;
+                
+        semuaData.forEach(v => {
+            if (v.judul) {
+                let slug = encodeURIComponent(v.judul.replace(/ /g, '-'));
+                xml += `  <url>\n    <loc>https://zonexhub.net/?v=${slug}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
+            }
+        });
+        
+        xml += `</urlset>`;
+        
+        const blob = new Blob([xml], { type: "application/xml" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = 'sitemap.xml';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+   
     unduhFile(dataIndo, 'indo.json');
     unduhFile(dataJav, 'jav.json');
     unduhFile(dataWestern, 'western.json');
+    unduhSitemap(videoData); 
+
     setTimeout(() => {
         localStorage.removeItem('dataVideoLokal');       
-        alert("3 File JSON siap disebar! Sistem telah dibersihkan otomatis.");             
+        alert("3 File JSON dan 1 Sitemap.xml siap disebar! Sistem telah dibersihkan otomatis.");             
         location.reload();        
     }, 15000); 
 }
@@ -1766,7 +1942,7 @@ async function muatDataAwal() {
         wadahVid.style.minHeight = "70vh"; 
         
         wadahVid.innerHTML = `
-            <div data-nosnippet aria-hidden="true" style="text-align: center;">                
+            <div data-nosnippet style="text-align: center;">                
                 <i class="fa-solid fa-gear fa-spin" style="font-size: 45px; color: red; margin-bottom: 12px;"></i>               
                 <h3 style="color: red; font-size: 18px; margin-bottom: 8px; font-style: italic;">UNDER MAINTENANCE !</h3>       
                 <p style="color: #888; font-size: 12px; margin-bottom: 30px;">We are currently updating our database to serve you better. Please check back soon.</p>              
@@ -1817,12 +1993,133 @@ function cekAdblock() {
     }, 500);
 }
 
+
+
+      const playerBoxDrag = document.querySelector('.player-box');
+      const dragHeader = document.getElementById('dragArea');
+      let floatDitutupLokal = false; 
+      let isDragging = false;
+      let currentX = 0, currentY = 0, initialX = 0, initialY = 0;
+      let xOffset = 0, yOffset = 0;
+      let raFId = null; 
+
+        function tutupFloating(e) {
+           if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+        
+        floatDitutupLokal = true; 
+        playerBoxDrag.classList.remove('floating');
+     
+        xOffset = 0;
+        yOffset = 0;
+        playerBoxDrag.style.transform = "none";
+      }
+
+        window.addEventListener('scroll', function() {
+           const playerPage = document.getElementById('playerPage');
+         
+    if (playerPage && playerPage.style.display === 'block') {
+        const batasScroll = 350; 
+              
+        if (floatDitutupLokal) return; 
+
+        if (window.scrollY > batasScroll) {
+            if (!playerBoxDrag.classList.contains('floating')) {
+                playerBoxDrag.classList.add('floating');
+            }
+        } else {
+            if (playerBoxDrag.classList.contains('floating')) {
+                playerBoxDrag.classList.remove('floating');
+                xOffset = 0;
+                yOffset = 0;
+                playerBoxDrag.style.transform = "none";
+                }
+             }
+          }
+      });
+
+          if (dragHeader) {
+            dragHeader.addEventListener("mousedown", dragStart, false);
+            document.addEventListener("mouseup", dragEnd, false);
+            document.addEventListener("mousemove", drag, false);
+            dragHeader.addEventListener("touchstart", dragStart, {passive: false});
+            document.addEventListener("touchend", dragEnd, false);
+            document.addEventListener("touchmove", drag, {passive: false});
+          }
+
+         function dragStart(e) {  
+             if (e.target.closest('button')) return;
+
+         if (e.type === "touchstart") {
+             initialX = e.touches[0].clientX - xOffset;
+             initialY = e.touches[0].clientY - yOffset;
+         } else {
+             initialX = e.clientX - xOffset;
+             initialY = e.clientY - yOffset;
+          }
+    
+         if (e.target === dragHeader || dragHeader.contains(e.target)) {
+             isDragging = true;
+             playerBoxDrag.style.transition = "none"; 
+          }
+     }
+
+         function dragEnd(e) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+    
+         if(playerBoxDrag.classList.contains('floating')){
+            playerBoxDrag.style.transition = "transform 0.1s ease-out, box-shadow 0.3s ease";
+           }
+     }
+
+         function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault(); 
+
+        if (e.type === "touchmove") {
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+        } else {
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+        }
+
+            xOffset = currentX;
+             yOffset = currentY;
+
+         if (raFId) cancelAnimationFrame(raFId);
+             raFId = requestAnimationFrame(setTranslate);
+        }
+
+         function setTranslate() {
+    playerBoxDrag.style.transform = "translate3d(" + currentX + "px, " + currentY + "px, 0)";
+}
+
+
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then((registration) => {
+                console.log('PWA Service Worker sukses jalan bosku!', registration.scope);
+            })
+            .catch((error) => {
+                console.log('PWA Service Worker gagal:', error);
+            });
+    });
+}
+
+
+
 function tampilkanPeringatanAdblock() {   
     if (document.getElementById('overlay-satpam')) return;
     let overlayAdblock = document.createElement('div');
     overlayAdblock.id = 'overlay-satpam';
     overlayAdblock.setAttribute('data-nosnippet', '');
-    overlayAdblock.setAttribute('aria-hidden', 'true');
     overlayAdblock.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,15,15,0.70);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:9999999;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;padding:25px;';
     
     overlayAdblock.innerHTML = `
