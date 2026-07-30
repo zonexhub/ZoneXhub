@@ -39,7 +39,7 @@
     <meta name="twitter:description" content="A collection of the latest and trending viral porn videos that are currently the talk of the town.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png">
   
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=7">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=8">
       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
@@ -1024,7 +1024,7 @@ function cariVideo(event){
         const keywordInput = document.getElementById('searchInput').value;
         const keyword = keywordInput.toLowerCase().trim();
         const sectionTitle = document.getElementById("sectionTitle");
-        const titleText = sectionTitle.querySelector("h2");
+        const titleText = sectionTitle.querySelector("h1");
         const hotVideoEl = document.getElementById("hot-video-text");
 
         if(keyword === ''){
@@ -1190,7 +1190,7 @@ if(elTanggal) {
                 
                 if (kategoriAktif === "HOME") {
                     document.getElementById("sectionTitle").style.display = "block";
-                    document.getElementById("sectionTitle").querySelector("h2").textContent = "Most Popular & Viral Porn Video Collection: Indo, JAV, and Western.";
+                    document.getElementById("sectionTitle").querySelector("h1").textContent = "Most Popular & Viral Porn Video Collection: Indo, JAV, and Western.";
                     document.getElementById("home-banner").style.display = "flex";
                     hotVideoEl.style.display = "flex";
                     hotVideoEl.innerHTML = `Hot Porn Videos <i class="fa-solid fa-fire"></i>`;
@@ -1212,7 +1212,7 @@ if(elTanggal) {
                 );                
                 document.getElementById("sectionTitle").style.display = "block";
                 const amanKeywordHistory = keyword.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                document.getElementById("sectionTitle").querySelector("h2").innerHTML = hasilPencarian.length > 0 
+                document.getElementById("sectionTitle").querySelector("h1").innerHTML = hasilPencarian.length > 0 
                     ? `Search results for: <span style="color: var(--accent-color); font-style: italic;">"${amanKeywordHistory}"</span>` 
                     : `No results found for: <span style="color: var(--accent-color); font-style: italic;">"${amanKeywordHistory}"</span>`;
                 document.getElementById("home-banner").style.display = "none";
@@ -1349,14 +1349,14 @@ function tampilkanGrid() {
     const homeBannerEl = document.getElementById("home-banner");
     const hotVideoEl = document.getElementById("hot-video-text");
     const sectionTitleEl = document.getElementById("sectionTitle");
-    const titleH2 = sectionTitleEl ? sectionTitleEl.querySelector("h2") : null;
+    const titleH1 = sectionTitleEl ? sectionTitleEl.querySelector("h1") : null;
     
     if (halamanSekarang > 1) {
         if (homeBannerEl) homeBannerEl.style.display = "none";
         if (hotVideoEl) hotVideoEl.style.display = "none";
-        if (sectionTitleEl && titleH2) {
+        if (sectionTitleEl && titleH1) { 
             sectionTitleEl.style.display = "block";
-            titleH2.innerHTML = `Latest Porn - <span style="color: var(--accent-color); font-style: italic;">Page ${halamanSekarang}</span>`;
+            titleH1.innerHTML = `Latest Porn - <span style="color: var(--accent-color); font-style: italic;">Page ${halamanSekarang}</span>`; 
         }
     } else {
         if (hasilPencarian) {
@@ -1370,9 +1370,9 @@ function tampilkanGrid() {
         } else {
             if (homeBannerEl) homeBannerEl.style.display = "flex";
             if (hotVideoEl) hotVideoEl.style.display = "flex";
-            if (sectionTitleEl && titleH2) {
+            if (sectionTitleEl && titleH1) { 
                 sectionTitleEl.style.display = "block";
-                titleH2.textContent = "Most Popular & Viral Porn Video Collection: Indo, JAV, and Western.";
+                titleH1.textContent = "Most Popular & Viral Porn Video Collection: Indo, JAV, and Western."; 
             }
         }
     }
