@@ -1968,30 +1968,8 @@ async function muatDataAwal() {
           }       
             filterKategori(text);
 }
-muatDataAwal();
 
-function cekAdblock() {        
-    let scriptUmpan = document.createElement('script');    
-    scriptUmpan.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-    scriptUmpan.async = true;    
-    scriptUmpan.onerror = function() {
-        tampilkanPeringatanAdblock();
-    };
-    document.head.appendChild(scriptUmpan);       
-    let kotakUmpan = document.createElement('div');
-    kotakUmpan.innerHTML = '&nbsp;';    
-    kotakUmpan.className = 'adsbox ad-placement pub_300x250 pub_728x90 text-ad adBanner';    
-    kotakUmpan.style.cssText = 'position: absolute; top: 0; left: 0; width: 10px; height: 10px; opacity: 0; pointer-events: none; z-index: -1;';
-    document.body.appendChild(kotakUmpan);
-    
-    setTimeout(function() {        
-        if (kotakUmpan.offsetHeight === 0 || kotakUmpan.clientHeight === 0 || window.getComputedStyle(kotakUmpan).display === 'none') {
-            tampilkanPeringatanAdblock();
-        }
-                
-        kotakUmpan.remove();
-    }, 500);
-}
+muatDataAwal();
 
 
 
@@ -2101,6 +2079,7 @@ function cekAdblock() {
 
 
 
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
@@ -2114,6 +2093,34 @@ if ('serviceWorker' in navigator) {
 }
 
 
+
+function cekAdblock() {        
+    let kecidukAdblock = false;
+    let scriptUmpan = document.createElement('script');    
+    scriptUmpan.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+    scriptUmpan.async = true;    
+    scriptUmpan.onerror = function() {
+        kecidukAdblock = true;
+    };
+    document.head.appendChild(scriptUmpan);       
+
+    let kotakUmpan = document.createElement('div');
+    kotakUmpan.innerHTML = '&nbsp;';    
+    kotakUmpan.className = 'adsbox ad-placement pub_300x250 pub_728x90 text-ad adBanner';    
+    kotakUmpan.style.cssText = 'position: absolute; top: -999px; left: -999px; width: 10px; height: 10px; z-index: -1;';
+    document.body.appendChild(kotakUmpan);
+    
+    setTimeout(function() {        
+        let gaya = window.getComputedStyle(kotakUmpan);
+        let kotakIlang = (kotakUmpan.offsetHeight === 0 || kotakUmpan.clientHeight === 0 || gaya.display === 'none');
+
+        if (kecidukAdblock || kotakIlang) {
+            tampilkanPeringatanAdblock();
+        }
+                
+        kotakUmpan.remove();
+    }, 2000); 
+}
 
 function tampilkanPeringatanAdblock() {   
     if (document.getElementById('overlay-satpam')) return;
