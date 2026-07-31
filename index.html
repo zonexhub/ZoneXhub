@@ -39,7 +39,7 @@
     <meta name="twitter:description" content="A collection of the latest and trending viral porn videos that are currently the talk of the town.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png">
   
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=11">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=12">
       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
@@ -1135,7 +1135,19 @@ function cariVideo(event){
     document.getElementById("playerPage").style.display = "block";
     
     document.getElementById("playerTitle").textContent = video.judul;
-    let deskripsiVideo = "Nonton video " + video.judul + " gratis. Kumpulan video viral terbaru hari ini tanpa sensor hanya di ZoneXhub.";
+    let deskripsiVideo = "";
+    let kat = (video.kategori || "").toLowerCase();
+
+    if (kat === "indo") {
+        deskripsiVideo = `Bokep Indo – ${video.judul} Bokep Indo Terbaru Full Durasi. Kumpulan video pemersatu bangsa, skandal ABG, SMP, SMA, selebgram, Viral Seleb TikTok Blunder, bocoran Twitter/X, dan skandal lokal terbaru hari ini gratis hanya di ZoneXhub.net.`;
+    } else if (kat === "jav") {
+        deskripsiVideo = `Nonton Video Drama JAV HD ${video.judul} Drama JAV Sub Indo. Streaming koleksi film Japan, drama Japanese, bokep Jepang no sensor, uncensored, skandal artis JAV idola terbaik dan terbaru full durasi hanya di ZoneXhub.net.`;
+    } else if (kat === "western") {
+        deskripsiVideo = `Nonton Video Bokep Barat ${video.judul} Full Durasi. Free Porn, XXX, Sex, Koleksi video bule hot, Western porn, skandal seleb, dan bocoran Onlyfans leaked viral gratis di ZoneXhub.net.`;
+    } else {
+        deskripsiVideo = `Watch Now Video ${video.judul} Nonton video Full HD. Free Porn, XXX, Sex, Kumpulan Bokep Indo, Skandal, Viral, SMP, SMA, Seleb Tiktok Blunder, Japanese Drama JAV Censored, Uncensored, dan Western Onlyfans Leaked terbaru gratis hanya di ZoneXhub.net.`;
+    }
+    
     let videoUrlLengkap = window.location.origin + window.location.pathname + "?v=" + encodeURIComponent(video.judul.replace(/ /g, '-'));
 ubahSEO(video.judul + " - ZoneXhub", deskripsiVideo, video.gambar, videoUrlLengkap, video);
     const elTanggal = document.getElementById("playerTanggal");
