@@ -39,7 +39,7 @@
     <meta name="twitter:description" content="A collection of the latest and trending viral porn videos that are currently the talk of the town.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png">
   
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=13">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=14">
       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
@@ -1880,38 +1880,6 @@ async function muatDataAwal() {
         wadahVid.style.justifyContent = "";
         wadahVid.style.minHeight = "";
         
-        if (keywordTersimpan !== "") {
-            document.getElementById('searchInput').value = keywordTersimpan;
-            hasilPencarian = videoData.filter(v => 
-                (v.judul || '').toLowerCase().includes(keywordTersimpan.toLowerCase()) || 
-                (v.kategori || '').toLowerCase().includes(keywordTersimpan.toLowerCase())
-            );
-            
-            document.getElementById("sectionTitle").style.display = "block";
-            document.getElementById("home-banner").style.display = "none";
-            if(document.getElementById("hot-video-text")) document.getElementById("hot-video-text").style.display = "none";
-            document.getElementById("bottom-banner").style.display = "none";
-            document.getElementById("tombol-telegram").style.display = "none";           
-            const amanKeyword = keywordTersimpan.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            document.getElementById("sectionTitle").querySelector("h1").innerHTML = `Search results for : <span style="color: var(--accent-color); font-style: italic;">"${amanKeyword}"</span>`;
-        } else if (kategoriAktif !== "HOME") {
-            document.getElementById("sectionTitle").style.display = "none";
-            document.getElementById("home-banner").style.display = "none";
-            const hotVideoEl = document.getElementById("hot-video-text");
-            if(hotVideoEl) {
-                hotVideoEl.style.display = "flex";
-                let flag = "";
-                let catLower = (kategoriAktif || "").toLowerCase();
-                if(catLower.includes("indo")) flag = '<span class="fi fi-id"></span>';
-                else if(catLower.includes("jav")) flag = '<span class="fi fi-jp"></span>';
-                else if(catLower.includes("western")) flag = '<span class="fi fi-us"></span>';
-                hotVideoEl.innerHTML = `Categories : <span style="color: var(--accent-color); font-style: italic;">${kategoriAktif}</span> ${flag}`;
-            }
-        }
-            
-        tampilkanMenu();
-        tampilkanPagination(); 
-               
         const parameterUrl = new URLSearchParams(window.location.search);
         const linkShare = parameterUrl.get('v');
         const linkKategori = parameterUrl.get('kategori'); 
@@ -1923,17 +1891,66 @@ async function muatDataAwal() {
             if (videoDitemukan) {
                 history.replaceState({ view: 'grid', page: 1, category: 'HOME', search: '', scrollY: 0 }, "", window.location.pathname);
                 arahkanKeLink(videoDitemukan);
-                return; 
+                return; // Berhenti di sini karena udah masuk player
             }
         } else if (linkKategori) {
             kategoriAktif = decodeURIComponent(linkKategori);
             sessionStorage.setItem('kategoriAktif', kategoriAktif);
-        } else {
-            if (!keywordTersimpan) {
+            keywordTersimpan = ""; // Bersihin search biar gak bentrok
+            sessionStorage.removeItem('keywordSearch');
+        } else {          
+            if (!keywordTersimpan && !sessionStorage.getItem('kategoriAktif')) {
                 kategoriAktif = "HOME";
                 sessionStorage.setItem('kategoriAktif', 'HOME');
             }
         }
+
+        const hotVideoEl = document.getElementById("hot-video-text");
+        const sectionTitleEl = document.getElementById("sectionTitle");
+        const homeBannerEl = document.getElementById("home-banner");
+        const bottomBannerEl = document.getElementById("bottom-banner");
+        const telegramEl = document.getElementById("tombol-telegram");
+
+        if (keywordTersimpan !== "") {
+            if(sectionTitleEl) sectionTitleEl.style.display = "block";
+            if(homeBannerEl) homeBannerEl.style.display = "none";
+            if(hotVideoEl) hotVideoEl.style.display = "none";
+            if(bottomBannerEl) bottomBannerEl.style.display = "none";
+            if(telegramEl) telegramEl.style.display = "none";           
+            const amanKeyword = keywordTersimpan.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            if(sectionTitleEl) sectionTitleEl.querySelector("h1").innerHTML = `Search results for : <span style="color: var(--accent-color); font-style: italic;">"${amanKeyword}"</span>`;
+        
+        } else if (kategoriAktif !== "HOME") {
+            if(sectionTitleEl) sectionTitleEl.style.display = "none";
+            if(homeBannerEl) homeBannerEl.style.display = "none";
+            if(hotVideoEl) {
+                hotVideoEl.style.display = "flex";
+                let flag = "";
+                let catLower = (kategoriAktif || "").toLowerCase();
+                if(catLower.includes("indo")) flag = '<span class="fi fi-id"></span>';
+                else if(catLower.includes("jav")) flag = '<span class="fi fi-jp"></span>';
+                else if(catLower.includes("western")) flag = '<span class="fi fi-us"></span>';
+                hotVideoEl.innerHTML = `Categories : <span style="color: var(--accent-color); font-style: italic;">${kategoriAktif}</span> ${flag}`;
+            }
+            if(bottomBannerEl) bottomBannerEl.style.display = "block";
+            if(telegramEl) telegramEl.style.display = "block";
+
+        } else {
+            if(sectionTitleEl) {
+                sectionTitleEl.style.display = "block";
+                sectionTitleEl.querySelector("h1").textContent = "Most Popular & Viral Porn Video Collection: Indo, JAV, and Western.";
+            }
+            if(homeBannerEl) homeBannerEl.style.display = "flex";
+            if(hotVideoEl) {
+                hotVideoEl.style.display = "flex";
+                hotVideoEl.innerHTML = `Hot Porn Videos <i class="fa-solid fa-fire"></i>`;
+            }
+            if(bottomBannerEl) bottomBannerEl.style.display = "block";
+            if(telegramEl) telegramEl.style.display = "block";
+        }
+            
+        tampilkanMenu();
+        tampilkanPagination(); 
        
         sessionStorage.setItem('viewAktif', 'grid');
         sessionStorage.removeItem('videoAktif');
