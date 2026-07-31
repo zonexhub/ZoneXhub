@@ -39,7 +39,7 @@
     <meta name="twitter:description" content="A collection of the latest and trending viral porn videos that are currently the talk of the town.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png">
   
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=10">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png?v=11">
       
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
@@ -643,9 +643,10 @@
                                                               
         </div>
                   
-        <div id="hot-video-text" class="hot-video" data-nosnippet>
-          Hot Porn Videos <i class="fa-solid fa-fire"></i>
-       </div>
+      <h2 id="hot-video-text" class="hot-video" data-nosnippet>
+              Hot Porn Videos <i class="fa-solid fa-fire"></i>
+       </h2>
+       
        <div class="video-grid" id="tempat-video"></div>
               
         <div class="pagination" id="tempat-pagination"></div>
@@ -948,7 +949,7 @@ function bukaKunciRahasia() {
         
         document.getElementById("sectionTitle").style.display = "block";
         
-        document.getElementById("sectionTitle").querySelector("h2").textContent = "Most Popular & Viral Porn Video Collection: Indo, JAV, and Western.";
+        document.getElementById("sectionTitle").querySelector("h1").textContent = "Most Popular & Viral Porn Video Collection: Indo, JAV, and Western.";
         
         document.getElementById("home-banner").style.display = "flex";
         
@@ -1861,7 +1862,7 @@ async function muatDataAwal() {
             document.getElementById("bottom-banner").style.display = "none";
             document.getElementById("tombol-telegram").style.display = "none";           
             const amanKeyword = keywordTersimpan.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            document.getElementById("sectionTitle").querySelector("h2").innerHTML = `Search results for : <span style="color: var(--accent-color); font-style: italic;">"${amanKeyword}"</span>`;
+            document.getElementById("sectionTitle").querySelector("h1").innerHTML = `Search results for : <span style="color: var(--accent-color); font-style: italic;">"${amanKeyword}"</span>`;
         } else if (kategoriAktif !== "HOME") {
             document.getElementById("sectionTitle").style.display = "none";
             document.getElementById("home-banner").style.display = "none";
@@ -2095,22 +2096,26 @@ if ('serviceWorker' in navigator) {
 
 
 function cekAdblock() {        
+    let scriptUmpan = document.createElement('script');    
+    scriptUmpan.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+    scriptUmpan.async = true;    
+    scriptUmpan.onerror = function() {
+        tampilkanPeringatanAdblock();
+    };
+    document.head.appendChild(scriptUmpan);       
     let kotakUmpan = document.createElement('div');
     kotakUmpan.innerHTML = '&nbsp;';    
     kotakUmpan.className = 'adsbox ad-placement pub_300x250 pub_728x90 text-ad adBanner';    
-    kotakUmpan.style.cssText = 'position: absolute; top: -999px; left: -999px; width: 10px; height: 10px; z-index: -1;';
+    kotakUmpan.style.cssText = 'position: absolute; top: 0; left: 0; width: 10px; height: 10px; opacity: 0; pointer-events: none; z-index: -1;';
     document.body.appendChild(kotakUmpan);
     
     setTimeout(function() {        
-        let gaya = window.getComputedStyle(kotakUmpan);
-        let kotakIlang = (kotakUmpan.offsetHeight === 0 || kotakUmpan.clientHeight === 0 || gaya.display === 'none');
-
-        if (kotakIlang) {
+        if (kotakUmpan.offsetHeight === 0 || kotakUmpan.clientHeight === 0 || window.getComputedStyle(kotakUmpan).display === 'none') {
             tampilkanPeringatanAdblock();
         }
                 
         kotakUmpan.remove();
-    }, 2000); 
+    }, 800);
 }
 
 function tampilkanPeringatanAdblock() {   
