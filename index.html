@@ -511,7 +511,7 @@
             z-index: 9999;
             box-shadow: 0 10px 30px rgba(0,0,0,0.9);                     
             border-radius: 6px !important; 
-            border: 1.5px solid #444; !important;         
+            border: 1.5px solid #444 !important;
             overflow: hidden;
             animation: popIn 0.3s ease-out;
             will-change: transform; 
@@ -1837,7 +1837,7 @@ async function muatDataAwal() {
         console.log("Memuat data draft dari LocalStorage (Mode Edit Aktif)...");
         videoData = JSON.parse(dataLokal);
      } else {
-        console.log("Memuat 3 data JSON dari Server GitHub...");
+        console.log("Memuat 3 data JSON dari Server...");
         const versiAntiCache = new Date().getTime();        
         const [resIndo, resJav, resWestern] = await Promise.all([
             fetch('indo.json?v=' + versiAntiCache),
@@ -1885,7 +1885,12 @@ async function muatDataAwal() {
         const linkKategori = parameterUrl.get('kategori'); 
         
         if (linkShare) {
-            const judulDicari = decodeURIComponent(linkShare).replace(/-/g, ' ');
+            let judulDicari = "";
+            try {
+                judulDicari = decodeURIComponent(linkShare).replace(/-/g, ' ');
+            } catch(e) {
+                judulDicari = linkShare.replace(/-/g, ' '); 
+            }
             const videoDitemukan = videoData.find(v => v.judul === judulDicari);
             
             if (videoDitemukan) {
