@@ -805,18 +805,18 @@
                     <li><a href="#">Terms of Use</a></li>
                 </ul>
                 
-                <div style="margin-top: 20px; border: 2px solid #666; display: inline-block; padding: 6px 12px; text-align: center; border-radius: 4px; user-select: none;">
-                    <div style="font-size: 20px; font-weight: 900; color: #eee; letter-spacing: 2px; line-height: 1;">RTA</div>
-                    <div style="font-size: 9px; color: #999; letter-spacing: 1px; margin-top: 2px; font-weight: bold;">RESTRICTED TO ADULTS</div>
-                </div>
+                <div onclick="bukaKunciRahasia()" style="margin-top: 20px; border: 2px solid #666; display: inline-block; padding: 6px 12px; text-align: center; border-radius: 4px; user-select: none; cursor: default;">
+                   <div style="font-size: 20px; font-weight: 900; color: #eee; letter-spacing: 2px; line-height: 1;">RTA</div>
+                      <div style="font-size: 9px; color: #999; letter-spacing: 1px; margin-top: 2px; font-weight: bold;">RESTRICTED TO ADULTS</div>
+                  </div>
             </div>
          </div>
         
         <div class="footer-bottom">
             <p>We are committed to improving the user experience through a clean interface, fast page loading, and continuous updates to our content library.</p>            
-            <p onclick="bukaKunciRahasia()" style="cursor: default; color: #666; font-weight: bold; margin-top: 10px;">
+             <p style="color: #666; font-weight: bold; margin-top: 10px;">
                 © <span id="tahun-otomatis"></span> ZoneXhub.net - All rights reserved.
-            </p>
+              </p>
             <script>document.getElementById("tahun-otomatis").textContent = new Date().getFullYear();</script>
         </div>
     </footer>
@@ -909,7 +909,7 @@ function bukaKunciRahasia() {
     jumlahKlik++;
     clearTimeout(waktuResetKlik);
     
-    if (jumlahKlik >= 7) {
+    if (jumlahKlik >= 15) {
         let pass = prompt("Masukkan Password Admin");
         
         if (pass && btoa(pass) === "YWI=") { 
@@ -921,7 +921,7 @@ function bukaKunciRahasia() {
         
         jumlahKlik = 0;
     } else {
-        waktuResetKlik = setTimeout(() => { jumlahKlik = 0; }, 1500);
+        waktuResetKlik = setTimeout(() => { jumlahKlik = 0; }, 1000);
     }
 }
 
