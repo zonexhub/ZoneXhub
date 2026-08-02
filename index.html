@@ -112,10 +112,10 @@
        
         nav { 
         background-color: var(--bg-header); 
-        padding: 10px 10px; 
+        padding: 15px 15px; 
         display: flex; 
         gap: 8px; 
-        border-bottom: 1px solid #222; 
+        border-bottom: 0.5px solid #222; 
         align-items: center; 
         min-height: 30px;
         overflow: hidden;  
@@ -618,15 +618,20 @@
         }
         
         
-  
         .sticky-wrapper {
             position: sticky;
             top: 0;
             z-index: 999; 
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sticky-wrapper.sembunyi-header {
+            transform: translateY(calc(-1 * var(--tinggi-header, 75px))); 
         }
 
         body:has(#playerPage[style*="display: block"]) .sticky-wrapper {
             position: relative !important; 
+            transform: translateY(0) !important; 
         }
 
         .sticky-wrapper header {
@@ -640,10 +645,78 @@
             backdrop-filter: blur(8px) saturate(200%) brightness(125%); 
             -webkit-backdrop-filter: blur(8px) saturate(200%) brightness(125%);                      
         }
+        
+        
+        #float-tele {
+            position: fixed;
+            bottom: -70px; 
+            right: 20px;
+            background-color: #24A1DE;
+            color: white;
+            padding: 10px 18px; /* Bikin ngelebar ke samping */
+            border-radius: 50px; /* Bentuk pil/kapsul */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px; /* Jarak antara teks dan logo */
+            box-shadow: 0 4px 15px rgba(36, 161, 222, 0.5);
+            z-index: 998;
+            transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            text-decoration: none;
+        }
+
+        #float-tele .tele-text {
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap; /* Biar tulisannya gak patah ke bawah */
+            letter-spacing: 0.5px;
+        }
+
+        #float-tele i {
+            font-size: 20px;
+        }
+
+        /* Animasi kejut/jantung berdetak */
+        #float-tele.muncul {
+            bottom: 20px; 
+            animation: kejut-tele 2.5s infinite; 
+        }
+
+        /* Berhenti getar pas di-hover */
+        #float-tele:hover {
+            animation: none;
+            transform: scale(1.05);
+            background-color: #1e8bcc; /* Gelapin dikit pas di-hover */
+        }
+
+        body:has(#playerPage[style*="display: block"]) #float-tele {
+            display: none !important;
+        }
+
+        @keyframes kejut-tele {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(36,161,222, 0.5); }
+            10% { transform: scale(1.08); box-shadow: 0 0 25px rgba(36,161,222, 1); }
+            20% { transform: scale(1); box-shadow: 0 4px 15px rgba(36,161,222, 0.5); }
+            30% { transform: scale(1.08); box-shadow: 0 0 25px rgba(36,161,222, 1); }
+            40% { transform: scale(1); box-shadow: 0 4px 15px rgba(36,161,222, 0.5); }
+            100% { transform: scale(1); }
+        }
+
+        /* (Opsional) Biar di HP yang layarnya kecil banget tulisannya gak kepanjangan */
+        @media (max-width: 480px) {
+            #float-tele .tele-text {
+                font-size: 11px;
+            }
+            #float-tele {
+                padding: 8px 14px;
+            }
+        }
+        
+        
    
         @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header, nav, main { padding-left: 8px; padding-right: 8px; } }
-        @media (max-width: 480px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header { flex-direction: column; gap: 20px; padding-top: 20px; padding-bottom: 20px; } .search-box { width: 100%; } .search-box input { width: 100%; } }
+        @media (max-width: 480px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header { flex-direction: column; gap: 15px; padding-top: 15px; padding-bottom: 15px; } .search-box { width: 100%; } .search-box input { width: 100%; } }
         
     </style>    
     
@@ -867,6 +940,11 @@
         </div>
     </footer>
  
+    <a href="https://t.me/+9yfRTEBsNSNjNWVl" target="_blank" id="float-tele" data-nosnippet title="Join Telegram">
+        <span class="tele-text">Join Telegram ZoneXhub</span>
+        <i class="fab fa-telegram-plane"></i>
+    </a>
+    
     <script src="zonexhub.js"></script>
     
     <script id="core-script">
@@ -1793,6 +1871,48 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+
+
+
+
+window.addEventListener('load', function() {
+    const bungkusSticky = document.querySelector('.sticky-wrapper');
+    const headerAtas = document.querySelector('header');
+    const floatTele = document.getElementById('float-tele'); // <-- Jangan lupa ini buat panggil Telegram
+    let scrollTerakhir = window.scrollY;
+
+    function setTinggiHeader() {
+        if(headerAtas) {
+            bungkusSticky.style.setProperty('--tinggi-header', headerAtas.offsetHeight + 'px');
+        }
+    }
+    
+    setTinggiHeader();
+    window.addEventListener('resize', setTinggiHeader);
+
+    window.addEventListener('scroll', function() {
+        if (sessionStorage.getItem('viewAktif') === 'player') return;
+
+        let scrollSekarang = window.scrollY;
+        
+        // --- 1. LOGIKA HEADER (Pakai gaya "ENAK" yang lu mau) ---
+        if (scrollSekarang > scrollTerakhir && scrollSekarang > headerAtas.offsetHeight) {
+            bungkusSticky.classList.add('sembunyi-header');
+        } 
+        else {
+            bungkusSticky.classList.remove('sembunyi-header');
+        }
+        
+        // --- 2. LOGIKA TELEGRAM KAPSUL ---
+        if (scrollSekarang > 300) {
+            if(floatTele) floatTele.classList.add('muncul'); 
+        } else {
+            if(floatTele) floatTele.classList.remove('muncul'); 
+        }
+        
+        scrollTerakhir = scrollSekarang;
+    }, { passive: true });
+});
 
 
 
