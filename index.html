@@ -466,19 +466,17 @@
        }
       .section-related h2 { font-size: 17px; font-weight: 900; color: #eee; } 
         
-     @media (min-width: 769px) {
-       #playerPage {
-        padding: 0 8px;
-       }
-       
-       
-        #backBtn {
-        padding: 4px 10px;
-       }
-
-        .section-related {
-        padding: 8px 15px;
-      }
+     @media (min-width: 1025px) {
+    #playerPage {
+        padding: 0 20px;
+    }
+    .player-wrapper-card {
+        margin-left: 0;  
+        margin-right: 0;
+    }
+    .section-related {
+        padding: 10px 20px;
+    }
 }
         .hot-video {
         color: white;              
@@ -640,7 +638,7 @@
             -webkit-backdrop-filter: blur(8px) saturate(200%) brightness(125%);                      
         }
    
-        @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } #playerPage { padding: 0 20px; } }
+        @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header, nav, main { padding-left: 8px; padding-right: 8px; } }
         @media (max-width: 480px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header { flex-direction: column; gap: 20px; padding-top: 20px; padding-bottom: 20px; } .search-box { width: 100%; } .search-box input { width: 100%; } }
         
