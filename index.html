@@ -645,20 +645,19 @@
             backdrop-filter: blur(8px) saturate(200%) brightness(125%); 
             -webkit-backdrop-filter: blur(8px) saturate(200%) brightness(125%);                      
         }
-        
-        
+                
         #float-tele {
             position: fixed;
             bottom: -70px; 
             right: 20px;
             background-color: #24A1DE;
             color: white;
-            padding: 10px 18px; /* Bikin ngelebar ke samping */
-            border-radius: 50px; /* Bentuk pil/kapsul */
+            padding: 10px 18px; 
+            border-radius: 50px; 
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px; /* Jarak antara teks dan logo */
+            gap: 8px; 
             box-shadow: 0 4px 15px rgba(36, 161, 222, 0.5);
             z-index: 998;
             transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -666,9 +665,9 @@
         }
 
         #float-tele .tele-text {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: bold;
-            white-space: nowrap; /* Biar tulisannya gak patah ke bawah */
+            white-space: nowrap; 
             letter-spacing: 0.5px;
         }
 
@@ -676,17 +675,15 @@
             font-size: 20px;
         }
 
-        /* Animasi kejut/jantung berdetak */
         #float-tele.muncul {
             bottom: 20px; 
             animation: kejut-tele 2.5s infinite; 
         }
 
-        /* Berhenti getar pas di-hover */
         #float-tele:hover {
             animation: none;
             transform: scale(1.05);
-            background-color: #1e8bcc; /* Gelapin dikit pas di-hover */
+            background-color: #1e8bcc; 
         }
 
         body:has(#playerPage[style*="display: block"]) #float-tele {
@@ -694,18 +691,17 @@
         }
 
         @keyframes kejut-tele {
-            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(36,161,222, 0.5); }
-            10% { transform: scale(1.08); box-shadow: 0 0 25px rgba(36,161,222, 1); }
-            20% { transform: scale(1); box-shadow: 0 4px 15px rgba(36,161,222, 0.5); }
-            30% { transform: scale(1.08); box-shadow: 0 0 25px rgba(36,161,222, 1); }
-            40% { transform: scale(1); box-shadow: 0 4px 15px rgba(36,161,222, 0.5); }
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(36,161,222, 0.4); }
+            10% { transform: scale(1.08); box-shadow: 0 6px 18px rgba(36,161,222, 0.65); }
+            20% { transform: scale(1); box-shadow: 0 4px 15px rgba(36,161,222, 0.4); }
+            30% { transform: scale(1.08); box-shadow: 0 6px 18px rgba(36,161,222, 0.65); }
+            40% { transform: scale(1); box-shadow: 0 4px 15px rgba(36,161,222, 0.4); }
             100% { transform: scale(1); }
         }
 
-        /* (Opsional) Biar di HP yang layarnya kecil banget tulisannya gak kepanjangan */
         @media (max-width: 480px) {
             #float-tele .tele-text {
-                font-size: 11px;
+                font-size: 12px;
             }
             #float-tele {
                 padding: 8px 14px;
@@ -941,7 +937,7 @@
     </footer>
  
     <a href="https://t.me/+9yfRTEBsNSNjNWVl" target="_blank" id="float-tele" data-nosnippet title="Join Telegram">
-        <span class="tele-text">Join Telegram ZoneXhub</span>
+        <span class="tele-text">Channel Tele ZoneXhub</span>
         <i class="fab fa-telegram-plane"></i>
     </a>
     
@@ -1878,7 +1874,7 @@ if ('serviceWorker' in navigator) {
 window.addEventListener('load', function() {
     const bungkusSticky = document.querySelector('.sticky-wrapper');
     const headerAtas = document.querySelector('header');
-    const floatTele = document.getElementById('float-tele'); // <-- Jangan lupa ini buat panggil Telegram
+    const floatTele = document.getElementById('float-tele'); 
     let scrollTerakhir = window.scrollY;
 
     function setTinggiHeader() {
@@ -1894,17 +1890,17 @@ window.addEventListener('load', function() {
         if (sessionStorage.getItem('viewAktif') === 'player') return;
 
         let scrollSekarang = window.scrollY;
-        
-        // --- 1. LOGIKA HEADER (Pakai gaya "ENAK" yang lu mau) ---
-        if (scrollSekarang > scrollTerakhir && scrollSekarang > headerAtas.offsetHeight) {
+              
+        if (scrollSekarang > scrollTerakhir && scrollSekarang > 20) {
             bungkusSticky.classList.add('sembunyi-header');
         } 
         else {
             bungkusSticky.classList.remove('sembunyi-header');
         }
-        
-        // --- 2. LOGIKA TELEGRAM KAPSUL ---
-        if (scrollSekarang > 300) {
+               
+        let lagiNyari = sessionStorage.getItem('keywordSearch');
+ 
+        if (scrollSekarang > 300 && !lagiNyari) {
             if(floatTele) floatTele.classList.add('muncul'); 
         } else {
             if(floatTele) floatTele.classList.remove('muncul'); 
