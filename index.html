@@ -60,7 +60,7 @@
         display: flex; 
         justify-content: space-between; 
         align-items: center; 
-        padding: 15px 20px; 
+        padding: 20px 20px; 
         background-color: var(--bg-header); 
       }
 
@@ -69,13 +69,13 @@
          background: #1a1a1a; 
          border-radius: 100px; 
          overflow: hidden; 
-         border: 1.5px solid #444; 
+         border: 1px solid var(--accent-color);
       }
 
         .search-box input { 
          background: transparent; 
          border: none; 
-         padding: 10px 12px; 
+         padding: 10px 10px; 
          color: white; 
          width: 297px; 
          outline: none; 
@@ -97,7 +97,7 @@
         
        @media (min-width: 769px) {
           header { 
-          padding: 20px 20px; 
+          padding: 10px 10px; 
         }
      
          #tempat-logo {
@@ -110,7 +110,7 @@
        
         nav { 
         background-color: var(--bg-header); 
-        padding: 10px 20px 25px 20px; 
+        padding: 10px 20px 10px 20px; 
         display: flex; 
         gap: 8px; 
         border-bottom: 1px solid #222; 
@@ -134,7 +134,7 @@
          
          transition: background 0.2s; 
          border-radius: 100px; 
-         border: 1.5px solid #444; 
+         border: 0.8px solid var(--accent-color);
       }
 
         nav a.active, nav a:hover { 
@@ -613,12 +613,34 @@
             color: #fff;
             margin-bottom: 5px;
         }
+        
+        
+  
+        .sticky-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 999; 
+        }
+
+        body:has(#playerPage[style*="display: block"]) .sticky-wrapper {
+            position: relative !important; 
+        }
+
+        .sticky-wrapper header {
+            background-color: var(--bg-header) !important;
+            position: relative;
+            z-index: 2; 
+        }
+       
+        .sticky-wrapper nav {         
+            background: rgba(10, 10, 10, 0.15) !important;          
+            backdrop-filter: blur(8px) saturate(200%) brightness(125%); 
+            -webkit-backdrop-filter: blur(8px) saturate(200%) brightness(125%);                      
+        }
    
         @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header, nav, main { padding-left: 8px; padding-right: 8px; } }
-        @media (max-width: 480px) { .video-grid { grid-template-columns: repeat(2, 1fr); }  header {  flex-direction: column;  gap: 15px;  padding-top: 25px;  padding-bottom: 15px; 
-      } 
-}
+        @media (max-width: 480px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header { flex-direction: column; gap: 10px; padding-top: 25px; padding-bottom: 15px; } .search-box { width: 100%; } .search-box input { width: 100%; } }
         
     </style>    
     
@@ -646,15 +668,19 @@
         </div>
     </noscript>
       
-    <header>
-        <div id="tempat-logo"></div>
-        <div class="search-box" data-nosnippet>
-            <input type="text" id="searchInput" placeholder="Search video..." onkeyup="cariVideo(event)">
-            <button id="btnSecret" onclick="cariVideo(event)"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </div>
-    </header>
+    
+    <div class="sticky-wrapper">
+        <header>
+            <div id="tempat-logo"></div>
+            <div class="search-box" data-nosnippet>
+                <input type="text" id="searchInput" placeholder="Search video..." onkeyup="cariVideo(event)">
+                <button id="btnSecret" onclick="cariVideo(event)"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </header>
 
-    <nav id="menu-navigasi" data-nosnippet></nav>
+        <nav id="menu-navigasi" data-nosnippet></nav>
+    </div>
+    
     
     <div class="section-header" id="sectionTitle">
         <h1>Most Popular & Viral Porn Video Collection: Indo, JAV, and Western.</h1>
