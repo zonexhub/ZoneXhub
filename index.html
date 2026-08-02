@@ -99,15 +99,11 @@
           header { 
           padding-top: 20px;
           padding-right: 20px;
-          padding-bottom: 12px;
+          padding-bottom: 20px;
           padding-left: 23px;
-        }
-          .search-box { 
-          padding-bottom: 12px;
         }
          #tempat-logo {
           margin-left: 10px;
-          margin-bottom: 12
         }  
           #tempat-logo img {
           width: 180px !important; 
@@ -116,7 +112,7 @@
        
         nav { 
         background-color: var(--bg-header); 
-        padding: 20px 20px; 
+        padding: 10px 10px; 
         display: flex; 
         gap: 8px; 
         border-bottom: 1px solid #222; 
@@ -140,7 +136,7 @@
          
          transition: background 0.2s; 
          border-radius: 100px; 
-         border: 0.8px solid var(--accent-color);
+         border: 1px solid var(--accent-color);
       }
 
         nav a.active, nav a:hover { 
@@ -646,7 +642,7 @@
    
         @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header, nav, main { padding-left: 8px; padding-right: 8px; } }
-        @media (max-width: 480px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header { flex-direction: column; gap: 10px; padding-top: 25px; padding-bottom: 15px; } .search-box { width: 100%; } .search-box input { width: 100%; } }
+        @media (max-width: 480px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header { flex-direction: column; gap: 20px; padding-top: 20px; padding-bottom: 20px; } .search-box { width: 100%; } .search-box input { width: 100%; } }
         
     </style>    
     
@@ -1338,7 +1334,7 @@ if(elTanggal) {
                     <input type="text" class="edit-sm-input edit-sm-link" id="input-header-link" value="${headerData.link}" placeholder="Link Redirect" style="width: 150px;">
                 </div>`;
             } else {
-                wadahLogo.innerHTML = `<a href="${headerData.link}"><img src="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345608/1000042601-removebg-preview_onl3xz.png" alt="Logo" style="height: auto; width:150px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(235, 31, 114, 0.4));"></a>`;
+                wadahLogo.innerHTML = `<a href="${headerData.link}"><img src="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345608/1000042601-removebg-preview_onl3xz.png" alt="Logo" style="height: auto; width:150px; filter: drop-shadow(0 0 10px rgba(235, 31, 114, 0.4));"></a>`;
             }
         }
         
