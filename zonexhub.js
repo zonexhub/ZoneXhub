@@ -282,7 +282,7 @@ function tampilkanGrid() {
                
         let labelHTML = '';
         
-        let otomatisNew = (index < 4 && halamanSekarang === 1 && kategoriAktif === "HOME" && !hasilPencarian);           
+        let otomatisNew = (index < 4 && halamanSekarang === 1 && !hasilPencarian);
         
         if (video.label === 'new' || otomatisNew) {
             labelHTML += '<div class="label-new">NEW</div>';
