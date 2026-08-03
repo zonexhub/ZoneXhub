@@ -279,11 +279,12 @@ function tampilkanGrid() {
                 video.label_time = null; 
             }
         }
-        
-        
-        let labelHTML = '';
                
-        if (video.label === 'new' || (!video.label && index < 4 && halamanSekarang === 1 && kategoriAktif === "HOME" && !hasilPencarian)) {
+        let labelHTML = '';
+        
+        let otomatisNew = (index < 4 && halamanSekarang === 1 && kategoriAktif === "HOME" && !hasilPencarian);           
+        
+        if (video.label === 'new' || otomatisNew) {
             labelHTML += '<div class="label-new">NEW</div>';
         } 
 
