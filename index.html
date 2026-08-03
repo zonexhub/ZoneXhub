@@ -53,9 +53,34 @@
     <style id="core-style">
         :root { --bg-body: #1a1a1a; --bg-header: #202020; --accent-color: #eb1f72; --text-main: #ffffff; --text-muted: #b3b3b3; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.5; }
-        a { text-decoration: none; color: inherit; }
-      
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body { 
+        font-family: Arial, sans-serif; 
+        background-color: var(--bg-body); 
+        color: var(--text-main); 
+        line-height: 1.5; 
+        -webkit-overflow-scrolling: touch; 
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overscroll-behavior-y: none; 
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+         user-select: none;
+        -webkit-touch-callout: none;
+        }       
+        
+        a { 
+        text-decoration: none; 
+        color: inherit; 
+       }
+        
+        
         header { 
         display: flex; 
         justify-content: space-between; 
@@ -589,7 +614,8 @@
         
         .player-box.floating {
             position: fixed;
-            top: 20px;
+            bottom: 90px !important; 
+            top: auto !important;    
             right: 20px;
             width: 320px !important;
             height: 180px !important; 
@@ -615,15 +641,20 @@
 
         @media (max-width: 768px) {
             .player-box.floating { 
-                width: 240px !important; 
-                height: 135px !important; 
-                top: 20px !important;                   
+                width: 183px !important;  
+                height: 103px !important; 
+                bottom: 150px !important;  
+                top: auto !important;     
                 right: 8px !important; 
             }
             .player-box.floating iframe { 
-                width: 240px !important;
-                height: 135px !important; 
+                width: 183px !important;  
+                height: 103px !important; 
                 aspect-ratio: unset !important;
+            }
+            .player-box.floating #closeFloatBtn {
+                font-size: 21px !important; 
+                top: 3px !important;
             }
         }
                       
@@ -1872,55 +1903,82 @@ muatDataAwal();
             document.addEventListener("touchmove", drag, {passive: false});
           }
 
-         function dragStart(e) {  
+
+        let bKiri = 0, bKanan = 0, bAtas = 0, bBawah = 0;
+
+        function dragStart(e) {  
              if (e.target.closest('button')) return;
 
-         if (e.type === "touchstart") {
-             initialX = e.touches[0].clientX - xOffset;
-             initialY = e.touches[0].clientY - yOffset;
-         } else {
-             initialX = e.clientX - xOffset;
-             initialY = e.clientY - yOffset;
-          }
-    
-         if (e.target === dragHeader || dragHeader.contains(e.target)) {
-             isDragging = true;
              playerBoxDrag.style.transition = "none"; 
-          }
-     }
 
-         function dragEnd(e) {
-            initialX = currentX;
-            initialY = currentY;
-            isDragging = false;
-    
-         if(playerBoxDrag.classList.contains('floating')){
-            playerBoxDrag.style.transition = "transform 0.1s ease-out, box-shadow 0.3s ease";
-           }
-     }
+             if (e.type === "touchstart") {
+                 initialX = e.touches[0].clientX - xOffset;
+                 initialY = e.touches[0].clientY - yOffset;
+             } else {
+                 initialX = e.clientX - xOffset;
+                 initialY = e.clientY - yOffset;
+             }
+        
+             if (e.target === dragHeader || dragHeader.contains(e.target)) {
+                 isDragging = true;
+                 
+                 let playerW = playerBoxDrag.offsetWidth;
+                 let playerH = playerBoxDrag.offsetHeight;
+                 let isMobile = window.innerWidth <= 768;
+                 let spasiKanan = isMobile ? 8 : 20;
+                 let spasiBawah = isMobile ? 150 : 90;
+                 let spasiKiri = 8;
+                 let spasiAtas = 15;
+
+                 bKiri = -(window.innerWidth - playerW - spasiKanan - spasiKiri);
+                 bKanan = 0; 
+                 bAtas = -(window.innerHeight - playerH - spasiBawah - spasiAtas);
+                 bBawah = 0; 
+             }
+         }
 
          function drag(e) {
             if (!isDragging) return;
-            e.preventDefault(); 
+            e.preventDefault(); // Kunci scroll layar
 
-        if (e.type === "touchmove") {
-            currentX = e.touches[0].clientX - initialX;
-            currentY = e.touches[0].clientY - initialY;
-        } else {
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
+            if (e.type === "touchmove") {
+                currentX = e.touches[0].clientX - initialX;
+                currentY = e.touches[0].clientY - initialY;
+            } else {
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+            }
+          
+            if (currentX < bKiri) currentX = bKiri;
+            if (currentX > bKanan) currentX = bKanan;
+            if (currentY < bAtas) currentY = bAtas;
+            if (currentY > bBawah) currentY = bBawah;        
+            if (raFId) cancelAnimationFrame(raFId);
+            raFId = requestAnimationFrame(() => {
+                playerBoxDrag.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+            });
         }
 
-            xOffset = currentX;
-             yOffset = currentY;
+        function dragEnd(e) {
+            if (!isDragging) return;
+            isDragging = false;
+    
+            if(playerBoxDrag.classList.contains('floating')){
+                
+                let tengahX = bKiri / 2;
+                let tengahY = bAtas / 2;
+             
+                currentX = (currentX < tengahX) ? bKiri : bKanan;
+                currentY = (currentY < tengahY) ? bAtas : bBawah;
 
-         if (raFId) cancelAnimationFrame(raFId);
-             raFId = requestAnimationFrame(setTranslate);
+                xOffset = currentX;
+                yOffset = currentY;
+             
+                playerBoxDrag.style.transition = "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)";
+                playerBoxDrag.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+            }
         }
 
-         function setTranslate() {
-    playerBoxDrag.style.transform = "translate3d(" + currentX + "px, " + currentY + "px, 0)";
-}
 
 
 
@@ -1936,6 +1994,7 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+
 
 
 
@@ -1978,6 +2037,9 @@ window.addEventListener('load', function() {
         scrollTerakhir = scrollSekarang;
     }, { passive: true });
 });
+
+
+
 
 
 
@@ -2036,5 +2098,31 @@ window.addEventListener('load', function() {
 
 
     </script>
+   
+    <script data-nosnippet>      
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+ 
+    document.onkeydown = function(e) {              
+        if(e.keyCode == 123) {
+            return false;
+        }       
+            
+        if((e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || 
+           (e.metaKey && e.altKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67))) {
+            return false;
+        }          
+            
+        if((e.ctrlKey && e.keyCode == 85) || (e.metaKey && e.altKey && e.keyCode == 85)) {
+            return false;
+        }         
+                
+        if((e.ctrlKey && e.keyCode == 83) || (e.metaKey && e.keyCode == 83)) {
+            return false;
+        }
+    };
+</script>
+    
 </body>
 </html>
