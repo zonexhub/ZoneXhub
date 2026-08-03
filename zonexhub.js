@@ -51,9 +51,14 @@ function toggleEditMode() {
                     v.views = document.getElementById(`input-view-${i}`).value;
                     v.durasi = document.getElementById(`input-durasi-${i}`).value;
                     v.kategori = document.getElementById(`input-kategori-${i}`).value;
-                    v.label = document.getElementById(`input-label-${i}`) ? document.getElementById(`input-label-${i}`).value : (v.label || "");
-                }
-            });
+                    v.label = document.getElementById(`input-label-${i}`) ? document.getElementById(`input-label-${i}`).value : (v.label || "");                 
+               if (v.label === 'new' && !v.label_time) {
+                 v.label_time = new Date().getTime(); 
+              } else if (v.label !== 'new') {
+                 v.label_time = null; 
+              }
+          }
+      });
 
             menuData.forEach((menu, index) => {
                 if(document.getElementById(`input-menu-text-${index}`)) {
@@ -264,11 +269,22 @@ function tampilkanGrid() {
         if (!isEditMode) {
             card.onclick = () => arahkanKeLink((hasilPencarian || dataAktif)[index]);
         }
+        
+        const SEKARANG = new Date().getTime();
+        const SATU_HARI = 24 * 60 * 60 * 1000; 
+
+        if (video.label === 'new' && video.label_time) {
+            if (SEKARANG - video.label_time > SATU_HARI) {
+                video.label = "";       
+                video.label_time = null; 
+            }
+        }
+        
         let labelHTML = '';
         if (video.label === 'new' || (!video.label && index < 4 && halamanSekarang === 1 && kategoriAktif === "HOME" && !hasilPencarian)) {
-            labelHTML = '<div class="video-label label-new">NEW</div>';
+            labelHTML = '<div class="label-new">NEW</div>';
         } else if (video.label === 'populer') {
-            labelHTML = '<div class="video-label label-populer">POPULAR</div>';
+            labelHTML = '<div class="label-populer">POPULAR</div>';
         }
 
         card.innerHTML = `
