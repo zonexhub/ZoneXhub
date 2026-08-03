@@ -74,7 +74,9 @@ function toggleEditMode() {
                 alert("Data tersimpan sementara!");
             }
         }
-        
+
+  
+      
         
        function bersihkanIframeInstan(elemenInput) {
        let teks = elemenInput.value;
@@ -403,3 +405,13 @@ function tampilkanGrid() {
 
     wadahVideo.appendChild(fragment);   
  }
+ 
+ 
+ document.addEventListener('input', function(e) {
+    if (e.target.classList.contains('edit-input-title') && e.target.id.startsWith('input-judul-')) {
+        let teks = e.target.value;
+        e.target.value = teks.replace(/\b\w/g, function(huruf) { 
+            return huruf.toUpperCase(); 
+        });
+    }
+});
