@@ -280,11 +280,15 @@ function tampilkanGrid() {
             }
         }
         
+        
         let labelHTML = '';
+               
         if (video.label === 'new' || (!video.label && index < 4 && halamanSekarang === 1 && kategoriAktif === "HOME" && !hasilPencarian)) {
-            labelHTML = '<div class="label-new">NEW</div>';
-        } else if (video.label === 'populer') {
-            labelHTML = '<div class="label-populer">POPULAR</div>';
+            labelHTML += '<div class="label-new">NEW</div>';
+        } 
+
+        if (video.label === 'populer') {
+            labelHTML += '<div class="label-populer">POPULAR</div>';
         }
 
         card.innerHTML = `
