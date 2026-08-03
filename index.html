@@ -219,9 +219,9 @@
 
         .label-new {
             position: absolute;
-            top: 6px;      
-            left: 6px;     
-            padding: 3px 8px; 
+            top: 4px;      
+            left: 5px;     
+            padding: 3px 7px; 
             font-size: 8px;   
             font-weight: 900;
             color: #fff;
@@ -245,9 +245,9 @@
 
         .label-populer {
             position: absolute;
-            top: 6px;      
-            right: 6px;    
-            padding: 3px 8px; 
+            top: 4px;      
+            right: 5px;    
+            padding: 3px 6px; 
             font-size: 8px;   
             font-weight: 900;
             color: #fff;
@@ -671,6 +671,9 @@
         .video-card.editing.gambar-mati {
             border: 2px solid #ff0000 !important;
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.8) !important;
+        }
+        .video-card.gambar-mati:not(.editing) {
+            display: none !important;
         }
         .video-card.editing.gambar-mati .edit-overlay {
             background: rgba(255, 0, 0, 0.9) !important;

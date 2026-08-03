@@ -30,6 +30,10 @@ window['\x7a\x6f\x6e\x65\x78\x68\x75\x62']=function(){
     }
 };
 
+
+
+
+
 function toggleEditMode() {
             isEditMode = true;
             document.getElementById("btnEdit").style.display = "none";
@@ -38,8 +42,15 @@ function toggleEditMode() {
             tampilkanHeader(); tampilkanGrid(); tampilkanMenu(); tampilkanPagination();
         }
 
+
+
+
+
         function simpanPerubahan(tanpaNotif = false) {
-            const dataTarget = hasilPencarian || videoData;
+            let dataTarget = videoData;
+            if (kategoriAktif !== "HOME") { dataTarget = dataTarget.filter(v => (v.kategori || "") == kategoriAktif); }
+            if (hasilPencarian) { dataTarget = hasilPencarian; }
+
             const mulai = (halamanSekarang - 1) * videoPerHalaman;
             const akhir = mulai + videoPerHalaman;
             dataTarget.slice(mulai, akhir).forEach((v, idx) => {
@@ -52,6 +63,7 @@ function toggleEditMode() {
                     v.durasi = document.getElementById(`input-durasi-${i}`).value;
                     v.kategori = document.getElementById(`input-kategori-${i}`).value;
                     v.label = document.getElementById(`input-label-${i}`) ? document.getElementById(`input-label-${i}`).value : (v.label || "");                 
+               
                if (v.label === 'new' && !v.label_time) {
                  v.label_time = new Date().getTime(); 
               } else if (v.label !== 'new') {
@@ -83,6 +95,7 @@ function toggleEditMode() {
 
   
       
+      
         
        function bersihkanIframeInstan(elemenInput) {
        let teks = elemenInput.value;
@@ -93,45 +106,63 @@ function toggleEditMode() {
         }
     }
 }
-        
+   
+
+
+
+     
         function gantiGambarURL(i) {
             const dataTarget = hasilPencarian || videoData;
             let u = prompt("LINK GAMBAR:", dataTarget[i].gambar);
             if (u) { dataTarget[i].gambar = u; tampilkanGrid(); }
         }
-     
+  
+
+
+
+   
    function tambahVideo() {
-        const dataTarget = hasilPencarian || videoData;
-        const mulai = (halamanSekarang - 1) * videoPerHalaman;
-        const akhir = mulai + videoPerHalaman;
-        dataTarget.slice(mulai, akhir).forEach((v, idx) => {
-            const i = mulai + idx;
-            if (document.getElementById(`input-judul-${i}`)) {
-                v.judul = document.getElementById(`input-judul-${i}`).value;
-                v.tujuan = document.getElementById(`input-player-${i}`).value || "#";
-                v.tanggal = document.getElementById(`input-tanggal-${i}`) ? document.getElementById(`input-tanggal-${i}`).value : (v.tanggal || "");
-                v.views = document.getElementById(`input-view-${i}`).value;
-                v.durasi = document.getElementById(`input-durasi-${i}`).value;
-                v.kategori = document.getElementById(`input-kategori-${i}`).value;
-            }
-        });
+            let dataTarget = videoData;
+            if (kategoriAktif !== "HOME") { dataTarget = dataTarget.filter(v => (v.kategori || "") == kategoriAktif); }
+            if (hasilPencarian) { dataTarget = hasilPencarian; }
+
+            const mulai = (halamanSekarang - 1) * videoPerHalaman;
+            const akhir = mulai + videoPerHalaman;
+            dataTarget.slice(mulai, akhir).forEach((v, idx) => {
+                const i = mulai + idx;
+                if (document.getElementById(`input-judul-${i}`)) {
+                    v.judul = document.getElementById(`input-judul-${i}`).value;
+                    v.tujuan = document.getElementById(`input-player-${i}`).value || "#";
+                    v.tanggal = document.getElementById(`input-tanggal-${i}`) ? document.getElementById(`input-tanggal-${i}`).value : (v.tanggal || "");
+                    v.views = document.getElementById(`input-view-${i}`).value;
+                    v.durasi = document.getElementById(`input-durasi-${i}`).value;
+                    v.kategori = document.getElementById(`input-kategori-${i}`).value;
+                    v.label = document.getElementById(`input-label-${i}`) ? document.getElementById(`input-label-${i}`).value : (v.label || "");
+                }
+            });
+            
+            const bulanIndo = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            const waktu = new Date();
+            const tglOtomatis = `${waktu.getDate()} ${bulanIndo[waktu.getMonth()]} ${waktu.getFullYear()}`;
+            videoData.unshift({
+                gambar: "",
+                judul: "",
+                tujuan: "",
+                views: "",
+                durasi: "",
+                kategori: "",
+                label: "",
+                tanggal: tglOtomatis 
+            });
+            tampilkanPagination();
+            tampilkanGrid();
+        }
         
-    const bulanIndo = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-    const waktu = new Date();
-    const tglOtomatis = `${waktu.getDate()} ${bulanIndo[waktu.getMonth()]} ${waktu.getFullYear()}`;
-    videoData.unshift({
-        gambar: "",
-        judul: "",
-        tujuan: "",
-        views: "",
-        durasi: "",
-        kategori: "",
-        label: "",
-        tanggal: tglOtomatis 
-    });
-    tampilkanPagination();
-    tampilkanGrid();
-}
+
+
+
+
+        
     function hapusVideo() {
          if(videoData.length > 0){ 
                 videoData.shift(); 
@@ -140,7 +171,10 @@ function toggleEditMode() {
              }
          }
 
-     
+   
+   
+ 
+ 
 function downloadWebFinal() {
     simpanPerubahan(true);     
     
@@ -203,6 +237,10 @@ function downloadWebFinal() {
         location.reload();        
     }, 15000); 
 }
+
+
+
+
 
 
 function tampilkanGrid() {
@@ -443,6 +481,8 @@ function tampilkanGrid() {
 
     wadahVideo.appendChild(fragment);   
  }
+ 
+ 
  
  
  document.addEventListener('input', function(e) {
