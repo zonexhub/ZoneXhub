@@ -51,6 +51,7 @@ function toggleEditMode() {
                     v.views = document.getElementById(`input-view-${i}`).value;
                     v.durasi = document.getElementById(`input-durasi-${i}`).value;
                     v.kategori = document.getElementById(`input-kategori-${i}`).value;
+                    v.label = document.getElementById(`input-label-${i}`) ? document.getElementById(`input-label-${i}`).value : (v.label || "");
                 }
             });
 
@@ -120,6 +121,7 @@ function toggleEditMode() {
         views: "",
         durasi: "",
         kategori: "",
+        label: "",
         tanggal: tglOtomatis 
     });
     tampilkanPagination();
@@ -262,15 +264,22 @@ function tampilkanGrid() {
         if (!isEditMode) {
             card.onclick = () => arahkanKeLink((hasilPencarian || dataAktif)[index]);
         }
+        let labelHTML = '';
+        if (video.label === 'new' || (!video.label && index < 4 && halamanSekarang === 1 && kategoriAktif === "HOME" && !hasilPencarian)) {
+            labelHTML = '<div class="video-label label-new">NEW</div>';
+        } else if (video.label === 'populer') {
+            labelHTML = '<div class="video-label label-populer">POPULAR</div>';
+        }
 
         card.innerHTML = `
             <div class="thumbnail">
+              ${labelHTML}
                 <img src="${srcGambar}" alt="${video.judul}" loading="lazy" onerror="this.onerror=null; this.src='${gambarLoading}'; this.closest('.video-card').classList.add('gambar-mati');">
                 <div class="overlay-stats">
                     <span><i class="fa-solid fa-eye"></i> ${video.views}</span>
                     <span><i class="fa-regular fa-clock"></i> ${video.durasi}</span>
                 </div>
-              <div class="edit-overlay" data-nosnippet onclick="event.stopPropagation(); gantiGambarURL(${index})">🔗 Link Gambar</div>
+              <div class="edit-overlay" data-nosnippet onclick="event.stopPropagation(); gantiGambarURL(${index})">Link Gambar</div>
             </div>
             <div class="info" onclick="if(isEditMode) event.stopPropagation();">               
                 <div class="title">${video.judul}</div>
@@ -390,12 +399,20 @@ function tampilkanGrid() {
                         <option value="301K">
                     </datalist>
                     <input type="text" class="edit-input-title" id="input-durasi-${index}" value="${video.durasi}" placeholder="Durasi (contoh: 00:00)">
-                    <input type="text" class="edit-input-title" id="input-tanggal-${index}" value="${video.tanggal || ''}" placeholder="Tanggal Post">               
+                    <input type="text" class="edit-input-title" id="input-tanggal-${index}" value="${video.tanggal || ''}" placeholder="Tanggal Post">    
+           
                     <select class="edit-input-title" id="input-kategori-${index}">
                         <option value="${video.kategori}" selected>${video.kategori || "Pilih Kategori"}</option>
                         <option value="Indo">Indo</option>
                         <option value="Jav">Jav</option>
                         <option value="Western">Western</option>
+                    </select>
+                    
+                    <select class="edit-input-title" id="input-label-${index}" style="border-color: #f1c40f;">
+                        <option value="${video.label || ''}" selected>${video.label ? video.label.toUpperCase() : "Tanpa Label"}</option>
+                        <option value="">Tanpa Label</option>
+                        <option value="new">NEW (Hijau)</option>
+                        <option value="populer">POPULAR (Merah)</option>
                     </select>
                 </div>
             </div>`;
