@@ -615,21 +615,21 @@
         
         .player-box.floating {
             position: fixed;
-            bottom: 250px !important; 
-            top: auto !important;    
+            top: 25px !important;
             right: 20px;
-            width: 420px !important;
-            height: 236px !important; 
+            bottom: auto !important;                   
+            width: 360px !important;
+            height: 203px !important; 
             z-index: 9999;
             box-shadow: 0 10px 30px rgba(0,0,0,0.9);                     
-            border: 1px solid var(--accent-color) !important;
+            border: 2px solid var(--accent-color) !important;
             overflow: hidden;        
             will-change: transform, width, height; 
         }
         
         .player-box.floating iframe {
-            width: 420px !important;
-            height: 236px !important; 
+            width: 260px !important;
+            height: 203px !important; 
             aspect-ratio: unset !important;
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
         }
@@ -641,6 +641,7 @@
                 bottom: 150px !important;  
                 top: auto !important;     
                 right: 8px !important; 
+                border: 1px solid var(--accent-color) !important;
             }
             .player-box.floating iframe { 
                 width: 183px !important;  
@@ -1923,15 +1924,23 @@ muatDataAwal();
                  let playerW = playerBoxDrag.offsetWidth;
                  let playerH = playerBoxDrag.offsetHeight;
                  let isMobile = window.innerWidth <= 768;
-                 let spasiKanan = isMobile ? 8 : 20;
-                 let spasiBawah = isMobile ? 150 : 250;
-                 let spasiKiri = 8;
-                 let spasiAtas = 20;
 
+                 let spasiKanan = isMobile ? 8 : 20;
+                 let spasiKiri = 8;
                  bKiri = -(window.innerWidth - playerW - spasiKanan - spasiKiri);
                  bKanan = 0; 
-                 bAtas = -(window.innerHeight - playerH - spasiBawah - spasiAtas);
-                 bBawah = 0; 
+
+                 if (isMobile) {
+                     let spasiBawah = 150;
+                     let spasiAtas = 20;
+                     bAtas = -(window.innerHeight - playerH - spasiBawah - spasiAtas);
+                     bBawah = 0; 
+                 } else {
+                     let spasiAtas = 25; 
+                     let spasiBawah = 20;
+                     bAtas = 0; 
+                     bBawah = (window.innerHeight - playerH - spasiAtas - spasiBawah); 
+                 }
              }
          }
 
@@ -1951,6 +1960,7 @@ muatDataAwal();
             if (currentX > bKanan) currentX = bKanan;
             if (currentY < bAtas) currentY = bAtas;
             if (currentY > bBawah) currentY = bBawah;        
+            
             if (raFId) cancelAnimationFrame(raFId);
             raFId = requestAnimationFrame(() => {
                 playerBoxDrag.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
@@ -1962,12 +1972,18 @@ muatDataAwal();
             isDragging = false; 
             
             if(playerBoxDrag.classList.contains('floating')){
-                            
+                
+                let isMobile = window.innerWidth <= 768;
                 let tengahX = bKiri / 2;
-                let tengahY = bAtas / 2;
+                let tengahY = isMobile ? (bAtas / 2) : (bBawah / 2);
                           
                 currentX = (currentX < tengahX) ? bKiri : bKanan;
-                currentY = (currentY < tengahY) ? bAtas : bBawah;
+                
+                if (isMobile) {
+                    currentY = (currentY < tengahY) ? bAtas : bBawah; 
+                } else {
+                    currentY = (currentY > tengahY) ? bBawah : bAtas; 
+                }
 
                 xOffset = currentX;
                 yOffset = currentY;
