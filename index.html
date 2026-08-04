@@ -193,8 +193,8 @@
         padding: 2px 20px; 
         min-height: 80vh; 
        }
-       
-       .section-header {
+
+        .section-header {
         display: flex;
         align-items: center;
         margin: 15px 18px 15px 18px; 
@@ -472,9 +472,7 @@
           padding: 0 8px;
         }
                       
-        .player-wrapper-card {   
-            width: 100%;
-            max-width: 800px;                     
+        .player-wrapper-card {            
             margin-left: -8px; 
             margin-right: -8px;             
             overflow: hidden;        
@@ -570,7 +568,8 @@
         padding: 0 20px;
        }
        .player-wrapper-card {
-        margin: 0 auto;
+        margin-left: 0;  
+        margin-right: 0;
         box-shadow: none;
        }
         .section-related {
@@ -614,12 +613,9 @@
       }
       
            
-        .player-box { 
-            top: 0;
-            left: 0; 
+        .player-box {   
             width: 100%; 
-            height: 100%;     
-            position: absolute;            
+            height: 100%;         
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease; 
             background: #000;
             transform: translate3d(0,0,0); 
@@ -628,8 +624,7 @@
         .player-box.floating {
             position: fixed;
             top: 25px !important;
-            right: 20px !important;
-            left: auto !important;
+            right: 20px;
             bottom: auto !important;                   
             width: 360px !important;
             height: 203px !important; 
@@ -639,7 +634,7 @@
             overflow: hidden;        
             will-change: transform, width, height; 
         }
-           
+        
         .player-box.floating iframe {
             width: 100% !important;
             height: 203px !important; 
@@ -654,7 +649,6 @@
                 bottom: 150px !important;  
                 top: auto !important;     
                 right: 8px !important; 
-                left: auto !important;
                 border: 1px solid var(--accent-color) !important;
             }
             .player-box.floating iframe { 
@@ -835,8 +829,8 @@
     ];   
     window.DATA_VIDEO = [];
 </script>
-  
-  <script data-nosnippet>
+
+<script data-nosnippet>
     if (window.location.search.includes('v=')) {
         document.documentElement.style.setProperty('--tampil-utama', 'none');
         document.documentElement.style.setProperty('--tampil-player', 'block');
@@ -845,7 +839,7 @@
         document.documentElement.style.setProperty('--tampil-player', 'none');
     }
 </script>
-
+    
 </head>
 
 <body>
