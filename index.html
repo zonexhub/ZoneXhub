@@ -842,7 +842,7 @@
             <div id="tempat-logo"></div>
             <div class="search-box" data-nosnippet>
                 <input type="text" id="searchInput" placeholder="Search video..." onkeyup="cariVideo(event)">
-                <button id="btnSecret" onclick="cariVideo(event)"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button id="btnSecret" aria-label="Cari Video" onclick="cariVideo(event)"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </header>
 
@@ -903,8 +903,8 @@
             <div style="width: 100%; aspect-ratio: 16/9; background: #000;">           
                 <div class="player-box">                              
                     <div id="dragArea"></div>                
-                    <button id="closeFloatBtn" onclick="tutupFloating(event)">&times;</button>              
-                    <iframe id="playerFrame" allowfullscreen frameborder="0"></iframe>
+                    <button id="closeFloatBtn" aria-label="Tutup Video Melayang" onclick="tutupFloating(event)">&times;</button>              
+                    <iframe id="playerFrame" title="Video Player" allowfullscreen frameborder="0"></iframe>
                 </div>              
             </div> 
       
@@ -1003,12 +1003,12 @@
 
             <div>
                 <div class="footer-heading">Categories</div>
-                <ul class="footer-list">
-                    <li><a href="javascript:void(0)" onclick="filterKategori('Indo')">Indonesian Viral</a></li>
-                    <li><a href="javascript:void(0)" onclick="filterKategori('Jav')">JAV Censored & Uncensored</a></li>
-                    <li><a href="javascript:void(0)" onclick="filterKategori('Western')">Western & OnlyFans</a></li>
-                </ul>
-            </div>
+                  <ul class="footer-list">
+                    <li><a href="/?kategori=Indo" onclick="filterKategori('Indo'); return false;">Indonesian Viral</a></li>
+                    <li><a href="/?kategori=Jav" onclick="filterKategori('Jav'); return false;">JAV Censored & Uncensored</a></li>
+                    <li><a href="/?kategori=Western" onclick="filterKategori('Western'); return false;">Western & OnlyFans</a></li>
+                 </ul>
+             </div>
 
             <div>
                 <div class="footer-heading">Information</div>
@@ -1511,19 +1511,21 @@ if(elTanggal) {
                 wadahLogo.innerHTML = `<a href="${headerData.link}"><img src="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345608/1000042601-removebg-preview_onl3xz.png" alt="Logo" style="height: auto; width:150px; filter: drop-shadow(0 0 10px rgba(235, 31, 114, 0.4));"></a>`;
             }
         }
-        
-        function tampilkanMenu() {
-            let isHomeActive = (kategoriAktif === "HOME" || kategoriAktif === "") ? 'class="active"' : '';
-            wadahMenu.innerHTML = `<a href="javascript:void(0)" ${isHomeActive} onclick="kembaliKeHome()">All Videos</a>`;            
-            menuData.forEach((menu, index) => {
-                if (isEditMode) {
-                    wadahMenu.innerHTML += `<div class="edit-block" data-nosnippet><input type="text" class="edit-sm-input" id="input-menu-text-${index}" value="${menu.text}"><input type="text" class="edit-sm-input edit-sm-link" id="input-menu-link-${index}" value="${menu.link}" placeholder="Link"></div>`;
-                } else {
-                    let isKategoriActive = (kategoriAktif === menu.text) ? 'class="active"' : '';
-                    wadahMenu.innerHTML += `<a href="javascript:void(0)" ${isKategoriActive} onclick="bukaKategoriDenganIklan('${menu.link}', '${menu.text}')">${menu.text}</a>`;
-                }
-            });
+ 
+   
+    
+ function tampilkanMenu() {
+     let isHomeActive = (kategoriAktif === "HOME" || kategoriAktif === "") ? 'class="active"' : '';
+     wadahMenu.innerHTML = `<a href="/" ${isHomeActive} onclick="kembaliKeHome(); return false;">All Videos</a>`;            
+     menuData.forEach((menu, index) => {
+        if (isEditMode) {
+            wadahMenu.innerHTML += `<div class="edit-block" data-nosnippet><input type="text" class="edit-sm-input" id="input-menu-text-${index}" value="${menu.text}"><input type="text" class="edit-sm-input edit-sm-link" id="input-menu-link-${index}" value="${menu.link}" placeholder="Link"></div>`;
+        } else {
+            let isKategoriActive = (kategoriAktif === menu.text) ? 'class="active"' : '';
+            wadahMenu.innerHTML += `<a href="/?kategori=${encodeURIComponent(menu.text)}" ${isKategoriActive} onclick="bukaKategoriDenganIklan('${menu.link}', '${menu.text}'); return false;">${menu.text}</a>`;
         }
+    });
+}
 
         
 function tampilkanPagination() {
