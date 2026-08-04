@@ -188,8 +188,13 @@
         .edit-sm-input { background: #111; color: white; border: 1px solid var(--accent-color); padding: 6px; font-size: 12px; border-radius: 3px; outline: none; text-align: center; width: 100px; }
         .edit-sm-link { border-color: #2ecc71; } 
       
-        main { padding: 2px 20px; min-height: 80vh; }
-        .section-header {
+        main { 
+        display: var(--tampil-utama, block);
+        padding: 2px 20px; 
+        min-height: 80vh; 
+       }
+       
+       .section-header {
         display: flex;
         align-items: center;
         margin: 15px 18px 15px 18px; 
@@ -459,8 +464,9 @@
         .fab-btn.download { background-color: #e74c3c; display: none; }
         
         .redirect-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;color:white;justify-content:center;align-items:center;font-size:28px;font-weight:bold;text-align:center;}
+        
         #playerPage {
-          display: none;
+          display: var(--tampil-player, none);
           max-width: 1200px;
           margin: auto;
           padding: 0 8px;
@@ -622,7 +628,8 @@
         .player-box.floating {
             position: fixed;
             top: 25px !important;
-            right: 20px;
+            right: 20px !important;
+            left: auto !important;
             bottom: auto !important;                   
             width: 360px !important;
             height: 203px !important; 
@@ -647,6 +654,7 @@
                 bottom: 150px !important;  
                 top: auto !important;     
                 right: 8px !important; 
+                left: auto !important;
                 border: 1px solid var(--accent-color) !important;
             }
             .player-box.floating iframe { 
@@ -827,8 +835,19 @@
     ];   
     window.DATA_VIDEO = [];
 </script>
-    
+  
+  <script data-nosnippet>
+    if (window.location.search.includes('v=')) {
+        document.documentElement.style.setProperty('--tampil-utama', 'none');
+        document.documentElement.style.setProperty('--tampil-player', 'block');
+    } else {
+        document.documentElement.style.setProperty('--tampil-utama', 'block');
+        document.documentElement.style.setProperty('--tampil-player', 'none');
+    }
+</script>
+
 </head>
+
 <body>
 
     <noscript data-nosnippet>
