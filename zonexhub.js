@@ -333,7 +333,7 @@ function tampilkanGrid() {
         card.innerHTML = `
             <div class="thumbnail">
               ${labelHTML}
-                <img src="${srcGambar}" alt="${video.judul}" loading="lazy" onerror="this.onerror=null; this.src='${gambarLoading}'; this.closest('.video-card').classList.add('gambar-mati');">
+                <img src="${srcGambar}" alt="${video.judul}" ${idx < 4 ? 'fetchpriority="high"' : 'loading="lazy"'} onerror="this.onerror=null; this.src='${gambarLoading}'; this.closest('.video-card').classList.add('gambar-mati');">
                 <div class="overlay-stats">
                     <span><i class="fa-solid fa-eye"></i> ${video.views}</span>
                     <span><i class="fa-regular fa-clock"></i> ${video.durasi}</span>
