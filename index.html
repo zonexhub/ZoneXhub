@@ -608,37 +608,32 @@
       
            
         .player-box {            
-            transition: transform 0.1s ease-out, box-shadow 0.3s ease; 
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease; 
             background: #000;
+            transform: translate3d(0,0,0); 
         }
         
         .player-box.floating {
             position: fixed;
-            bottom: 90px !important; 
+            bottom: 250px !important; 
             top: auto !important;    
             right: 20px;
-            width: 320px !important;
-            height: 180px !important; 
+            width: 420px !important;
+            height: 236px !important; 
             z-index: 9999;
             box-shadow: 0 10px 30px rgba(0,0,0,0.9);                     
-            border-radius: 6px !important; 
-            border: 1.5px solid var(--accent-color) !important;
-            overflow: hidden;
-            animation: popIn 0.3s ease-out;
-            will-change: transform; 
+            border: 1px solid var(--accent-color) !important;
+            overflow: hidden;        
+            will-change: transform, width, height; 
         }
         
         .player-box.floating iframe {
-            width: 320px !important;
-            height: 180px !important; 
+            width: 420px !important;
+            height: 236px !important; 
             aspect-ratio: unset !important;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
         }
-
-        @keyframes popIn {
-           0% { transform: scale(0.8) translateY(20px); opacity: 0; }
-           100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
-
+       
         @media (max-width: 768px) {
             .player-box.floating { 
                 width: 183px !important;  
@@ -1874,25 +1869,28 @@ muatDataAwal();
         window.addEventListener('scroll', function() {
            const playerPage = document.getElementById('playerPage');
          
-    if (playerPage && playerPage.style.display === 'block') {
-        const batasScroll = 350; 
-              
-        if (floatDitutupLokal) return; 
+           if (playerPage && playerPage.style.display === 'block') {
+               const batasScroll = 350; 
+                     
+               if (floatDitutupLokal) return; 
 
-        if (window.scrollY > batasScroll) {
-            if (!playerBoxDrag.classList.contains('floating')) {
-                playerBoxDrag.classList.add('floating');
-            }
-        } else {
-            if (playerBoxDrag.classList.contains('floating')) {
-                playerBoxDrag.classList.remove('floating');
-                xOffset = 0;
-                yOffset = 0;
-                playerBoxDrag.style.transform = "none";
-                }
-             }
-          }
-      });
+               if (window.scrollY > batasScroll) {
+                   if (!playerBoxDrag.classList.contains('floating')) {
+                       
+                       currentX = 0; currentY = 0; xOffset = 0; yOffset = 0;
+                       playerBoxDrag.style.transform = `translate3d(0px, 0px, 0)`;
+                       playerBoxDrag.classList.add('floating');
+                   }
+               } else {
+                   if (playerBoxDrag.classList.contains('floating')) {
+                       playerBoxDrag.classList.remove('floating');
+                       
+                       currentX = 0; currentY = 0; xOffset = 0; yOffset = 0;
+                       playerBoxDrag.style.transform = `translate3d(0px, 0px, 0)`;
+                   }
+               }
+           }
+        });
 
           if (dragHeader) {
             dragHeader.addEventListener("mousedown", dragStart, false);
@@ -1926,9 +1924,9 @@ muatDataAwal();
                  let playerH = playerBoxDrag.offsetHeight;
                  let isMobile = window.innerWidth <= 768;
                  let spasiKanan = isMobile ? 8 : 20;
-                 let spasiBawah = isMobile ? 150 : 90;
+                 let spasiBawah = isMobile ? 150 : 250;
                  let spasiKiri = 8;
-                 let spasiAtas = 15;
+                 let spasiAtas = 20;
 
                  bKiri = -(window.innerWidth - playerW - spasiKanan - spasiKiri);
                  bKanan = 0; 
@@ -1939,7 +1937,7 @@ muatDataAwal();
 
          function drag(e) {
             if (!isDragging) return;
-            e.preventDefault(); // Kunci scroll layar
+            e.preventDefault(); 
 
             if (e.type === "touchmove") {
                 currentX = e.touches[0].clientX - initialX;
@@ -1961,19 +1959,19 @@ muatDataAwal();
 
         function dragEnd(e) {
             if (!isDragging) return;
-            isDragging = false;
-    
+            isDragging = false; 
+            
             if(playerBoxDrag.classList.contains('floating')){
-                
+                            
                 let tengahX = bKiri / 2;
                 let tengahY = bAtas / 2;
-             
+                          
                 currentX = (currentX < tengahX) ? bKiri : bKanan;
                 currentY = (currentY < tengahY) ? bAtas : bBawah;
 
                 xOffset = currentX;
                 yOffset = currentY;
-             
+                           
                 playerBoxDrag.style.transition = "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)";
                 playerBoxDrag.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
             }
