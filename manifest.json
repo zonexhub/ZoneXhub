@@ -1,7 +1,7 @@
 {
   "name": "ZoneXhub - Viral Indo, JAV & Western",
-  "short_name": "ZoneXhub VIP",
-  "description": "Aplikasi VIP surganya skandal viral Indo pemersatu bangsa, JAV tanpa sensor, dan bocoran OnlyFans Barat. Nonton gratis, anti lelet, update tiap hari!",
+  "short_name": "ZoneXhub",
+  "description": "Aplikasi VIP surganya skandal viral Indo pemersatu bangsa, JAV tanpa sensor, dan bocoran OnlyFans Barat. Nonton gratis, anti lelet, update setiap hari!",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1a1a",
@@ -13,8 +13,8 @@
       "type": "image/png"
     },
     {
-      "src": "https://res.cloudinary.com/drtbkd5lr/image/upload/v1785303541/combined-image_1_pjjsyl.png",
-      "sizes": "512x512",
+      "src": "https://res.cloudinary.com/drtbkd5lr/image/upload/v1785922125/Logo_Loading_Screen_ZoneXhub_mfyzsd.png",
+      "sizes": "724x724",
       "type": "image/png"
     }
   ]
