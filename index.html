@@ -1992,23 +1992,28 @@ muatDataAwal();
                  
                  let playerW = playerBoxDrag.offsetWidth;
                  let playerH = playerBoxDrag.offsetHeight;
-                 let isMobile = window.innerWidth <= 768;
+                                 
+                 let lebarLayar = document.documentElement.clientWidth;
+                 let tinggiLayar = window.innerHeight;                  
+                 let isMobile = lebarLayar <= 768;
 
                  let spasiKanan = isMobile ? 8 : 20;
                  let spasiKiri = 8;
-                 bKiri = -(window.innerWidth - playerW - spasiKanan - spasiKiri);
+                 
+                 
+                 bKiri = -(lebarLayar - playerW - spasiKanan - spasiKiri);
                  bKanan = 0; 
 
                  if (isMobile) {
-                     let spasiBawah = 150;
-                     let spasiAtas = 20;
-                     bAtas = -(window.innerHeight - playerH - spasiBawah - spasiAtas);
+                     let spasiBawah = 150;                     
+                     let spasiAtas = 90; 
+                     bAtas = -(tinggiLayar - playerH - spasiBawah - spasiAtas);
                      bBawah = 0; 
                  } else {
                      let spasiAtas = 25; 
                      let spasiBawah = 20;
                      bAtas = 0; 
-                     bBawah = (window.innerHeight - playerH - spasiAtas - spasiBawah); 
+                     bBawah = (tinggiLayar - playerH - spasiAtas - spasiBawah); 
                  }
              }
          }
