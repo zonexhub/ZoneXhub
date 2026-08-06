@@ -1913,211 +1913,183 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+const playerBoxDrag = document.querySelector('.player-box');
+const dragHeader = document.getElementById('dragArea');
+let floatDitutupLokal = false; 
+let isDragging = false;
+let currentX = 0, currentY = 0, initialX = 0, initialY = 0;
+let xOffset = 0, yOffset = 0;
+let raFId = null; 
 
-      const playerBoxDrag = document.querySelector('.player-box');
-      const dragHeader = document.getElementById('dragArea');
-      let floatDitutupLokal = false; 
-      let isDragging = false;
-      let currentX = 0, currentY = 0, initialX = 0, initialY = 0;
-      let xOffset = 0, yOffset = 0;
-      let raFId = null; 
-
-        function tutupFloating(e) {
-           if (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-        
-        floatDitutupLokal = true; 
-        playerBoxDrag.classList.remove('floating');
-     
-        xOffset = 0;
-        yOffset = 0;
-        playerBoxDrag.style.transform = "none";
-      }
-
-        window.addEventListener('scroll', function() {
-           const playerPage = document.getElementById('playerPage');
-         
-           if (playerPage && playerPage.style.display === 'block') {
-               const batasScroll = 350; 
-                     
-               if (floatDitutupLokal) return; 
-
-               if (window.scrollY > batasScroll) {
-                   if (!playerBoxDrag.classList.contains('floating')) {
-                       
-                       currentX = 0; currentY = 0; xOffset = 0; yOffset = 0;
-                       playerBoxDrag.style.transform = `translate3d(0px, 0px, 0)`;
-                       playerBoxDrag.classList.add('floating');
-                   }
-               } else {
-                   if (playerBoxDrag.classList.contains('floating')) {
-                       playerBoxDrag.classList.remove('floating');
-                       
-                       currentX = 0; currentY = 0; xOffset = 0; yOffset = 0;
-                       playerBoxDrag.style.transform = `translate3d(0px, 0px, 0)`;
-                   }
-               }
-           }
-        });
-
-          if (dragHeader) {
-            dragHeader.addEventListener("mousedown", dragStart, false);
-            document.addEventListener("mouseup", dragEnd, false);
-            document.addEventListener("mousemove", drag, false);
-            dragHeader.addEventListener("touchstart", dragStart, {passive: false});
-            document.addEventListener("touchend", dragEnd, false);
-            document.addEventListener("touchmove", drag, {passive: false});
-          }
+function tutupFloating(e) {
+    if (e) { e.stopPropagation(); e.preventDefault(); }
+    floatDitutupLokal = true; 
+    playerBoxDrag.classList.remove('floating');
+    xOffset = 0; yOffset = 0;
+    playerBoxDrag.style.transform = "none";
+}
 
 
-        let bKiri = 0, bKanan = 0, bAtas = 0, bBawah = 0;
+if (dragHeader) {
+    dragHeader.addEventListener("mousedown", dragStart, false);
+    document.addEventListener("mouseup", dragEnd, false);
+    document.addEventListener("mousemove", drag, false);
+    dragHeader.addEventListener("touchstart", dragStart, {passive: false});
+    document.addEventListener("touchend", dragEnd, false);
+    document.addEventListener("touchmove", drag, {passive: false});
+}
 
-        function dragStart(e) {  
-             if (e.target.closest('button')) return;
+let bKiri = 0, bKanan = 0, bAtas = 0, bBawah = 0;
 
-             playerBoxDrag.style.transition = "none"; 
+function dragStart(e) {  
+    if (e.target.closest('button')) return;
+    playerBoxDrag.style.transition = "none"; 
+    if (e.type === "touchstart") {
+        initialX = e.touches[0].clientX - xOffset;
+        initialY = e.touches[0].clientY - yOffset;
+    } else {
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+    }
 
-             if (e.type === "touchstart") {
-                 initialX = e.touches[0].clientX - xOffset;
-                 initialY = e.touches[0].clientY - yOffset;
-             } else {
-                 initialX = e.clientX - xOffset;
-                 initialY = e.clientY - yOffset;
-             }
-        
-             if (e.target === dragHeader || dragHeader.contains(e.target)) {
-                 isDragging = true;
-                 
-                 let playerW = playerBoxDrag.offsetWidth;
-                 let playerH = playerBoxDrag.offsetHeight;
-                 let isMobile = window.innerWidth <= 768;
+    if (e.target === dragHeader || dragHeader.contains(e.target)) {
+        isDragging = true;
+        let playerW = playerBoxDrag.offsetWidth;
+        let playerH = playerBoxDrag.offsetHeight;
+        let isMobile = window.innerWidth <= 768;
 
-                 let spasiKanan = isMobile ? 8 : 20;
-                 let spasiKiri = 8;
-                 bKiri = -(window.innerWidth - playerW - spasiKanan - spasiKiri);
-                 bKanan = 0; 
+        let spasiKanan = isMobile ? 8 : 20;
+        let spasiKiri = 8;
+        bKiri = -(window.innerWidth - playerW - spasiKanan - spasiKiri);
+        bKanan = 0; 
 
-                 if (isMobile) {
-                     let spasiBawah = 150;
-                     let spasiAtas = 20;
-                     bAtas = -(window.innerHeight - playerH - spasiBawah - spasiAtas);
-                     bBawah = 0; 
-                 } else {
-                     let spasiAtas = 25; 
-                     let spasiBawah = 20;
-                     bAtas = 0; 
-                     bBawah = (window.innerHeight - playerH - spasiAtas - spasiBawah); 
-                 }
-             }
-         }
-
-         function drag(e) {
-            if (!isDragging) return;
-            e.preventDefault(); 
-
-            if (e.type === "touchmove") {
-                currentX = e.touches[0].clientX - initialX;
-                currentY = e.touches[0].clientY - initialY;
-            } else {
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
-            }
-          
-            if (currentX < bKiri) currentX = bKiri;
-            if (currentX > bKanan) currentX = bKanan;
-            if (currentY < bAtas) currentY = bAtas;
-            if (currentY > bBawah) currentY = bBawah;        
-            
-            if (raFId) cancelAnimationFrame(raFId);
-            raFId = requestAnimationFrame(() => {
-                playerBoxDrag.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-            });
+        if (isMobile) {
+            let spasiBawah = 150;
+            let spasiAtas = 20;
+            bAtas = -(window.innerHeight - playerH - spasiBawah - spasiAtas);
+            bBawah = 0; 
+        } else {
+            let spasiAtas = 25; 
+            let spasiBawah = 20;
+            bAtas = 0; 
+            bBawah = (window.innerHeight - playerH - spasiAtas - spasiBawah); 
         }
+    }
+}
 
-        function dragEnd(e) {
-            if (!isDragging) return;
-            isDragging = false; 
-            
-            if(playerBoxDrag.classList.contains('floating')){
-                
-                let isMobile = window.innerWidth <= 768;
-                let tengahX = bKiri / 2;
-                let tengahY = isMobile ? (bAtas / 2) : (bBawah / 2);
-                          
-                currentX = (currentX < tengahX) ? bKiri : bKanan;
-                
-                if (isMobile) {
-                    currentY = (currentY < tengahY) ? bAtas : bBawah; 
-                } else {
-                    currentY = (currentY > tengahY) ? bBawah : bAtas; 
-                }
+function drag(e) {
+    if (!isDragging) return;
+    e.preventDefault(); 
+    if (e.type === "touchmove") {
+        currentX = e.touches[0].clientX - initialX;
+        currentY = e.touches[0].clientY - initialY;
+    } else {
+        currentX = e.clientX - initialX;
+        currentY = e.clientY - initialY;
+    }
+  
+    if (currentX < bKiri) currentX = bKiri;
+    if (currentX > bKanan) currentX = bKanan;
+    if (currentY < bAtas) currentY = bAtas;
+    if (currentY > bBawah) currentY = bBawah;        
+    
+    if (raFId) cancelAnimationFrame(raFId);
+    raFId = requestAnimationFrame(() => {
+        playerBoxDrag.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+    });
+}
 
-                xOffset = currentX;
-                yOffset = currentY;
-                           
-                playerBoxDrag.style.transition = "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)";
-                playerBoxDrag.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-            }
-        }
+function dragEnd(e) {
+    if (!isDragging) return;
+    isDragging = false; 
+    
+    if(playerBoxDrag.classList.contains('floating')){
+        let isMobile = window.innerWidth <= 768;
+        let tengahX = bKiri / 2;
+        let tengahY = isMobile ? (bAtas / 2) : (bBawah / 2);
+                  
+        currentX = (currentX < tengahX) ? bKiri : bKanan;
+        if (isMobile) { currentY = (currentY < tengahY) ? bAtas : bBawah; } 
+        else { currentY = (currentY > tengahY) ? bBawah : bAtas; }
 
-
-
+        xOffset = currentX; yOffset = currentY;
+                   
+        playerBoxDrag.style.transition = "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)";
+        playerBoxDrag.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+    }
+}
 
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
-            .then((registration) => {
-                console.log('PWA Service Worker sukses jalan bosku!', registration.scope);
-            })
-            .catch((error) => {
-                console.log('PWA Service Worker gagal:', error);
-            });
+            .then((registration) => { console.log('PWA Service Worker sukses!'); })
+            .catch((error) => { console.log('PWA gagal:', error); });
     });
 }
 
 
-
-
-
-window.addEventListener('load', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const bungkusSticky = document.querySelector('.sticky-wrapper');
     const headerAtas = document.querySelector('header');
     const floatTele = document.getElementById('float-tele'); 
+    const playerPage = document.getElementById('playerPage');
+    
     let scrollTerakhir = window.scrollY;
+    let ticking = false; // Rem angin buat browser
 
     function setTinggiHeader() {
-        if(headerAtas) {
-            bungkusSticky.style.setProperty('--tinggi-header', headerAtas.offsetHeight + 'px');
-        }
+        if(headerAtas) bungkusSticky.style.setProperty('--tinggi-header', headerAtas.offsetHeight + 'px');
     }
-    
     setTinggiHeader();
     window.addEventListener('resize', setTinggiHeader);
 
+    
     window.addEventListener('scroll', function() {
-        if (sessionStorage.getItem('viewAktif') === 'player') return;
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                let scrollSekarang = window.scrollY;
+                let modePlayer = (sessionStorage.getItem('viewAktif') === 'player');
 
-        let scrollSekarang = window.scrollY;
-              
-        if (scrollSekarang > scrollTerakhir && scrollSekarang > 20) {
-            bungkusSticky.classList.add('sembunyi-header');
-        } 
-        else {
-            bungkusSticky.classList.remove('sembunyi-header');
+                
+                if (modePlayer && playerPage && playerPage.style.display === 'block') {
+                    if (!floatDitutupLokal) {
+                        if (scrollSekarang > 350) {
+                            if (!playerBoxDrag.classList.contains('floating')) {
+                                currentX = 0; currentY = 0; xOffset = 0; yOffset = 0;
+                                playerBoxDrag.style.transform = `translate3d(0px, 0px, 0)`;
+                                playerBoxDrag.classList.add('floating');
+                            }
+                        } else {
+                            if (playerBoxDrag.classList.contains('floating')) {
+                                playerBoxDrag.classList.remove('floating');
+                                currentX = 0; currentY = 0; xOffset = 0; yOffset = 0;
+                                playerBoxDrag.style.transform = `translate3d(0px, 0px, 0)`;
+                            }
+                        }
+                    }
+                } 
+                
+                else {
+                    if (scrollSekarang > scrollTerakhir && scrollSekarang > 20) {
+                        bungkusSticky.classList.add('sembunyi-header');
+                    } else {
+                        bungkusSticky.classList.remove('sembunyi-header');
+                    }
+                    
+                    let lagiNyari = sessionStorage.getItem('keywordSearch');
+                    if (scrollSekarang > 300 && !lagiNyari) {
+                        if(floatTele) floatTele.classList.add('muncul'); 
+                    } else {
+                        if(floatTele) floatTele.classList.remove('muncul'); 
+                    }
+                }
+
+                scrollTerakhir = scrollSekarang;
+                ticking = false;
+            });
+            ticking = true;
         }
-               
-        let lagiNyari = sessionStorage.getItem('keywordSearch');
- 
-        if (scrollSekarang > 300 && !lagiNyari) {
-            if(floatTele) floatTele.classList.add('muncul'); 
-        } else {
-            if(floatTele) floatTele.classList.remove('muncul'); 
-        }
-        
-        scrollTerakhir = scrollSekarang;
     }, { passive: true });
 });
 
