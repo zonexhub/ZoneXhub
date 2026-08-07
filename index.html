@@ -30,21 +30,21 @@
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ZoneXhub - Free Porn | XXX Sex Videos | Viral Indo, JAV, Western</title>
+    <title>ZoneXhub - Free Porn | XXX Sex Videos | Viral Indo, JAV, Western.</title>
 
     <meta name="description" content="Streaming koleksi video XXX sex terbaru! Nonton free porn skandal viral Indo, JAV uncensored, dan Western OnlyFans bocor full HD gratis hanya di ZoneXhub.">
     <meta name="keywords" content="bokep, porn, free porn, bokep indo, bokep barat, bokep jepang, viral indo, skandal, scandal, skandal indo, viral video, trending video, popular video, latest video, today's viral video, viral TikTok video, social media video, TikTok celebrity blunder, blunder, Instagram celebrity, TikTok, Seleb tiktok blunder, Japan, drama, drama jepang, jepang no sensor, drama jepang no sensor, Japanese drama, Jav">
     <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="Latest Viral Porn Videos Today - ZoneXhub">
-    <meta property="og:description" content="A collection of the latest and trending viral porn videos that are currently the talk of the town.">
+    <meta property="og:title" content="ZoneXhub - Free Porn | XXX Sex Videos | Viral Indo, JAV, and Western OnlyFans.">
+    <meta property="og:description" content="Streaming koleksi video XXX sex terbaru! Nonton free porn skandal viral Indo, JAV uncensored, dan Western OnlyFans bocor full HD gratis hanya di ZoneXhub.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://zonexhub.net/">
     <meta property="og:site_name" content="ZoneXhub">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Latest Viral Porn Videos Today - ZoneXhub">
-    <meta name="twitter:description" content="A collection of the latest and trending viral porn videos that are currently the talk of the town.">
+    <meta name="twitter:title" content="ZoneXhub - Free Porn | XXX Sex Videos | Viral Indo, JAV, and Western OnlyFans.">
+    <meta name="twitter:description" content="Streaming koleksi video XXX sex terbaru! Nonton free porn skandal viral Indo, JAV uncensored, dan Western OnlyFans bocor full HD gratis hanya di ZoneXhub.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png">
   
     <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785909506/Logo_Favicon_ZoneXhub_oo7rhq.png?v=15">
@@ -375,10 +375,37 @@
         .video-card.editing .title { display: none; }
         .video-card.editing .edit-input-title,
         .video-card.editing .edit-input-link { display: block; }     
-        .pagination { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 50px 0 20px 0; }
-        .pagination button { background-color: #2a2a2a; color: #ccc; border: none; padding: 8px 12px; border-radius: 50px; cursor: pointer; font-size: 13px; font-weight: bold; transition: background 0.2s;}
-        .pagination button:hover { background-color: #444; }
-        .pagination button.active { background-color: var(--accent-color); color: white; }
+        .pagination { 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            gap: 8px; 
+            margin: 50px 0 50px 0; 
+            position: relative;    
+            z-index: 50;           
+        }
+        .pagination button { 
+            background-color: #2a2a2a; 
+            color: #ccc; 
+            border: none; 
+            padding: 8px 12px; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            font-size: 13px; 
+            font-weight: bold; 
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5); 
+        }
+        .pagination button:hover { 
+            background-color: #444; 
+            transform: translateY(-2px); 
+        }
+        .pagination button.active { 
+            background-color: var(--accent-color); 
+            color: white; 
+        }
+        
+        
         
         footer {
             background-color: #121212; 
@@ -923,7 +950,8 @@
         <div id="home-banner" data-nosnippet style="margin: 0 0 20px 0; padding: 8px; text-align: center; background-color: #262626; border: 1px solid #333; border-radius: 4px; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden;">
             <span style="display: block; font-size: 10px; color: #aaaaaa; margin-bottom: 5px; letter-spacing: 1px; text-transform: uppercase;">- Advertisement -</span>           
            
-             <iframe                    
+             <iframe   
+                    loading="lazy"
                     width="320" 
                     height="50" 
                     title="Advertisement"                 
@@ -1672,14 +1700,13 @@ function tampilkanPagination() {
             if (navigator.share) {
                 navigator.share({
                     title: videoJudul,
-                    text: 'Check out this video on ZoneXhub: ' + videoJudul,
-                    url: videoUrl,
+                    text: '🔥 Gasss Nonton Video :\n\n💦 ' + videoJudul + '\n\n👉 ' + videoUrl,                  
                 })
                 .then(() => console.log('Successful share'))
                 .catch((error) => console.log('Error sharing', error));
             } else {
                 alert('Navigator.share is not supported in this browser. Fallback menu would open here.');
-                let shareText = 'Check out this video on ZoneXhub: ' + videoJudul + ' ' + videoUrl;
+                let shareText = '🔥Gasss Nonton Video :\n\n💦 ' + videoJudul + '\n\n👉 ' + videoUrl;
                 prompt('Copy this video share message:', shareText);
             }
         }
@@ -1732,7 +1759,7 @@ async function muatDataAwal() {
         videoData = JSON.parse(dataLokal);
      } else {
         console.log("Memuat 3 data JSON dari Server...");
-        const versiAntiCache = new Date().getTime();        
+        const versiAntiCache = Math.floor(Date.now() / 300000);        
         const [resIndo, resJav, resWestern] = await Promise.all([
             fetch('indo.json?v=' + versiAntiCache),
             fetch('jav.json?v=' + versiAntiCache),
@@ -2046,7 +2073,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const playerPage = document.getElementById('playerPage');
     
     let scrollTerakhir = window.scrollY;
-    let ticking = false; // Rem angin buat browser
+    let ticking = false; 
 
     function setTinggiHeader() {
         if(headerAtas) bungkusSticky.style.setProperty('--tinggi-header', headerAtas.offsetHeight + 'px');
