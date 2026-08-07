@@ -244,20 +244,7 @@
        text-align: left; 
       }
       
-        
-       .video-grid { 
-        display: grid; 
-        grid-template-columns: repeat(4, 1fr); 
-        gap: 8px 8px; 
-        align-content: start; 
-       }
-
-       .video-grid:has(.video-card.editing) {
-        align-content: stretch;
-        gap: 15px 8px; 
-       }
-        
-                       
+        .video-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 8px; align-content: start; }
         .video-card {
          background: #262626;
          border: 1.3px solid #444;
@@ -266,15 +253,10 @@
          position: relative;
          cursor: pointer;
          transition: transform .2s, box-shadow .2s;
-         box-shadow: 0 2px 8px rgba(0,0,0,.35);
+        box-shadow: 0 2px 8px rgba(0,0,0,.35);
       }
-        .video-card:hover { 
-         transform: translateY(-3px); 
-      }
-        .video-card.editing:hover { 
-         transform: none; 
-         cursor: default; 
-      }
+        .video-card:hover { transform: translateY(-3px); }
+        .video-card.editing:hover { transform: none; cursor: default; }
         .thumbnail {
          position: relative;
          width: 100%;
@@ -393,39 +375,11 @@
         .video-card.editing .title { display: none; }
         .video-card.editing .edit-input-title,
         .video-card.editing .edit-input-link { display: block; }     
-        
-        .pagination { 
-            display: flex; 
-            justify-content: center; 
-            flex-wrap: wrap; 
-            gap: 8px; 
-            margin: 50px 0 50px 0 !important; 
-            position: relative; 
-            z-index: 999 !important; 
-            clear: both; 
-        }
-        .pagination button { 
-            background-color: #2a2a2a; 
-            color: #ccc; 
-            border: none; 
-            padding: 8px 12px; 
-            border-radius: 50px; 
-            cursor: pointer; 
-            font-size: 13px; 
-            font-weight: bold; 
-            transition: background 0.2s, transform 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5); 
-        }
-        .pagination button:hover { 
-            background-color: #444; 
-            transform: translateY(-2px); 
-        }
-        .pagination button.active { 
-            background-color: var(--accent-color); 
-            color: white; 
-        }
-        
-        
+        .pagination { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin: 50px 0 20px 0; }
+        .pagination button { background-color: #2a2a2a; color: #ccc; border: none; padding: 8px 12px; border-radius: 50px; cursor: pointer; font-size: 13px; font-weight: bold; transition: background 0.2s;}
+        .pagination button:hover { background-color: #444; }
+        .pagination button.active { background-color: var(--accent-color); color: white; }
+                
         
         footer {
             background-color: #121212; 
@@ -654,14 +608,10 @@
         min-height: 85vh; 
         align-content: start;
       }
-      .video-grid:has(.video-card.editing) {
-        min-height: auto;
-        align-content: stretch;
-      }
    }
 
 
-       .hot-video {
+        .hot-video {
         color: white;              
         font-size: 17px;           
         font-weight: bold;         
