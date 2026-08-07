@@ -901,14 +901,13 @@
     
     <div class="sticky-wrapper">
         <header>
-            <div id="tempat-logo"></div>
-            <div class="search-box" data-nosnippet>
+         <div id="tempat-logo" style="width: 150px; min-height: 32px;"></div>       
+             <div class="search-box" data-nosnippet>
                 <input type="text" id="searchInput" placeholder="Search video..." onkeyup="cariVideo(event)">
                 <button id="btnSecret" aria-label="Cari Video" onclick="cariVideo(event)"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-        </header>
-
-        <nav id="menu-navigasi" data-nosnippet></nav>
+          </header>
+        <nav id="menu-navigasi" data-nosnippet style="min-height: 64px;"></nav>
     </div>
     
     
@@ -1577,7 +1576,7 @@ if(elTanggal) {
                     <input type="text" class="edit-sm-input edit-sm-link" id="input-header-link" value="${headerData.link}" placeholder="Link Redirect" style="width: 150px;">
                 </div>`;
             } else {
-                wadahLogo.innerHTML = `<a href="${headerData.link}"><img src="https://res.cloudinary.com/drtbkd5lr/image/upload/e_trim/v1785996609/Logo_Header_ZoneXhub_wxqjuk.webp" alt="Logo" width="150" height="32" style="width: 150px; height: auto; object-fit: contain; filter: drop-shadow(0 0 10px rgba(235, 31, 114, 0.4));"></a>`;
+                wadahLogo.innerHTML = `<a href="${headerData.link}"><img src="https://res.cloudinary.com/drtbkd5lr/image/upload/e_trim/v1785996609/Logo_Header_ZoneXhub_wxqjuk.webp" alt="Logo" width="150" height="32" style="width: 150px; height: 32px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(235, 31, 114, 0.4));"></a>`;
             }
         }
  
