@@ -244,7 +244,20 @@
        text-align: left; 
       }
       
-        .video-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 8px; align-content: start; }
+        
+       .video-grid { 
+        display: grid; 
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 8px 8px; 
+        align-content: start; 
+       }
+
+       .video-grid:has(.video-card.editing) {
+        align-content: stretch;
+        gap: 15px 8px; 
+       }
+        
+                       
         .video-card {
          background: #262626;
          border: 1.3px solid #444;
@@ -253,10 +266,15 @@
          position: relative;
          cursor: pointer;
          transition: transform .2s, box-shadow .2s;
-        box-shadow: 0 2px 8px rgba(0,0,0,.35);
+         box-shadow: 0 2px 8px rgba(0,0,0,.35);
       }
-        .video-card:hover { transform: translateY(-3px); }
-        .video-card.editing:hover { transform: none; cursor: default; }
+        .video-card:hover { 
+         transform: translateY(-3px); 
+      }
+        .video-card.editing:hover { 
+         transform: none; 
+         cursor: default; 
+      }
         .thumbnail {
          position: relative;
          width: 100%;
@@ -375,14 +393,16 @@
         .video-card.editing .title { display: none; }
         .video-card.editing .edit-input-title,
         .video-card.editing .edit-input-link { display: block; }     
+        
         .pagination { 
             display: flex; 
             justify-content: center; 
             flex-wrap: wrap; 
             gap: 8px; 
-            margin: 50px 0 50px 0; 
-            position: relative;    
-            z-index: 50;           
+            margin: 50px 0 50px 0 !important; 
+            position: relative; 
+            z-index: 999 !important; 
+            clear: both; 
         }
         .pagination button { 
             background-color: #2a2a2a; 
@@ -634,10 +654,14 @@
         min-height: 85vh; 
         align-content: start;
       }
+      .video-grid:has(.video-card.editing) {
+        min-height: auto;
+        align-content: stretch;
+      }
    }
 
 
-        .hot-video {
+       .hot-video {
         color: white;              
         font-size: 17px;           
         font-weight: bold;         
