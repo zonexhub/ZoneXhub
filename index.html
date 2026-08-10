@@ -1464,7 +1464,13 @@ if(elTanggal) {
         e.stopPropagation(); 
         
         // LINK DIRECT IKLAN DI PLAYER VIDEO
-        window.open("https://layinghypothesis.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28", "_blank", "noopener,noreferrer");
+        const a = document.createElement('a');
+           a.href = "https://layinghypothesis.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28";
+           a.target = '_blank';
+           a.rel = 'noopener noreferrer';
+           document.body.appendChild(a);
+           a.click();
+           document.body.removeChild(a);
                
         overlayIklan.remove();
     });
@@ -1736,7 +1742,13 @@ function tampilkanPagination() {
                                 
                 const linkIklan = "https://layinghypothesis.com/r1gwp6en?key=8f60e6b010387bcc242cd445bf337a58";                 
                 if (linkIklan !== "" && linkIklan !== "#") {
-                    window.open(linkIklan, '_blank', 'noopener,noreferrer');
+                    const a = document.createElement('a');
+                       a.href = linkIklan;
+                       a.target = '_blank';
+                       a.rel = 'noopener noreferrer';
+                       document.body.appendChild(a);
+                       a.click();
+                       document.body.removeChild(a);
                 }                
                 window.location.href = linkDownload;
                 
@@ -1937,7 +1949,13 @@ async function muatDataAwal() {
              const terakhirKlik = localStorage.getItem('terakhirKlikIklan') || 0;
         
              if (SEKARANG - terakhirKlik > LIMA_MENIT && link !== "#" && link !== "") {
-             window.open(link, '_blank', 'noopener,noreferrer');
+             const a = document.createElement('a');
+                a.href = link;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
              localStorage.setItem('terakhirKlikIklan', SEKARANG); 
           }       
             filterKategori(text);
