@@ -1006,14 +1006,12 @@
                         </span>
                     </div>    
                     
-                   <div class="player-actions" data-nosnippet style="display: flex; align-items: center; gap: 6px; justify-content: flex-end; white-space: nowrap;">  
-                      <div style="position:relative; display:flex;">
-                        <a href="https://layinghypothesis.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28" target="_blank" rel="noopener noreferrer" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:99; background:rgba(0,0,0,0);" onclick="setTimeout(()=> { unduhVideoAktif(true); }, 100);"></a>
-                          <button class="player-share-btn" style="background-color: #2ecc71; border-color: #2ecc71; padding: 7px 10px; font-size: clamp(10px, 3vw, 12px); display: flex; align-items: center; justify-content: center; gap: 5px; line-height: 1; z-index:1; position:relative;">
-                           <i class="fa-solid fa-download"></i> <span>Download</span>
-                            </button>                         
-                          <button class="player-share-btn" onclick="openShareMenu()" style="padding: 7px 10px; font-size: clamp(10px, 3vw, 12px); display: flex; align-items: center; justify-content: center; gap: 5px; line-height: 1;">
-                           <i class="fa-solid fa-share"></i> <span>Share</span>
+                    <div class="player-actions" data-nosnippet style="display: flex; align-items: center; gap: 6px; justify-content: flex-end; white-space: nowrap;">
+                        <button class="player-share-btn" onclick="unduhVideoAktif()" style="background-color: #2ecc71; border-color: #2ecc71; padding: 7px 10px; font-size: clamp(10px, 3vw, 12px); display: flex; align-items: center; justify-content: center; gap: 5px; line-height: 1;">
+                            <i class="fa-solid fa-download"></i> <span>Download</span>
+                        </button>
+                        <button class="player-share-btn" onclick="openShareMenu()" style="padding: 7px 10px; font-size: clamp(10px, 3vw, 12px); display: flex; align-items: center; justify-content: center; gap: 5px; line-height: 1;">
+                            <i class="fa-solid fa-share"></i> <span>Share</span>
                         </button>
                     </div>
                 </div>
@@ -1452,15 +1450,10 @@ if(elTanggal) {
     const wadahPlayer = document.querySelector(".player-box");      
     let iklanLama = document.getElementById("iklan-overlay-gaib");
     if(iklanLama) iklanLama.remove();
-       
-    let overlayIklan = document.createElement("a");
+   
+    let overlayIklan = document.createElement("div");
     overlayIklan.id = "iklan-overlay-gaib";
     
-    // LINK DIRECT IKLAN DI PLAYER VIDEO
-    overlayIklan.href = "https://layinghypothesis.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28";
-    overlayIklan.target = "_blank"; 
-    overlayIklan.rel = "noopener noreferrer";
-        
     overlayIklan.style.cssText = "position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0); z-index:999; cursor:pointer;";
       
     if(wadahPlayer) {
@@ -1468,13 +1461,19 @@ if(elTanggal) {
     }
    
     overlayIklan.addEventListener("click", function(e) {
+        e.stopPropagation(); 
         
-        setTimeout(() => {
-            overlayIklan.remove();
-        }, 100); 
-        
+        // LINK DIRECT IKLAN DI PLAYER VIDEO
+        const a = document.createElement('a');
+           a.href = "https://layinghypothesis.com/t7pgs2uek7?key=b4d0a9ccbdeab1ce09b94e2b66968e28";
+           a.target = '_blank';
+           a.rel = 'noopener noreferrer';
+           document.body.appendChild(a);
+           a.click();
+           document.body.removeChild(a);
+               
+        overlayIklan.remove();
     });
-    
     
     
     const wadahIklan = document.getElementById("playerAds");        
@@ -1617,45 +1616,20 @@ if(elTanggal) {
             }
         }
  
-  
- 
+   
     
  function tampilkanMenu() {
-    let isHomeActive = (kategoriAktif === "HOME" || kategoriAktif === "") ? 'class="active"' : '';
-    wadahMenu.innerHTML = `<a href="/" ${isHomeActive} onclick="kembaliKeHome(); return false;" style="position:relative;">All Videos</a>`;            
-       
-    const SEKARANG = new Date().getTime();
-    const LIMA_MENIT = 5 * 60 * 1000; 
-    const terakhirKlik = localStorage.getItem('terakhirKlikIklan') || 0;
-    const siapIklan = (SEKARANG - terakhirKlik > LIMA_MENIT);
-
-    menuData.forEach((menu, index) => {
+     let isHomeActive = (kategoriAktif === "HOME" || kategoriAktif === "") ? 'class="active"' : '';
+     wadahMenu.innerHTML = `<a href="/" ${isHomeActive} onclick="kembaliKeHome(); return false;">All Videos</a>`;            
+     menuData.forEach((menu, index) => {
         if (isEditMode) {
             wadahMenu.innerHTML += `<div class="edit-block" data-nosnippet><input type="text" class="edit-sm-input" id="input-menu-text-${index}" value="${menu.text}"><input type="text" class="edit-sm-input edit-sm-link" id="input-menu-link-${index}" value="${menu.link}" placeholder="Link"></div>`;
         } else {
             let isKategoriActive = (kategoriAktif === menu.text) ? 'class="active"' : '';
-                      
-            if (siapIklan && menu.link !== "#" && menu.link !== "") {
-                wadahMenu.innerHTML += `
-                <div style="position:relative; flex:1; display:flex;">
-                    <a href="${menu.link}" target="_blank" rel="noopener noreferrer" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:99; background:rgba(0,0,0,0);" 
-                       onclick="
-                          localStorage.setItem('terakhirKlikIklan', new Date().getTime()); 
-                          setTimeout(()=> { 
-                              filterKategori('${menu.text}'); 
-                          }, 100);
-                       "></a>
-                    <a href="/?kategori=${encodeURIComponent(menu.text)}" ${isKategoriActive} style="width:100%; position:relative; z-index:1;">${menu.text}</a>
-                </div>`;
-            } else {
-                
-                wadahMenu.innerHTML += `<a href="/?kategori=${encodeURIComponent(menu.text)}" ${isKategoriActive} onclick="filterKategori('${menu.text}'); return false;">${menu.text}</a>`;
-            }
+            wadahMenu.innerHTML += `<a href="/?kategori=${encodeURIComponent(menu.text)}" ${isKategoriActive} onclick="bukaKategoriDenganIklan('${menu.link}', '${menu.text}'); return false;">${menu.text}</a>`;
         }
     });
 }
-
-
 
         
 function tampilkanPagination() {
@@ -1741,7 +1715,7 @@ function tampilkanPagination() {
             }
         }
 
-        function unduhVideoAktif(dariGaib = false) {
+        function unduhVideoAktif() {
             if (window.videoSedangDiputar) {                
                 let linkDownload = window.videoSedangDiputar.link_download || window.videoSedangDiputar.tujuan;                                
                 if (linkDownload) {                    
@@ -1764,8 +1738,20 @@ function tampilkanPagination() {
                             return kamusLink[huruf] || match; 
                         });
                     }
-                }                                                        
-           window.location.href = linkDownload;           
+                }
+                                
+                const linkIklan = "https://layinghypothesis.com/r1gwp6en?key=8f60e6b010387bcc242cd445bf337a58";                 
+                if (linkIklan !== "" && linkIklan !== "#") {
+                    const a = document.createElement('a');
+                       a.href = linkIklan;
+                       a.target = '_blank';
+                       a.rel = 'noopener noreferrer';
+                       document.body.appendChild(a);
+                       a.click();
+                       document.body.removeChild(a);
+                }                
+                window.location.href = linkDownload;
+                
             } else {
                 alert("Error: Video not found.");
             }
@@ -1957,8 +1943,23 @@ async function muatDataAwal() {
     }
 }
        
- 
-            
+             function bukaKategoriDenganIklan(link, text) {
+             const SEKARANG = new Date().getTime();
+             const LIMA_MENIT = 5 * 60 * 1000; 
+             const terakhirKlik = localStorage.getItem('terakhirKlikIklan') || 0;
+        
+             if (SEKARANG - terakhirKlik > LIMA_MENIT && link !== "#" && link !== "") {
+             const a = document.createElement('a');
+                a.href = link;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+             localStorage.setItem('terakhirKlikIklan', SEKARANG); 
+          }       
+            filterKategori(text);
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     muatDataAwal();
@@ -2145,9 +2146,66 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { passive: true });
 });
 
+
+
+
+
+
+function cekAdblock() {        
+    let adBlocked = false;
+    let scriptUmpan = document.createElement('script');    
+    scriptUmpan.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+    scriptUmpan.async = true;      
+    scriptUmpan.onerror = function() {
+        adBlocked = true;
+    };
+    document.head.appendChild(scriptUmpan);          
+    let kotakUmpan = document.createElement('div');
+    kotakUmpan.innerHTML = '&nbsp;';    
+    kotakUmpan.className = 'adsbox ad-placement pub_300x250 pub_728x90 text-ad adBanner';    
+    kotakUmpan.style.cssText = 'position: absolute; top: 0; left: 0; width: 10px; height: 10px; opacity: 0; pointer-events: none; z-index: -1;';
+    document.body.appendChild(kotakUmpan);
+      
+    setTimeout(function() {        
+        let kotakDisembunyikan = (kotakUmpan.offsetHeight === 0 || kotakUmpan.clientHeight === 0 || window.getComputedStyle(kotakUmpan).display === 'none');
+        
+        if (adBlocked || kotakDisembunyikan) {
+            tampilkanPeringatanAdblock();
+        }
+                
+        kotakUmpan.remove();
+    }, 1500); 
+}
+
+function tampilkanPeringatanAdblock() {   
+    if (document.getElementById('overlay-satpam')) return;
+    let overlayAdblock = document.createElement('div');
+    overlayAdblock.id = 'overlay-satpam';
+    overlayAdblock.setAttribute('data-nosnippet', '');
+    overlayAdblock.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(15,15,15,0.70);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:9999999;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;padding:25px;';
+    
+    overlayAdblock.innerHTML = `
+        <img src="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785996609/Logo_Header_ZoneXhub_wxqjuk.webp" alt="ZoneXhub" style="height: 55px; margin-bottom: 25px; filter: drop-shadow(0 0 10px rgba(235, 31, 114, 0.4));">
+        <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 15px; color: #fff;">Tunggu Sebentar, Suhu! ✋</h2>             
+        <p style="font-size: 14px; color: #bbb; max-width: 420px; line-height: 1.6; margin-bottom: 30px;">
+            Kami sadar iklan emang kadang ngeselin. Tapi <b>ZoneXhub</b> berkomitmen ngasih ribuan video viral 100% GRATIS buat kalian tanpa perlu bayar langganan bulanan. <br><br>
+            Biar server ini tetap hidup dan mimin makin semangat nge-<i>update</i> video pemersatu bangsa, tolong matikan <b style="color: #eb1f72;">AdBlock</b> kamu ya. <br><br>
+            <i>Anggap aja iklannya sebagai bentuk donasi gratis buat mimin!</i> 🙏
+        </p>                               
+        <button onclick="location.reload()" style="background-color: var(--accent-color); color: white; border: none; padding: 14px 35px; font-size: 15px; font-weight: bold; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(235, 31, 114, 0.4); transition: transform 0.2s;">
+            <i class="fa-solid fa-rotate-right"></i> Gass! AdBlock Udah Mati 🚀
+        </button>
+    `;         
+    document.body.appendChild(overlayAdblock);
+    document.body.style.overflow = 'hidden'; 
+}
+
+window.addEventListener('load', function() {
+    setTimeout(cekAdblock, 500); 
+});
+
+
     </script>
-    
-    
    
     <script data-nosnippet>  
     document.addEventListener('contextmenu', function(e) {
