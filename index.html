@@ -980,14 +980,6 @@
       
      
            <div id="playerInfoBlock">
-           
-           <div style="display: flex; justify-content: flex-end; margin-bottom: 5px;">
-                <div id="liveViewers" style="font-size: 10px; font-weight: 900; color: #ff4757; display: flex; align-items: center; gap: 4px; background: rgba(255, 71, 87, 0.1); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(255, 71, 87, 0.3);">
-                    <span style="display: inline-block; width: 5px; height: 5px; background-color: #ff4757; border-radius: 50%; box-shadow: 0 0 4px #ff4757; animation: kedipLive 1.5s infinite; flex-shrink: 0;"></span>
-                    <span><span id="angkaLive">0</span> orang sedang menonton</span>
-                </div>
-            </div>
-           
                <h2 id="playerTitle" style="margin-bottom: 7px;"></h2>
                          
                <div id="playerTanggal" style="font-size: 13px; color: #aaaaaa; margin-bottom: 8px; font-style: italic;">
@@ -1494,47 +1486,6 @@ if(elTanggal) {
     window.scrollTo(0, 0); 
 
 
-  const elLive = document.getElementById("angkaLive");
-    if(elLive) {        
-        const jamSekarang = new Date().getHours();        
-        let minViewers = 0;
-        let maxViewers = 0;        
-        let tingkatKeramaian = Math.floor(Math.random() * 100) + 1;
-
-        if (jamSekarang >= 21 || jamSekarang <= 4) {
-            if (tingkatKeramaian > 80) { 
-                minViewers = 1500; maxViewers = 4500;
-            } else if (tingkatKeramaian > 30) { 
-                minViewers = 300; maxViewers = 900;
-            } else { 
-                minViewers = 15; maxViewers = 80;
-            }
-        } else {           
-            if (tingkatKeramaian > 90) { 
-                minViewers = 400; maxViewers = 800;
-            } else if (tingkatKeramaian > 40) { 
-                minViewers = 50; maxViewers = 150;
-            } else { 
-                minViewers = 2; maxViewers = 25;
-            }
-        }  
-     
-        let angkaAwal = Math.floor(Math.random() * (maxViewers - minViewers + 1)) + minViewers;
-        elLive.textContent = angkaAwal.toLocaleString('id-ID');
-        
-        if(window.liveInterval) clearInterval(window.liveInterval);        
-        window.liveInterval = setInterval(() => {
-            let batasNaikTurun = Math.floor(angkaAwal * 0.05) + 3; 
-            let perubahan = Math.floor(Math.random() * (batasNaikTurun * 2)) - batasNaikTurun; 
-            
-            angkaAwal += perubahan;
-                        
-            if(angkaAwal < 2) angkaAwal = Math.floor(Math.random() * 5) + 2; 
-            
-            elLive.textContent = angkaAwal.toLocaleString('id-ID');
-        }, 10000); 
-    }
-    
 
     const wadahPlayer = document.querySelector(".player-box");      
     let iklanLama = document.getElementById("iklan-overlay-gaib");
