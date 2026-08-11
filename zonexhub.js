@@ -249,7 +249,7 @@ function tampilkanGrid() {
     const akhir = mulai + videoPerHalaman;
     let dataAktif = videoData;
     
-    if(kategoriAktif!=="HOME"){dataAktif=dataAktif.filter(v=>(v.kategori||"")==kategoriAktif);}
+    if(kategoriAktif!=="HOME"){dataAktif=dataAktif.filter(v=>(v.kategori||"").toLowerCase()===kategoriAktif.toLowerCase());}
     if(hasilPencarian){dataAktif=hasilPencarian;}
         
     const homeBannerEl = document.getElementById("home-banner");

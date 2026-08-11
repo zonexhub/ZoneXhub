@@ -47,7 +47,7 @@
     <meta name="twitter:description" content="Streaming koleksi video XXX sex terbaru! Nonton free porn skandal viral Indo, JAV uncensored, dan Western OnlyFans bocor full HD gratis hanya di ZoneXhub.">
     <meta name="twitter:image" content="https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png">
   
-    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785909506/Logo_Favicon_ZoneXhub_oo7rhq.png?v=15">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/drtbkd5lr/image/upload/v1785909506/Logo_Favicon_ZoneXhub_oo7rhq.png?v=17">
       
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -1254,11 +1254,7 @@ function ubahSEO(judul, deskripsi, gambar, urlParam = null, videoDataObj = null)
         scrollY: 0 
     }, "", urlKategori);
     
-    let judulBeranda = "ZoneXhub - Free Porn | XXX Sex Videos | Viral Indo, JAV, Western";
-    let deskripsiBeranda = "Streaming koleksi video XXX sex terbaru! Nonton free porn skandal viral Indo, JAV uncensored, dan Western OnlyFans bocor full HD gratis hanya di ZoneXhub.";
-    let gambarBeranda = "https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png";
-    
-    ubahSEO(judulBeranda, deskripsiBeranda, gambarBeranda);
+    tembakSEOPukatHarimau(kategoriAktif, halamanSekarang);
 }
 
 
@@ -1275,6 +1271,36 @@ function ubahSEO(judul, deskripsi, gambar, urlParam = null, videoDataObj = null)
            filterKategori("HOME");
         }
 
+
+
+
+function tembakSEOPukatHarimau(kategori, page) {
+    let judul = "";
+    let deskripsi = "";
+    let gambar = "https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png";
+    let txtPage = page > 1 ? ` - Page ${page}` : "";
+    let txtDescPage = page > 1 ? ` Halaman ke-${page} dari kumpulan` : " Kumpulan";
+    let katLow = (kategori || "").toLowerCase();
+
+    if (katLow === "indo") {
+        judul = `Bokep Indo Viral Terbaru & Skandal Lokal${txtPage} - ZoneXhub`;
+        deskripsi = `Nonton koleksi Bokep Indo Viral, Skandal ABG, SMP, SMA, Selebgram, dan video pemersatu bangsa terbaru tanpa sensor.${txtDescPage} video paling hot gratis di ZoneXhub.`;
+    } else if (katLow === "jav") {
+        judul = `JAV Sub Indo HD & Japanese Drama Uncensored${txtPage} - ZoneXhub`;
+        deskripsi = `Streaming JAV HD Sub Indo, Japanese Drama, bokep Jepang no sensor, uncensored terbaru artis idola.${txtDescPage} film JAV full durasi di ZoneXhub.`;
+    } else if (katLow === "western") {
+        judul = `Bokep Barat Hot & Western OnlyFans Leaked${txtPage} - ZoneXhub`;
+        deskripsi = `Nonton Bokep Barat Full HD, Free Porn, video bule hot, skandal seleb, dan bocoran Western Onlyfans Leaked.${txtDescPage} video brutal tanpa batas.`;
+    } else {
+        judul = `ZoneXhub - Free Porn | XXX Sex Videos | Viral Indo, JAV, Western${txtPage}`;
+        deskripsi = `Streaming koleksi video XXX sex terbaru! Nonton free porn skandal viral Indo, JAV uncensored, dan Western OnlyFans bocor full HD gratis.${txtDescPage} video hot terbaru.`;
+    }
+    ubahSEO(judul, deskripsi, gambar, window.location.href);
+}
+
+
+
+
         
 function gantiHalaman(page){
     halamanSekarang = page;
@@ -1283,16 +1309,30 @@ function gantiHalaman(page){
     tampilkanGrid();
     window.scrollTo({top:0,behavior:'smooth'});
 
+    let urlBaru = window.location.pathname;
+    if (kategoriAktif !== "HOME") {
+        urlBaru += "?kategori=" + encodeURIComponent(kategoriAktif);
+        if (page > 1) urlBaru += "&page=" + page;
+    } else {
+        if (page > 1) urlBaru += "?page=" + page;
+    }
+
     history.pushState({ 
         view: 'grid', 
         page: halamanSekarang, 
         category: kategoriAktif, 
         search: document.getElementById('searchInput').value,
         scrollY: 0 
-    }, "", window.location.pathname);
+    }, "", urlBaru);
+
+    tembakSEOPukatHarimau(kategoriAktif, halamanSekarang);
 }
 
-        
+  
+
+
+
+      
 function cariVideo(event){
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
@@ -1589,11 +1629,8 @@ if(elTanggal) {
 
                 tampilkanPagination();
                 tampilkanGrid();
-                              
-                let judulBeranda = "ZoneXhub - Free Porn | XXX Sex Videos | Viral Indo, JAV, Western";
-                let deskripsiBeranda = "Streaming koleksi video XXX sex terbaru! Nonton free porn skandal viral Indo, JAV uncensored, dan Western OnlyFans bocor full HD gratis hanya di ZoneXhub.";
-                let gambarBeranda = "https://res.cloudinary.com/drtbkd5lr/image/upload/v1784345713/file_00000000482481fa8b0724d40fd3c4f0_djentq.png";
-                ubahSEO(judulBeranda, deskripsiBeranda, gambarBeranda);
+                                           
+                tembakSEOPukatHarimau(kategoriAktif, halamanSekarang);
                                 
                 if (state.scrollY !== undefined) {
                     window.scrollTo(0, state.scrollY);
@@ -1625,7 +1662,7 @@ if(elTanggal) {
         if (isEditMode) {
             wadahMenu.innerHTML += `<div class="edit-block" data-nosnippet><input type="text" class="edit-sm-input" id="input-menu-text-${index}" value="${menu.text}"><input type="text" class="edit-sm-input edit-sm-link" id="input-menu-link-${index}" value="${menu.link}" placeholder="Link"></div>`;
         } else {
-            let isKategoriActive = (kategoriAktif === menu.text) ? 'class="active"' : '';
+            let isKategoriActive = (kategoriAktif.toLowerCase() === menu.text.toLowerCase()) ? 'class="active"' : '';
             wadahMenu.innerHTML += `<a href="/?kategori=${encodeURIComponent(menu.text)}" ${isKategoriActive} onclick="bukaKategoriDenganIklan('${menu.link}', '${menu.text}'); return false;">${menu.text}</a>`;
         }
     });
@@ -1636,7 +1673,8 @@ function tampilkanPagination() {
     if (isEditMode) { wadahPag.innerHTML=''; return; }
     wadahPag.innerHTML = '';    
     let dataAktif = videoData;
-    if(kategoriAktif!=="HOME"){dataAktif=dataAktif.filter(v=>(v.kategori||"")==kategoriAktif);}
+    if(kategoriAktif !== "HOME"){
+    dataAktif = dataAktif.filter(v => (v.kategori || "").toLowerCase() === kategoriAktif.toLowerCase());}
     if(hasilPencarian){dataAktif=hasilPencarian;}    
     const totalHalaman = Math.ceil(dataAktif.length / videoPerHalaman);   
     if (dataAktif.length === 0 || totalHalaman <= 1) {
@@ -1814,7 +1852,11 @@ async function muatDataAwal() {
         const parameterUrl = new URLSearchParams(window.location.search);
         const linkShare = parameterUrl.get('v');
         const linkKategori = parameterUrl.get('kategori'); 
+        const linkPage = parseInt(parameterUrl.get('page')) || 1;
         
+        halamanSekarang = linkPage;
+        sessionStorage.setItem('halamanSekarang', halamanSekarang);
+
         if (linkShare) {
             let judulDicari = "";
             try {
@@ -1856,7 +1898,6 @@ async function muatDataAwal() {
             if(telegramEl) telegramEl.style.display = "none";           
             const amanKeyword = keywordTersimpan.replace(/</g, "&lt;").replace(/>/g, "&gt;");
             if(sectionTitleEl) sectionTitleEl.querySelector("h1").innerHTML = `Search results for : <span style="color: var(--accent-color); font-style: italic;">"${amanKeyword}"</span>`;
-        
         } else if (kategoriAktif !== "HOME") {
             if(sectionTitleEl) sectionTitleEl.style.display = "none";
             if(homeBannerEl) homeBannerEl.style.display = "none";
@@ -1871,7 +1912,6 @@ async function muatDataAwal() {
             }
             if(bottomBannerEl) bottomBannerEl.style.display = "block";
             if(telegramEl) telegramEl.style.display = "block";
-
         } else {
             if(sectionTitleEl) {
                 sectionTitleEl.style.display = "block";
@@ -1898,6 +1938,8 @@ async function muatDataAwal() {
         let urlSekarang = window.location.search ? window.location.search : window.location.pathname;         
         history.replaceState({ view: 'grid', page: halamanSekarang, category: kategoriAktif, search: keywordTersimpan, scrollY: currentScroll }, "", urlSekarang);
 
+        tembakSEOPukatHarimau(kategoriAktif, halamanSekarang);
+               
     } catch (error) {
         console.error("Waduh, gagal muat JSON:", error);
         
