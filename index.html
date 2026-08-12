@@ -860,7 +860,42 @@
       #tempat-video {
         min-height: 100vh; 
       }
-        
+      
+      
+      /* Animasi Titik Kamera REC (Live) */
+@keyframes kedipKamera {
+  0% { 
+    opacity: 1; 
+    box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.8); 
+  }
+  50% { 
+    opacity: 0.1; 
+    box-shadow: 0 0 0px rgba(255, 0, 0, 0); 
+  }
+  100% { 
+    opacity: 1; 
+    box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.8); 
+  }
+}
+     
+
+/* Mode Bioskop Overlay */
+#kain-gelap {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95); /* Hitam pekat 95% */
+  z-index: 9998; 
+}
+
+/* Ngangkat Player Video ke atas kain gelap */
+.video-paling-atas {
+  position: relative !important;
+  z-index: 9999 !important; 
+}   
    
         @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header, nav, main { padding-left: 8px; padding-right: 8px; } }
@@ -902,7 +937,8 @@
             </p>
         </div>
     </noscript>
-      
+     
+   <div id="kain-gelap" onclick="saklarBioskop()"></div>
     
     <div class="sticky-wrapper">
         <header>
@@ -981,12 +1017,21 @@
      
            <div id="playerInfoBlock">
            
-           <div style="display: flex; justify-content: flex-end; margin-bottom: 5px;">
-                <div id="liveViewers" style="font-size: 10px; font-weight: 900; color: #ff4757; display: flex; align-items: center; gap: 4px; background: rgba(255, 71, 87, 0.1); padding: 3px 8px; border-radius: 4px; border: 1px solid rgba(255, 71, 87, 0.3);">
-                    <span style="display: inline-block; width: 5px; height: 5px; background-color: #ff4757; border-radius: 50%; box-shadow: 0 0 4px #ff4757; animation: kedipLive 1.5s infinite; flex-shrink: 0;"></span>
-                    <span><span id="angkaLive">0</span> orang sedang menonton</span>
-                </div>
-            </div>
+           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; padding-bottom: 12px; margin-bottom: 12px;">
+        
+        
+        <!-- KIRI: Live Viewers (Titik Kamera REC + Teks) -->
+        <div id="liveViewers" style="font-size: 12px; font-weight: 900; color: #ff3333; display: flex; align-items: center; gap: 6px;">
+            <span style="display: inline-block; width: 7px; height: 7px; background-color: #ff0000; border-radius: 50%; animation: kedipKamera 1.2s infinite ease-in-out; flex-shrink: 0;"></span>
+            <span><span id="angkaLive">0</span> orang sedang menonton</span>
+        </div>
+
+        <!-- KANAN: Tombol Mode Bioskop -->
+        <button class="btn-bioskop" onclick="saklarBioskop()" style="margin: 0; padding: 6px 12px; font-size: 11px; display: flex; align-items: center; gap: 6px; border-radius: 4px; background: #262626; color: white; border: 1px solid #555; cursor: pointer; transition: 0.2s;">
+            <i class="fa-solid fa-lightbulb" style="color: #ffd700;"></i> Mode Bioskop
+        </button>
+
+    </div>
            
                <h2 id="playerTitle" style="margin-bottom: 7px;"></h2>
                          
@@ -2295,6 +2340,20 @@ window.addEventListener('load', function() {
     setTimeout(cekAdblock, 500); 
 });
 
+
+
+function saklarBioskop() {
+  var kain = document.getElementById("kain-gelap");
+  var wadahVideo = document.querySelector(".player-box"); 
+
+  if (kain.style.display === "none" || kain.style.display === "") {
+    kain.style.display = "block";
+    wadahVideo.classList.add("video-paling-atas");
+  } else {
+    kain.style.display = "none";
+    wadahVideo.classList.remove("video-paling-atas");
+  }
+}
 
     </script>
    
