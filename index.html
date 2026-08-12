@@ -862,40 +862,38 @@
       }
       
       
-      /* Animasi Titik Kamera REC (Live) */
-@keyframes kedipKamera {
-  0% { 
-    opacity: 1; 
-    box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.8); 
-  }
-  50% { 
-    opacity: 0.1; 
-    box-shadow: 0 0 0px rgba(255, 0, 0, 0); 
-  }
-  100% { 
-    opacity: 1; 
-    box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.8); 
-  }
-}
+      
+      @keyframes kedipKamera {
+         0% { 
+         opacity: 1; 
+         box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.8); 
+      }
+         50% { 
+         opacity: 0.1; 
+         box-shadow: 0 0 0px rgba(255, 0, 0, 0); 
+      }
+         100% { 
+         opacity: 1; 
+         box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.8); 
+      }
+ }
      
 
-/* Mode Bioskop Overlay */
-#kain-gelap {
-  display: none; 
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.95); /* Hitam pekat 95% */
-  z-index: 9998; 
-}
 
-/* Ngangkat Player Video ke atas kain gelap */
-.video-paling-atas {
-  position: relative !important;
-  z-index: 9999 !important; 
-}   
+         #kain-gelap {
+           display: none; 
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           background-color: rgba(0, 0, 0, 0.95); 
+           z-index: 9998; 
+       }
+         .video-paling-atas {
+          position: relative !important;
+          z-index: 9999 !important; 
+       }   
    
         @media (max-width: 1024px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) { .video-grid { grid-template-columns: repeat(2, 1fr); } header, nav, main { padding-left: 8px; padding-right: 8px; } }
@@ -1015,26 +1013,21 @@
             </div> 
       
      
-           <div id="playerInfoBlock">
-           
-           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; padding-bottom: 12px; margin-bottom: 12px;">
-        
-        
-        <!-- KIRI: Live Viewers (Titik Kamera REC + Teks) -->
-        <div id="liveViewers" style="font-size: 12px; display: flex; align-items: center; gap: 6px;">
-            <span style="display: inline-block; width: 7px; height: 7px; background-color: #ff0000; border-radius: 50%; animation: kedipKamera 1.2s infinite ease-in-out; flex-shrink: 0;"></span>
-            <span>
-                <span id="angkaLive" style="color: #ff3333; font-weight: 900;">0</span> 
-                <span style="color: #dddddd; font-weight: bold; font-style: italic;">orang sedang menonton</span>
-            </span>
-        </div>
-
-        <!-- KANAN: Tombol Mode Bioskop -->
-        <button class="btn-bioskop" onclick="saklarBioskop()" style="margin: 0; padding: 6px 12px; font-size: 11px; display: flex; align-items: center; gap: 6px; border-radius: 4px; background: #262626; color: white; border: 1px solid #555; cursor: pointer; transition: 0.2s;">
-            <i class="fa-solid fa-lightbulb" style="color: #ffd700;"></i> Mode Bioskop
-        </button>
-
-    </div>
+           <div id="playerInfoBlock">         
+              <div data-nosnippet style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; padding-bottom: 12px; margin-bottom: 12px;">
+              
+                  <div id="liveViewers" style="font-size: 12px; display: flex; align-items: center; gap: 6px;">
+                      <span style="display: inline-block; width: 7px; height: 7px; background-color: #ff0000; border-radius: 50%; animation: kedipKamera 1.2s infinite ease-in-out; flex-shrink: 0;"></span>
+                         <span>
+                           <span id="angkaLive" style="color: #ff3333; font-weight: 900;">0</span> 
+                         <span style="color: #dddddd; font-weight: bold; font-style: italic;">Orang Sedang Menonton.</span>
+                        </span>
+                    </div>
+     
+                   <button class="btn-bioskop" onclick="saklarBioskop()" style="margin: 0; padding: 6px 12px; font-size: 11px; display: flex; align-items: center; gap: 6px; border-radius: 4px; background: #262626; color: white; border: 1px solid #555; cursor: pointer; transition: 0.2s;">
+                    <i class="fa-solid fa-lightbulb" style="color: #ffd700;"></i> Mode Bioskop
+                 </button>
+             </div>
            
                <h2 id="playerTitle" style="margin-bottom: 7px;"></h2>
                          

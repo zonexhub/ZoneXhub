@@ -163,13 +163,27 @@ function toggleEditMode() {
 
 
         
-    function hapusVideo() {
-         if(videoData.length > 0){ 
-                videoData.shift(); 
-                tampilkanPagination();
-                tampilkanGrid(); 
-             }
-         }
+ function hapusVideo() {
+        if (videoData.length > 0) {
+        let keywordHapus = prompt("Masukkan Judul Video yang mau dihapus (Ketik sebagian kata aja gapapa):");        
+        if (keywordHapus) {           
+            let indexAsli = videoData.findIndex(v => v.judul.toLowerCase().includes(keywordHapus.toLowerCase()));            
+            if (indexAsli !== -1) {                
+                let yakin = confirm('Yakin mau hapus video ini Bro?\n\n👉 "' + videoData[indexAsli].judul + '"');                
+                if (yakin) {                    
+                    videoData.splice(indexAsli, 1);                                     
+                    tampilkanPagination();
+                    tampilkanGrid();
+                    alert("Sukses! Video berhasil dibumihanguskan! 💥");
+                }
+            } else {
+                alert("Waduh, Judul video gak ketemu Bro! Coba ketik kata kuncinya yang bener.");
+            }
+        }
+    } else {
+        alert("Data video udah kosong melompong Bro!");
+    }
+}
 
    
    
