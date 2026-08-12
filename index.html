@@ -1021,9 +1021,12 @@
         
         
         <!-- KIRI: Live Viewers (Titik Kamera REC + Teks) -->
-        <div id="liveViewers" style="font-size: 12px; font-weight: 900; color: #ff3333; display: flex; align-items: center; gap: 6px;">
+        <div id="liveViewers" style="font-size: 12px; display: flex; align-items: center; gap: 6px;">
             <span style="display: inline-block; width: 7px; height: 7px; background-color: #ff0000; border-radius: 50%; animation: kedipKamera 1.2s infinite ease-in-out; flex-shrink: 0;"></span>
-            <span><span id="angkaLive">0</span> orang sedang menonton</span>
+            <span>
+                <span id="angkaLive" style="color: #ff3333; font-weight: 900;">0</span> 
+                <span style="color: #dddddd; font-weight: bold; font-style: italic;">orang sedang menonton</span>
+            </span>
         </div>
 
         <!-- KANAN: Tombol Mode Bioskop -->
