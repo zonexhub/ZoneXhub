@@ -46,52 +46,67 @@ function toggleEditMode() {
 
 
 
+
+function getDataAktif() {
+    if (hasilPencarian) return hasilPencarian;
+    if (kategoriAktif && kategoriAktif !== "HOME") {
+        return videoData.filter(v => (v.kategori || "").toLowerCase() === kategoriAktif.toLowerCase());
+    }
+    return videoData;
+}
+
+
+
+
+
+
         function simpanPerubahan(tanpaNotif = false) {
-            let dataTarget = videoData;
-            if (kategoriAktif !== "HOME") { dataTarget = dataTarget.filter(v => (v.kategori || "") == kategoriAktif); }
-            if (hasilPencarian) { dataTarget = hasilPencarian; }
+    const dataTarget = getDataAktif(); // Menggunakan getDataAktif()
+    const mulai = (halamanSekarang - 1) * videoPerHalaman;
+    const akhir = mulai + videoPerHalaman;
 
-            const mulai = (halamanSekarang - 1) * videoPerHalaman;
-            const akhir = mulai + videoPerHalaman;
-            dataTarget.slice(mulai, akhir).forEach((v, idx) => {
-                const i = mulai + idx;
-                if(document.getElementById(`input-judul-${i}`)) {
-                    v.judul = document.getElementById(`input-judul-${i}`).value;
-                    v.tujuan = document.getElementById(`input-player-${i}`).value || "#";
-                    v.tanggal = document.getElementById(`input-tanggal-${i}`) ? document.getElementById(`input-tanggal-${i}`).value : (v.tanggal || "");
-                    v.views = document.getElementById(`input-view-${i}`).value;
-                    v.durasi = document.getElementById(`input-durasi-${i}`).value;
-                    v.kategori = document.getElementById(`input-kategori-${i}`).value;
-                    v.label = document.getElementById(`input-label-${i}`) ? document.getElementById(`input-label-${i}`).value : (v.label || "");                 
-               
-               if (v.label === 'new' && !v.label_time) {
-                 v.label_time = new Date().getTime(); 
-              } else if (v.label !== 'new') {
-                 v.label_time = null; 
-              }
-          }
-      });
-
-            menuData.forEach((menu, index) => {
-                if(document.getElementById(`input-menu-text-${index}`)) {
-                    menu.text = document.getElementById(`input-menu-text-${index}`).value;
-                    menu.link = document.getElementById(`input-menu-link-${index}`).value;
-                }
-            });
-
-            localStorage.setItem('dataHeaderLokal', JSON.stringify(headerData));
-            localStorage.setItem('dataVideoLokal', JSON.stringify(videoData));
-            localStorage.setItem('dataMenuObjLokal', JSON.stringify(menuData));
-                      
-            isEditMode = false;
-            document.getElementById("btnEdit").style.display = "block";
-            document.getElementById("btnSimpan").style.display = "none";
-            document.getElementById("btnDownload").style.display = "none";                       
-            tampilkanHeader(); tampilkanGrid(); tampilkanMenu(); tampilkanPagination();         
-            if (!tanpaNotif) {
-                alert("Data tersimpan sementara!");
+    dataTarget.slice(mulai, akhir).forEach((v, idx) => {
+        const i = mulai + idx;
+        if (document.getElementById(`input-judul-${i}`)) {
+            v.judul = document.getElementById(`input-judul-${i}`).value;
+            v.tujuan = document.getElementById(`input-player-${i}`).value || "#";
+            v.tanggal = document.getElementById(`input-tanggal-${i}`) ? document.getElementById(`input-tanggal-${i}`).value : (v.tanggal || "");
+            v.views = document.getElementById(`input-view-${i}`).value;
+            v.durasi = document.getElementById(`input-durasi-${i}`).value;
+            v.kategori = document.getElementById(`input-kategori-${i}`).value;
+            
+            // Ambil input label & ubah ke huruf kecil
+            v.label = document.getElementById(`input-label-${i}`) ? document.getElementById(`input-label-${i}`).value.toLowerCase().trim() : (v.label || "");                 
+            
+            // Logika Cooldown 24 jam khusus kata 'new'
+            if (v.label.includes('new') && !v.label_time) {
+                v.label_time = new Date().getTime(); 
+            } else if (!v.label.includes('new')) {
+                v.label_time = null; 
             }
         }
+    });
+
+    menuData.forEach((menu, index) => {
+        if (document.getElementById(`input-menu-text-${index}`)) {
+            menu.text = document.getElementById(`input-menu-text-${index}`).value;
+            menu.link = document.getElementById(`input-menu-link-${index}`).value;
+        }
+    });
+
+    localStorage.setItem('dataHeaderLokal', JSON.stringify(headerData));
+    localStorage.setItem('dataVideoLokal', JSON.stringify(videoData));
+    localStorage.setItem('dataMenuObjLokal', JSON.stringify(menuData));
+              
+    isEditMode = false;
+    document.getElementById("btnEdit").style.display = "block";
+    document.getElementById("btnSimpan").style.display = "none";
+    document.getElementById("btnDownload").style.display = "none";                       
+    tampilkanHeader(); tampilkanGrid(); tampilkanMenu(); tampilkanPagination();         
+    if (!tanpaNotif) {
+        alert("Data tersimpan sementara!");
+    }
+}
 
   
       
@@ -112,51 +127,70 @@ function toggleEditMode() {
 
      
         function gantiGambarURL(i) {
-            const dataTarget = hasilPencarian || videoData;
-            let u = prompt("LINK GAMBAR:", dataTarget[i].gambar);
-            if (u) { dataTarget[i].gambar = u; tampilkanGrid(); }
+    const dataTarget = getDataAktif();
+    if (dataTarget[i]) {
+        let u = prompt("LINK GAMBAR:", dataTarget[i].gambar);
+        if (u) { dataTarget[i].gambar = u; tampilkanGrid(); }
+    }
+}
+
+
+
+
+
+
+
+
+function tambahVideo() {
+    const dataTarget = getDataAktif();
+    const mulai = (halamanSekarang - 1) * videoPerHalaman;
+    const akhir = mulai + videoPerHalaman;
+
+    // Simpan dulu inputan yang lagi diketik sebelum nambah video baru
+    dataTarget.slice(mulai, akhir).forEach((v, idx) => {
+        const i = mulai + idx;
+        if (document.getElementById(`input-judul-${i}`)) {
+            v.judul = document.getElementById(`input-judul-${i}`).value;
+            v.tujuan = document.getElementById(`input-player-${i}`).value || "#";
+            v.tanggal = document.getElementById(`input-tanggal-${i}`) ? document.getElementById(`input-tanggal-${i}`).value : (v.tanggal || "");
+            v.views = document.getElementById(`input-view-${i}`).value;
+            v.durasi = document.getElementById(`input-durasi-${i}`).value;
+            v.kategori = document.getElementById(`input-kategori-${i}`).value;
+            v.label = document.getElementById(`input-label-${i}`) ? document.getElementById(`input-label-${i}`).value : (v.label || "");
         }
+    });
+    
+    const bulanIndo = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    const waktu = new Date();
+    const tglOtomatis = `${waktu.getDate()} ${bulanIndo[waktu.getMonth()]} ${waktu.getFullYear()}`;
+
+    // Balikin ke settingan KOSONG BLANK kayak asli lu
+    videoData.unshift({
+        gambar: "",
+        judul: "",
+        tujuan: "",
+        views: "",
+        durasi: "",
+        kategori: "",
+        label: "",
+        tanggal: tglOtomatis 
+    });
+    
+    //  OBAT WAJIB: Balik ke halaman 1 & bersihin kolom pencarian biar index gak ketuker
+    halamanSekarang = 1;
+    hasilPencarian = null; 
+    let kotakSearch = document.getElementById("searchInput");
+    if (kotakSearch) kotakSearch.value = ""; 
+
+    tampilkanPagination();
+    tampilkanGrid();
+}
   
 
 
 
    
-   function tambahVideo() {
-            let dataTarget = videoData;
-            if (kategoriAktif !== "HOME") { dataTarget = dataTarget.filter(v => (v.kategori || "") == kategoriAktif); }
-            if (hasilPencarian) { dataTarget = hasilPencarian; }
-
-            const mulai = (halamanSekarang - 1) * videoPerHalaman;
-            const akhir = mulai + videoPerHalaman;
-            dataTarget.slice(mulai, akhir).forEach((v, idx) => {
-                const i = mulai + idx;
-                if (document.getElementById(`input-judul-${i}`)) {
-                    v.judul = document.getElementById(`input-judul-${i}`).value;
-                    v.tujuan = document.getElementById(`input-player-${i}`).value || "#";
-                    v.tanggal = document.getElementById(`input-tanggal-${i}`) ? document.getElementById(`input-tanggal-${i}`).value : (v.tanggal || "");
-                    v.views = document.getElementById(`input-view-${i}`).value;
-                    v.durasi = document.getElementById(`input-durasi-${i}`).value;
-                    v.kategori = document.getElementById(`input-kategori-${i}`).value;
-                    v.label = document.getElementById(`input-label-${i}`) ? document.getElementById(`input-label-${i}`).value : (v.label || "");
-                }
-            });
-            
-            const bulanIndo = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-            const waktu = new Date();
-            const tglOtomatis = `${waktu.getDate()} ${bulanIndo[waktu.getMonth()]} ${waktu.getFullYear()}`;
-            videoData.unshift({
-                gambar: "",
-                judul: "",
-                tujuan: "",
-                views: "",
-                durasi: "",
-                kategori: "",
-                label: "",
-                tanggal: tglOtomatis 
-            });
-            tampilkanPagination();
-            tampilkanGrid();
-        }
+   
         
 
 
@@ -261,16 +295,16 @@ function tampilkanGrid() {
     wadahVideo.innerHTML = "";
     const mulai = (halamanSekarang - 1) * videoPerHalaman;
     const akhir = mulai + videoPerHalaman;
-    let dataAktif = videoData;
     
-    if(kategoriAktif!=="HOME"){dataAktif=dataAktif.filter(v=>(v.kategori||"").toLowerCase()===kategoriAktif.toLowerCase());}
-    if(hasilPencarian){dataAktif=hasilPencarian;}
+    // Cukup panggil ini aja, filternya udah diurus di dalam fungsi lu
+    let dataAktif = getDataAktif(); 
         
     const homeBannerEl = document.getElementById("home-banner");
     const hotVideoEl = document.getElementById("hot-video-text");
     const sectionTitleEl = document.getElementById("sectionTitle");
     const titleH1 = sectionTitleEl ? sectionTitleEl.querySelector("h1") : null;
     
+    // ... LANJUTAN KODE LU KE BAWAH TETEP SAMA PERSIS ...
     if (halamanSekarang > 1) {
         if (homeBannerEl) homeBannerEl.style.display = "none";
         if (hotVideoEl) hotVideoEl.style.display = "none";
@@ -310,37 +344,40 @@ function tampilkanGrid() {
     const fragment = document.createDocumentFragment();
     dataAktif.slice(mulai, akhir).forEach((video, idx) => {
         const index = mulai + idx;
-        const gambarLoading = "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%231a1a1a%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%221.5%22 font-weight=%22bold%22 font-style=%22italic%22 fill=%22%23999999%22%3ELoading%3Ctspan opacity=%220%22%3E.%3Canimate attributeName=%22opacity%22 values=%220;1;0%22 dur=%221.5s%22 begin=%220s%22 repeatCount=%22indefinite%22/%3E%3C/tspan%3E%3Ctspan opacity=%220%22%3E.%3Canimate attributeName=%22opacity%22 values=%220;1;0%22 dur=%221.5s%22 begin=%220.5s%22 repeatCount=%22indefinite%22/%3E%3C/tspan%3E%3Ctspan opacity=%220%22%3E.%3Canimate attributeName=%22opacity%22 values=%220;1;0%22 dur=%221.5s%22 begin=%221s%22 repeatCount=%22indefinite%22/%3E%3C/tspan%3E%3C/text%3E%3C/svg%3E";       
-                const srcGambar = video.gambar 
-                ? (video.gambar.startsWith('http') ? 'https://img.zonexhub.net/?url=' + encodeURIComponent(video.gambar) : video.gambar) 
-                : gambarLoading;
+        const gambarLoading = "data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 10%22%3E%3Crect width=%2216%22 height=%2210%22 fill=%22%231a1a1a%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%221.5%22 font-weight=%22bold%22 font-style=%22italic%22 fill=%22%23999999%22%3ELoading%3Ctspan opacity=%220%22%3E.%3Canimate attributeName=%22opacity%22 values=%220;1;0%22 dur=%221.5s%22 begin=%220s%22 repeatCount=%22indefinite%22/%3E%3C/tspan%3E%3Ctspan opacity=%220%22%3E.%3Canimate attributeName=%22opacity%22 values=%220;1;0%22 dur=%221.5s%22 begin=%220.5s%22 repeatCount=%22indefinite%22/%3E%3C/tspan%3E%3Ctspan opacity=%220%22%3E.%3Canimate attributeName=%22opacity%22 values=%220;1;0%22 dur=%221.5s%22 begin=%221s%22 repeatCount=%22indefinite%22/%3E%3C/tspan%3E%3C/text%3E%3C/svg%3E";        
+        const srcGambar = video.gambar 
+            ? (video.gambar.startsWith('http') ? 'https://img.zonexhub.net/?url=' + encodeURIComponent(video.gambar) : video.gambar) 
+            : gambarLoading;
 
         const card = document.createElement('div');
         card.className = `video-card ${isEditMode ? 'editing' : ''}`;
         card.id = `card-${index}`;
         if (!isEditMode) {
-            card.onclick = () => arahkanKeLink((hasilPencarian || dataAktif)[index]);
+            card.onclick = () => arahkanKeLink(dataAktif[index]);
         }
         
         const SEKARANG = new Date().getTime();
         const SATU_HARI = 24 * 60 * 60 * 1000; 
 
-        if (video.label === 'new' && video.label_time) {
+        // Cooldown check 24 jam khusus 'new'
+        if (video.label && video.label.toLowerCase().includes('new') && video.label_time) {
             if (SEKARANG - video.label_time > SATU_HARI) {
-                video.label = "";       
+                video.label = video.label.replace(/\bnew\b/gi, '').trim(); 
                 video.label_time = null; 
             }
         }
-               
+                
         let labelHTML = '';
-        
+        let labelLower = (video.label || "").toLowerCase();
         let otomatisNew = (index < 4 && halamanSekarang === 1 && !hasilPencarian);
         
-        if (video.label === 'new' || otomatisNew) {
+        // Render NEW (otomatis 4 teratas ATAU dari input)
+        if (labelLower.includes('new') || otomatisNew) {
             labelHTML += '<div class="label-new">NEW</div>';
         } 
 
-        if (video.label === 'populer') {
+        // Render POPULAR (jika diketik populer / popular)
+        if (labelLower.includes('populer') || labelLower.includes('popular')) {
             labelHTML += '<div class="label-populer">POPULAR</div>';
         }
 
@@ -507,3 +544,11 @@ function tampilkanGrid() {
         });
     }
 });
+
+
+
+
+
+
+
+        
